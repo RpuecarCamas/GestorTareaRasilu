@@ -4,6 +4,12 @@
  */
 package controladores;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import modelos.Tarea;
 
@@ -11,7 +17,7 @@ import modelos.Tarea;
  *
  * @author raqpu
  */
-public class ControladorTarea {
+public class ControladorTarea implements Serializable{
 
     private java.util.List<Tarea> tareas;
 
@@ -22,7 +28,11 @@ public class ControladorTarea {
     // Acciones que va a tener las tareas
     // Añadir tarea
     public void añadirTarea(Tarea tarea) {
-        tareas.add(tarea);
+        if(isExistsTarea(tarea)){
+            System.out.println("La tarea ya existe");
+        } else {
+            tareas.add(tarea);
+        }
     }
     // Eliminar tarea
     public void eliminarTarea (Tarea tarea){
@@ -35,19 +45,45 @@ public class ControladorTarea {
         }
     }
     // Modificar Tarea
-    public void modificarTarea(int id, Tarea tareaModificada) {
+    public void modificarTarea(Tarea tareaModificada) {
         for (Tarea t : tareas) {
-            if (t.getId() == id) {
+            if (!isExistsTarea(tareaModificada)) {
                 t.setNombre(tareaModificada.getNombre());
                 t.setFechaInicio(tareaModificada.getFechaInicio());
                 t.setFechaFin(tareaModificada.getFechaFin());
                 t.setEstado(tareaModificada.getEstado());
-            } else {
+            
                 System.out.println("No se ha encontrado podido modificar la tarea");
             }
         }
     }
-    // Mostrar tareas por estados
+   // Tarea Esiste
+    public boolean isExistsTarea (Tarea t){
+        return tareas.contains(t);
+    }
      
+     public static void guardarDatos(Tarea e) {
+        try {
+            ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream("empresa.dat"));
+            salida.writeObject(e);
+            salida.close();
+        } catch (IOException ex) {
+            System.err.println("Error al guardar datos "
+                    + ex.getMessage());
+        }
+    }
     
+    public static Tarea cargarDatos (){
+        Tarea e;
+        try {
+            ObjectInputStream entrada = new ObjectInputStream(new
+                                        FileInputStream("empresa.dat"));
+            e = (Tarea)entrada.readObject();
+            entrada.close();
+        }catch (IOException | ClassNotFoundException ex){
+            System.err.println("Error al abrir los datos: " + ex.getMessage());
+        } 
+        e = new Tarea();
+        return e;
+    }
 }

@@ -279,7 +279,7 @@ public class TareaVista extends javax.swing.JFrame {
     }//GEN-LAST:event_textTituloActionPerformed
 
     private void addBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBotonActionPerformed
-
+        
         botonGuardar.setVisible(true);
     }//GEN-LAST:event_addBotonActionPerformed
 

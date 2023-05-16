@@ -18,18 +18,19 @@ public class Usuario  implements Serializable {
     public static int nextId = 100;
     private int id;
     private String nombre;
-    private String apellidos;
-    private String correoElectronico;
-    private String contraseña;
+    private String email;
+    private String contrasena;
+    private String contasena2;
     
     public Usuario (){
     }
     
-    public Usuario (String nombre, String email, String contraseña){
+    public Usuario (String nombre, String email, String contrasena, String contrasena2){
         this.id = nextId++;
         this.nombre = nombre;
-        this.correoElectronico = email;
-        this.contraseña = contraseña;
+        this.email = email;
+        this.contrasena = contrasena;
+        this.contasena2 = contasena2;
         
     }
 
@@ -49,27 +50,36 @@ public class Usuario  implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getCorreoElectronico() {
-        return correoElectronico;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
+    public void setEmail(String correoElectronico) {
+        this.email = correoElectronico;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contraseña) {
+        this.contrasena = contraseña;
     }
+
+    public String getContasena2() {
+        return contasena2;
+    }
+
+    public void setContasena2(String contasena2) {
+        this.contasena2 = contasena2;
+    }
+    
     
 
     @Override
     public String toString() {
         return "Usuario" + "id: " + id + 
-               "\n" + ", nombre: " + nombre + "\n" + ", correoElectronico: " + correoElectronico ;
+               "\n" + ", nombre: " + nombre + "\n" + ", correoElectronico: " + email ;
     }
     
 }

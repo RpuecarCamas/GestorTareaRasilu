@@ -17,6 +17,7 @@ public class UsuarioVista extends javax.swing.JFrame {
      */
     public UsuarioVista() {
         initComponents();
+        
     }
 
     /**
@@ -156,7 +157,7 @@ public class UsuarioVista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void textUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textUsuarioActionPerformed
-        // TODO add your handling code here:
+            
     }//GEN-LAST:event_textUsuarioActionPerformed
 
     private void textContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textContraseñaActionPerformed
