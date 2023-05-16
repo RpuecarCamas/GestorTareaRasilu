@@ -13,26 +13,36 @@ import java.time.LocalDate;
  */
 public class Tarea implements Serializable, Comparable<Tarea> {
 
+    private static final long serialVersionUID = 1;
+
     public static int nextId = 001;
     // Atributos de la Clase Tarea
     private int id;
     private String nombre;
-    private String estado;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
+    private EstadoTarea estado;
 
     // Contrustores
     public Tarea() {
     }
 
-    public Tarea(String nombre, String estado, LocalDate fechaInicio, LocalDate fechaFin) {
+    /**
+     * Construtor de Tarea
+     * @param nombre
+     * @param fechaInicio
+     * @param fechaFin
+     * @param estado
+     */
+    public Tarea(String nombre, LocalDate fechaInicio, LocalDate fechaFin, EstadoTarea estado) {
 
         this.nombre = nombre;
-        this.estado = estado;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         // Inicializamos el id de forma aleatoria
         this.id = nextId++;
+        this. estado = estado;
+        
     }
 
     // Metodos
@@ -52,14 +62,15 @@ public class Tarea implements Serializable, Comparable<Tarea> {
         this.nombre = nombre;
     }
 
-    public String getEstado() {
+    public EstadoTarea getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EstadoTarea estado) {
         this.estado = estado;
     }
 
+    
     public LocalDate getFechaInicio() {
         return fechaInicio;
     }

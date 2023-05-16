@@ -6,6 +6,7 @@ package vistas;
 
 import java.awt.Color;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -18,7 +19,7 @@ public class TareaVista extends javax.swing.JFrame {
      */
     public TareaVista() {
         initComponents();
-    
+         this.setIconImage(new ImageIcon(getClass().getResource("/img/logo rasilu.png")).getImage());
         
         
         

@@ -6,6 +6,7 @@ package modelos;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 
 /**
@@ -21,6 +22,7 @@ public class Usuario  implements Serializable {
     private String email;
     private String contrasena;
     private String contasena2;
+    private List<Tarea> listaTareas;
     
     public Usuario (){
     }
@@ -74,12 +76,23 @@ public class Usuario  implements Serializable {
         this.contasena2 = contasena2;
     }
     
-    
-
     @Override
     public String toString() {
         return "Usuario" + "id: " + id + 
                "\n" + ", nombre: " + nombre + "\n" + ", correoElectronico: " + email ;
     }
     
+        public void añadirTarea(Tarea tarea) {
+        listaTareas.add(tarea);
+    }
+        public void eliminarTarea(Tarea tarea) {
+        listaTareas.remove(tarea);
+    }
+        
+       public void modificarTarea(Tarea tarea) {
+        // Implementación para modificar una tarea específica
+    }
+         public void modificarEstadoTarea(Tarea tarea, EstadoTarea estado) {
+        tarea.setEstado(estado);
+    }
 }

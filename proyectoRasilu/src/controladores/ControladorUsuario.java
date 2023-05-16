@@ -4,40 +4,49 @@
  */
 package controladores;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.List;
 import modelos.Usuario;
+import vistas.UsuarioVista;
 
 /**
  *
  * @author raqpu
  */
-public class ControladorUsuario implements Serializable{
+public class ControladorUsuario implements Serializable {
 
-    private List<Usuario> usuarios;
+    private static UsuarioVista usuarioVista;
+    private static List<Usuario> usuarios;
 
+      
     public ControladorUsuario() {
+        this.usuarioVista = usuarioVista;
+        usuarioVista.addLoginListener(new LoginListener());
+        usuarioVista.addRegisterListener(new RegisterListener());
     }
 
     //Crear Usuario
     public void crearUsuario(String nombre, String email, String contrasena, String contrasena2) {
         Usuario usuBuscar = new Usuario(nombre, email, contrasena, contrasena2);
-        
+
         if (nombre.equals(contrasena)) {
             System.out.println("El nombre no puede ser igual a la contraseña");
-        } else if (usuarios.contains(usuBuscar)){
+        } else if (usuarios.contains(usuBuscar)) {
             System.out.println("El usuario ya existe");
-        } else if (!nombreValido(nombre)){
+        } else if (!nombreValido(nombre)) {
             System.out.println("El nombre no es válido");
-        } else if (contrasena.length() < 9){
+        } else if (contrasena.length() < 9) {
             System.out.println("La contraseña debe contener al menos 8 caracteres");
-        } else if (!contrasena.equals(contrasena2)){
+        } else if (!contrasena.equals(contrasena2)) {
             System.out.println("Las dos contraseñas deben coincidir");
         } else {
-            Usuario nuevo = new Usuario (nombre, email, contrasena, contrasena2);
+            Usuario nuevo = new Usuario(nombre, email, contrasena, contrasena2);
             usuarios.add(nuevo);
         }
     }
+
     /*
     * Comprobar que el nombre es valido:
     *     Si esta vacio
@@ -57,7 +66,7 @@ public class ControladorUsuario implements Serializable{
         return false;
     }
 
-    //Modificar Usuario 
+    //Modificar Usuario, modifica un usuario que se le pasa por parametro 
     public void modificarUsuario(Usuario usu) {
         for (Usuario u : usuarios) {
             if (isExistsUsuario(usu)) {
@@ -70,10 +79,42 @@ public class ControladorUsuario implements Serializable{
             }
         }
     }
+
     //UsuarioExiste
-    public boolean isExistsUsuario (Usuario usu){
+    public boolean isExistsUsuario(Usuario usu) {
         return usuarios.contains(usu);
     }
-    //ComprobadorContraseña
-    
+        
+    // Clase estatica de inicio que implementa ActionListener
+    private static class LoginListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String nombreUsuario = usuarioVista.getName();
+            String contrasena = usuarioVista.getContrasenaUsuario();
+            
+             if (usuarios.contains(nombreUsuario)) {
+              usuarioVista.mostrarMensaje("Usuario correcto");
+            } else {
+                usuarioVista.mostrarMensaje("Usuario incorrecto");
+            }
+             
+             
+             
+        }
+
+    }
+
+    private static class RegisterListener implements ActionListener {
+
+        public RegisterListener() {
+            
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
+        }
+    }
+
 }

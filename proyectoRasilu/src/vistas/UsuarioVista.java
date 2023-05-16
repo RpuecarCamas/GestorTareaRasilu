@@ -5,6 +5,8 @@
 package vistas;
 
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,7 +19,7 @@ public class UsuarioVista extends javax.swing.JFrame {
      */
     public UsuarioVista() {
         initComponents();
-        
+
     }
 
     /**
@@ -42,6 +44,7 @@ public class UsuarioVista extends javax.swing.JFrame {
         textContraseña = new javax.swing.JPasswordField();
         jSeparator2 = new javax.swing.JSeparator();
         botonEntrar = new javax.swing.JButton();
+        botonRegistro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -142,6 +145,17 @@ public class UsuarioVista extends javax.swing.JFrame {
         });
         background.add(botonEntrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 410, -1, -1));
 
+        botonRegistro.setBackground(new java.awt.Color(221, 152, 123));
+        botonRegistro.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        botonRegistro.setText("Registro");
+        botonRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonRegistro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRegistroActionPerformed(evt);
+            }
+        });
+        background.add(botonRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 480, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -157,7 +171,7 @@ public class UsuarioVista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void textUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textUsuarioActionPerformed
-            
+
     }//GEN-LAST:event_textUsuarioActionPerformed
 
     private void textContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textContraseñaActionPerformed
@@ -179,35 +193,39 @@ public class UsuarioVista extends javax.swing.JFrame {
     }//GEN-LAST:event_botonEntrarMouseExited
 
     private void textUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textUsuarioMousePressed
-//       Cuando pasamos el cursor se cambia de color el apartado contrario y viceversa
+//       uando pasamos el cursor se cambia de color el apartado contrario y viceversa
 
         if (textUsuario.getText().equals("Ingrese su nombre de usuario")) {
             textUsuario.setText("");
             textUsuario.setForeground(Color.black);
         }
-         if (String.valueOf(textContraseña.getPassword()).isEmpty()) {
+        if (String.valueOf(textContraseña.getPassword()).isEmpty()) {
             textContraseña.setText("********");
             textContraseña.setForeground(Color.gray);
-         }
+        }
     }//GEN-LAST:event_textUsuarioMousePressed
 
     private void textContraseñaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseñaMousePressed
 //Estas condiciones se ponen para que cuando escribas en un campo no se borren los datos en el otro
-         if (String.valueOf(textContraseña.getPassword()).equals("********")) {
+        if (String.valueOf(textContraseña.getPassword()).equals("********")) {
             textContraseña.setText("");
             textContraseña.setForeground(Color.black);
-         }
+        }
         if (textUsuario.getText().isEmpty()) {
             textUsuario.setText("Ingrese su nombre de usuario");
             textUsuario.setForeground(Color.gray);
         }
     }//GEN-LAST:event_textContraseñaMousePressed
 
-    private void botonEntrarMousePressed(java.awt.event.MouseEvent evt) {                                         
+    private void botonRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistroActionPerformed
+
+    }//GEN-LAST:event_botonRegistroActionPerformed
+
+    private void botonEntrarMousePressed(java.awt.event.MouseEvent evt) {
 // En este apartado creo una alerta como si estubieramos accediendo 
-        javax.swing.JOptionPane.showMessageDialog(this, "Intento de login con los datos:\nUsuario: " + textUsuario.getText() + "\nContraseña: " + 
-                "*********", "LOGIN", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-    }                                                                                     
+        javax.swing.JOptionPane.showMessageDialog(this, "Intento de login con los datos:\nUsuario: " + textUsuario.getText() + "\nContraseña: "
+                + "*********", "LOGIN", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }
 
     /**
      * @param args the command line arguments
@@ -250,6 +268,7 @@ public class UsuarioVista extends javax.swing.JFrame {
     private javax.swing.JPanel background;
     private javax.swing.JLabel bgFondo;
     private javax.swing.JButton botonEntrar;
+    private javax.swing.JButton botonRegistro;
     private javax.swing.JLabel contraseña;
     private javax.swing.JLabel iniciarSesion;
     private javax.swing.JLabel jLabel1;
@@ -260,4 +279,28 @@ public class UsuarioVista extends javax.swing.JFrame {
     private javax.swing.JTextField textUsuario;
     private javax.swing.JLabel usuario;
     // End of variables declaration//GEN-END:variables
+
+    public String getNombreUsuario() {
+        // Devuelve el nombre de usuario ingresado en el campo textUsuario
+        return textUsuario.getText();
+    }
+    public String getContrasenaUsuario(){
+        return textContraseña.getText();
+    }
+
+    public void addLoginListener(ActionListener listener) {
+        // Agrega un ActionListener al botón de inicio de sesión de la vista
+        botonEntrar.addActionListener(listener);
+    }
+
+    public void addRegisterListener(ActionListener listener) {
+        // Agrega un ActionListener al botón de registro de la vista
+        botonRegistro.addActionListener(listener);
+    }
+
+    // Proporciona un mensaje que se abrirá en otra ventana
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
 }
