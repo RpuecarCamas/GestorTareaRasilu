@@ -19,18 +19,19 @@ public class Usuario  implements Serializable {
     public static int nextId = 100;
     private int id;
     private static String nombre;
-    private String email;
     private String contrasena;
     private String contasena2;
     private List<Tarea> listaTareas;
     
     public Usuario (){
     }
-    
-    public Usuario (String nombre, String email, String contrasena, String contrasena2){
+    public Usuario (String nombre, String contrasena){
+        this.nombre = nombre;
+        this.contrasena = contrasena;
+    }
+    public Usuario (String nombre, String contrasena, String contrasena2){
         this.id = nextId++;
         this.nombre = nombre;
-        this.email = email;
         this.contrasena = contrasena;
         this.contasena2 = contasena2;
         
@@ -52,14 +53,6 @@ public class Usuario  implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String correoElectronico) {
-        this.email = correoElectronico;
-    }
-
     public String getContrasena() {
         return contrasena;
     }
@@ -79,7 +72,7 @@ public class Usuario  implements Serializable {
     @Override
     public String toString() {
         return "Usuario" + "id: " + id + 
-               "\n" + ", nombre: " + nombre + "\n" + ", correoElectronico: " + email ;
+               "\n" + ", nombre: " + nombre + "\n" ;
     }
     
         public void añadirTarea(Tarea tarea) {

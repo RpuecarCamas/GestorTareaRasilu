@@ -5,11 +5,18 @@
 package vista;
 
 import java.awt.Color;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import modelos.Tarea;
 import modelos.Usuario;
 
 /**
@@ -20,7 +27,12 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
     private static String rutaUsuario = new String("datos/usuario.dat");
     private static String rutaTarea = new String("datos/tarea.dat");
-    private static Usuario usu ;
+    private static Usuario usu;
+    private static List<Usuario> usuarios;
+    private static Tarea tarea;
+    private static List<Tarea> tareas;
+    int contadorIntento = 0;
+    
 
     /**
      * Creates new form UsuarioFrame
@@ -28,6 +40,8 @@ public class UsuarioFrame extends javax.swing.JFrame {
     public UsuarioFrame() {
         initComponents();
         usu = new Usuario();
+        usuarios = new ArrayList();
+        tareas = new ArrayList();
     }
 
     /**
@@ -40,7 +54,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         menuUsuario = new javax.swing.JTabbedPane();
-        background = new javax.swing.JPanel();
+        Inicio = new javax.swing.JPanel();
         logoRasilu = new javax.swing.JLabel();
         bgFondo = new javax.swing.JLabel();
         logoName = new javax.swing.JLabel();
@@ -56,7 +70,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         botonSalir = new javax.swing.JButton();
         botonRegistro = new javax.swing.JButton();
         botonAcceder1 = new javax.swing.JButton();
-        background1 = new javax.swing.JPanel();
+        menuRegistro = new javax.swing.JPanel();
         logoRasilu1 = new javax.swing.JLabel();
         bgFondo1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -73,7 +87,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         jSeparator5 = new javax.swing.JSeparator();
         confirmarContraseña = new javax.swing.JLabel();
         botonRegistro1 = new javax.swing.JButton();
-        background2 = new javax.swing.JPanel();
+        menuTareas = new javax.swing.JPanel();
         Logo = new javax.swing.JLabel();
         bgFondo2 = new javax.swing.JLabel();
         oclock = new javax.swing.JLabel();
@@ -103,35 +117,35 @@ public class UsuarioFrame extends javax.swing.JFrame {
         setLocationByPlatform(true);
         setResizable(false);
 
-        background.setBackground(new java.awt.Color(255, 255, 255));
-        background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        Inicio.setBackground(new java.awt.Color(255, 255, 255));
+        Inicio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         logoRasilu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logo rasilu.png"))); // NOI18N
-        background.add(logoRasilu, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 190, 240, 130));
+        Inicio.add(logoRasilu, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 190, 240, 130));
 
         bgFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondoflores.png"))); // NOI18N
         bgFondo.setText("jLabel2");
-        background.add(bgFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, -10, 280, 600));
+        Inicio.add(bgFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, -10, 280, 600));
 
         logoName.setFont(new java.awt.Font("Segoe Print", 1, 18)); // NOI18N
         logoName.setText("O´clock");
-        background.add(logoName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 120, 50));
+        Inicio.add(logoName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 120, 50));
 
         logo.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logopequeño.png"))); // NOI18N
-        background.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 20, 280, 90));
+        Inicio.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 20, 280, 90));
 
         iniciarSesion.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         iniciarSesion.setText("INICIAR SESION");
-        background.add(iniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 180, 50));
+        Inicio.add(iniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 180, 50));
 
         usuario.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         usuario.setText("USUARIO");
-        background.add(usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, -1, -1));
+        Inicio.add(usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, -1, -1));
 
         contraseña.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         contraseña.setText("CONTRASEÑA");
-        background.add(contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, 20));
+        Inicio.add(contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, 20));
 
         textUsuario.setForeground(new java.awt.Color(204, 204, 204));
         textUsuario.setText("Escriba aquí su nombre..");
@@ -147,10 +161,10 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 textUsuarioActionPerformed(evt);
             }
         });
-        background.add(textUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, 330, 20));
+        Inicio.add(textUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, 330, 20));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        background.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 310, 10));
+        Inicio.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 310, 10));
 
         textContraseña.setForeground(new java.awt.Color(204, 204, 204));
         textContraseña.setText("jPasswordFie");
@@ -165,14 +179,14 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 textContraseñaActionPerformed(evt);
             }
         });
-        background.add(textContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 170, -1));
+        Inicio.add(textContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 170, -1));
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        background.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 280, 310, 20));
+        Inicio.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 280, 310, 20));
 
         registro.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         registro.setText("¿Aún no estás registrado?");
-        background.add(registro, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 530, -1, 30));
+        Inicio.add(registro, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 530, -1, 30));
 
         botonSalir.setBackground(new java.awt.Color(221, 152, 123));
         botonSalir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -195,7 +209,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonSalirActionPerformed(evt);
             }
         });
-        background.add(botonSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 410, 80, 30));
+        Inicio.add(botonSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 410, 80, 30));
 
         botonRegistro.setBackground(new java.awt.Color(221, 152, 123));
         botonRegistro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -218,7 +232,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonRegistroActionPerformed(evt);
             }
         });
-        background.add(botonRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 520, 140, 30));
+        Inicio.add(botonRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 520, 140, 30));
 
         botonAcceder1.setBackground(new java.awt.Color(221, 152, 123));
         botonAcceder1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -241,39 +255,39 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonAcceder1ActionPerformed(evt);
             }
         });
-        background.add(botonAcceder1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 410, 90, 30));
+        Inicio.add(botonAcceder1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 410, 90, 30));
 
-        menuUsuario.addTab("Usuario", background);
+        menuUsuario.addTab("Usuario", Inicio);
 
-        background1.setBackground(new java.awt.Color(255, 255, 255));
-        background1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        menuRegistro.setBackground(new java.awt.Color(255, 255, 255));
+        menuRegistro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         logoRasilu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logo rasilu.png"))); // NOI18N
-        background1.add(logoRasilu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 190, 240, 130));
+        menuRegistro.add(logoRasilu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 190, 240, 130));
 
         bgFondo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondoflores.png"))); // NOI18N
         bgFondo1.setText("jLabel2");
-        background1.add(bgFondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, -10, 280, 600));
+        menuRegistro.add(bgFondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, -10, 280, 600));
 
         jLabel2.setFont(new java.awt.Font("Segoe Print", 1, 18)); // NOI18N
         jLabel2.setText("O´clock");
-        background1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 120, 50));
+        menuRegistro.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 120, 50));
 
         logo1.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         logo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logopequeño.png"))); // NOI18N
-        background1.add(logo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 20, 280, 90));
+        menuRegistro.add(logo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 20, 280, 90));
 
         iniciarSesion1.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         iniciarSesion1.setText("NUEVA CUENTA");
-        background1.add(iniciarSesion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 180, 50));
+        menuRegistro.add(iniciarSesion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 180, 50));
 
         usuario1.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         usuario1.setText("NOMBRE DE USUARIO");
-        background1.add(usuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, -1));
+        menuRegistro.add(usuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, -1));
 
         contraseña1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         contraseña1.setText("CONTRASEÑA");
-        background1.add(contraseña1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 300, -1, 20));
+        menuRegistro.add(contraseña1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 300, -1, 20));
 
         textUsuario1.setForeground(new java.awt.Color(204, 204, 204));
         textUsuario1.setText("Escriba aquí su nombre..");
@@ -289,10 +303,10 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 textUsuario1ActionPerformed(evt);
             }
         });
-        background1.add(textUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 240, 330, 20));
+        menuRegistro.add(textUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 240, 330, 20));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
-        background1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, 310, 10));
+        menuRegistro.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, 310, 10));
 
         textContraseña1.setForeground(new java.awt.Color(204, 204, 204));
         textContraseña1.setText("jPasswordFie");
@@ -307,10 +321,10 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 textContraseña1ActionPerformed(evt);
             }
         });
-        background1.add(textContraseña1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 300, 170, -1));
+        menuRegistro.add(textContraseña1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 300, 170, -1));
 
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
-        background1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, 310, 20));
+        menuRegistro.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, 310, 20));
 
         botonInicio.setBackground(new java.awt.Color(221, 152, 123));
         botonInicio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -333,7 +347,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonInicioActionPerformed(evt);
             }
         });
-        background1.add(botonInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, 140, 30));
+        menuRegistro.add(botonInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, 140, 30));
 
         textContraseña2.setForeground(new java.awt.Color(204, 204, 204));
         textContraseña2.setText("jPasswordFie");
@@ -348,14 +362,14 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 textContraseña2ActionPerformed(evt);
             }
         });
-        background1.add(textContraseña2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 170, -1));
+        menuRegistro.add(textContraseña2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 170, -1));
 
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
-        background1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 380, 310, 10));
+        menuRegistro.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 380, 310, 10));
 
         confirmarContraseña.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         confirmarContraseña.setText("CONFIRMAR CONTRASEÑA");
-        background1.add(confirmarContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, -1, 20));
+        menuRegistro.add(confirmarContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, -1, 20));
 
         botonRegistro1.setBackground(new java.awt.Color(221, 152, 123));
         botonRegistro1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -378,12 +392,12 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonRegistro1ActionPerformed(evt);
             }
         });
-        background1.add(botonRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 440, 110, 30));
+        menuRegistro.add(botonRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 440, 110, 30));
 
-        menuUsuario.addTab("Registro", background1);
+        menuUsuario.addTab("Registro", menuRegistro);
 
-        background2.setBackground(new java.awt.Color(255, 255, 255));
-        background2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        menuTareas.setBackground(new java.awt.Color(255, 255, 255));
+        menuTareas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Logo.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
         Logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -391,27 +405,27 @@ public class UsuarioFrame extends javax.swing.JFrame {
         Logo.setToolTipText("");
         Logo.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         Logo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        background2.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 190, 280, 130));
+        menuTareas.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 190, 280, 130));
 
         bgFondo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondoflores.png"))); // NOI18N
         bgFondo2.setText("jLabel2");
-        background2.add(bgFondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 0, 280, 580));
+        menuTareas.add(bgFondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 0, 280, 580));
 
         oclock.setFont(new java.awt.Font("Segoe Print", 1, 18)); // NOI18N
         oclock.setText("O´clock");
-        background2.add(oclock, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 120, 50));
+        menuTareas.add(oclock, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 120, 50));
 
         logo2.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         logo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logopequeño.png"))); // NOI18N
-        background2.add(logo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 20, 280, 90));
+        menuTareas.add(logo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 20, 280, 90));
 
         titulo.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         titulo.setText("TITULO");
-        background2.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, 20));
+        menuTareas.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, 20));
 
         duracion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         duracion.setText("DURACION");
-        background2.add(duracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, 20));
+        menuTareas.add(duracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, 20));
 
         textDuracion.setForeground(new java.awt.Color(204, 204, 204));
         textDuracion.setText("Escriba aquí la duración de su tarea...");
@@ -427,13 +441,13 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 textDuracionActionPerformed(evt);
             }
         });
-        background2.add(textDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 330, 20));
+        menuTareas.add(textDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 330, 20));
 
         jSeparator6.setForeground(new java.awt.Color(0, 0, 0));
-        background2.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 310, 10));
+        menuTareas.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 310, 10));
 
         jSeparator7.setForeground(new java.awt.Color(0, 0, 0));
-        background2.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 310, 20));
+        menuTareas.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 310, 20));
 
         botonGuardar.setBackground(new java.awt.Color(221, 152, 123));
         botonGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -457,7 +471,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonGuardarActionPerformed(evt);
             }
         });
-        background2.add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 350, -1, -1));
+        menuTareas.add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 350, -1, -1));
 
         textTitulo.setForeground(new java.awt.Color(204, 204, 204));
         textTitulo.setText("Escriba aquí el titulo de su tarea...");
@@ -473,11 +487,11 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 textTituloActionPerformed(evt);
             }
         });
-        background2.add(textTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 330, 20));
+        menuTareas.add(textTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 330, 20));
 
         estado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         estado.setText("ESTADO");
-        background2.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, 20));
+        menuTareas.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, 20));
 
         addBoton.setBackground(new java.awt.Color(242, 242, 242));
         addBoton.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
@@ -489,7 +503,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 addBotonActionPerformed(evt);
             }
         });
-        background2.add(addBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 90, 40));
+        menuTareas.add(addBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 90, 40));
 
         modificarBoton.setBackground(new java.awt.Color(242, 242, 242));
         modificarBoton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -501,7 +515,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 modificarBotonActionPerformed(evt);
             }
         });
-        background2.add(modificarBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 100, 40));
+        menuTareas.add(modificarBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 100, 40));
 
         eliminarBoton.setBackground(new java.awt.Color(242, 242, 242));
         eliminarBoton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -513,7 +527,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 eliminarBotonActionPerformed(evt);
             }
         });
-        background2.add(eliminarBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 100, -1));
+        menuTareas.add(eliminarBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 100, -1));
 
         tituloLista.setBackground(new java.awt.Color(242, 242, 242));
         tituloLista.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Titulo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 10))); // NOI18N
@@ -525,7 +539,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         tituloLista.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lista1.setViewportView(tituloLista);
 
-        background2.add(lista1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, 110, 140));
+        menuTareas.add(lista1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, 110, 140));
 
         duracionLista.setBackground(new java.awt.Color(242, 242, 242));
         duracionLista.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Duración", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 10))); // NOI18N
@@ -539,7 +553,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         duracionLista.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lista2.setViewportView(duracionLista);
 
-        background2.add(lista2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 400, 110, 140));
+        menuTareas.add(lista2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 400, 110, 140));
 
         estadoLista.setBackground(new java.awt.Color(242, 242, 242));
         estadoLista.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 10))); // NOI18N
@@ -551,7 +565,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         estadoLista.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lista3.setViewportView(estadoLista);
 
-        background2.add(lista3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 400, 110, 140));
+        menuTareas.add(lista3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 400, 110, 140));
 
         pendiente.setText("PENDIENTE");
         pendiente.addActionListener(new java.awt.event.ActionListener() {
@@ -559,7 +573,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 pendienteActionPerformed(evt);
             }
         });
-        background2.add(pendiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, -1));
+        menuTareas.add(pendiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, -1));
 
         enProceso.setText("EN PROCESO");
         enProceso.addActionListener(new java.awt.event.ActionListener() {
@@ -567,14 +581,14 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 enProcesoActionPerformed(evt);
             }
         });
-        background2.add(enProceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, -1, -1));
+        menuTareas.add(enProceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, -1, -1));
 
         finalizado.setText("FINALIZADO");
         finalizado.setContentAreaFilled(false);
         finalizado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        background2.add(finalizado, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 310, -1, -1));
+        menuTareas.add(finalizado, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 310, -1, -1));
 
-        menuUsuario.addTab("Tareas", background2);
+        menuUsuario.addTab("Tareas", menuTareas);
 
         getContentPane().add(menuUsuario, java.awt.BorderLayout.PAGE_START);
 
@@ -610,7 +624,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         }
         if (textUsuario.getText().isEmpty()) {
             textUsuario.setText("Ingrese su nombre de usuario");
-            textUsuario.setForeground(Color.gray);
+            textUsuario.setForeground(Color.black);
         }
     }//GEN-LAST:event_textContraseñaMousePressed
 
@@ -627,7 +641,11 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonSalirMousePressed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
-        // TODO add your handling code here:
+        int salir = JOptionPane.showConfirmDialog(this, "¿Estás seguro que deseas salir?", "", JOptionPane.YES_NO_OPTION);
+        if (salir == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+
     }//GEN-LAST:event_botonSalirActionPerformed
 
     private void botonRegistroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonRegistroMouseEntered
@@ -643,7 +661,9 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonRegistroMousePressed
 
     private void botonRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistroActionPerformed
-        // TODO add your handling code here:
+
+        Inicio.setVisible(false);
+        menuRegistro.setVisible(true);
     }//GEN-LAST:event_botonRegistroActionPerformed
 
     private void textUsuario1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textUsuario1MousePressed
@@ -701,7 +721,17 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonInicioMousePressed
 
     private void botonInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInicioActionPerformed
-        // TODO add your handling code here:
+        int volverInicio = JOptionPane.showConfirmDialog(
+                this,
+                "¿Está seguro de que quiere volver al menú principal?",
+                "",
+                JOptionPane.YES_NO_OPTION);
+
+        if (volverInicio == JOptionPane.YES_OPTION) {
+            menuRegistro.setVisible(false);
+            Inicio.setVisible(true);
+        }
+
     }//GEN-LAST:event_botonInicioActionPerformed
 
     private void textContraseña2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseña2MousePressed
@@ -725,7 +755,14 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonRegistro1MousePressed
 
     private void botonRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistro1ActionPerformed
-        // TODO add your handling code here:
+        UsuarioFrame uf = new UsuarioFrame();
+        String nombre = textUsuario.getText();
+        String contrasena = String.valueOf(textContraseña1.getPassword());
+        String contrasena2 = String.valueOf(textContraseña2.getPassword());
+        uf.cargarUsuarios(usuarios);
+        crearUsuario(usuarios, nombre, contrasena, contrasena2);
+
+
     }//GEN-LAST:event_botonRegistro1ActionPerformed
 
     private void textDuracionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textDuracionMousePressed
@@ -794,19 +831,35 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonAcceder1MousePressed
 
     private void botonAcceder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder1ActionPerformed
-        
-        List<Usuario> usuarios = new ArrayList();
+        UsuarioFrame uf = new UsuarioFrame();
         cargarUsuarios(usuarios);
         String nombre = textUsuario.getText();
-        String contrasena = String.valueOf(textContraseña.getPassword());
+        String contrasena = textContraseña.getText();
 
         if (nombre.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe introducir un nombre de usuario");
         } else if (contrasena.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe introducir una contraseña");
 
+        } else {
+
+            if (usuarioCorrecto(usuarios, nombre, contrasena)) {
+                menuTareas.setVisible(true);
+                menuUsuario.setVisible(false);
+                
+            } else if (!usuarioCorrecto(usuarios, nombre, contrasena)) {
+                JOptionPane.showMessageDialog(this, "El usuario no existe en el sistema");
+
+            } else {
+                JOptionPane.showMessageDialog(this, "La contraseña es incorrecta");
+                contadorIntento++;
+                if (contadorIntento == 4) {
+                    JOptionPane.showMessageDialog(this, "Has fallado la contraseña demasiadas veces, vuelve a intentarlo más tarde");
+                    System.exit(0);
+                }
+            }
         }
-        
+
         }//GEN-LAST:event_botonAcceder1ActionPerformed
 
     private void botonEntrarMousePressed(java.awt.event.MouseEvent evt) {
@@ -851,11 +904,9 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Inicio;
     private javax.swing.JLabel Logo;
     private javax.swing.JButton addBoton;
-    private javax.swing.JPanel background;
-    private javax.swing.JPanel background1;
-    private javax.swing.JPanel background2;
     private javax.swing.JLabel bgFondo;
     private javax.swing.JLabel bgFondo1;
     private javax.swing.JLabel bgFondo2;
@@ -894,6 +945,8 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JLabel logoName;
     private javax.swing.JLabel logoRasilu;
     private javax.swing.JLabel logoRasilu1;
+    private javax.swing.JPanel menuRegistro;
+    private javax.swing.JPanel menuTareas;
     private javax.swing.JTabbedPane menuUsuario;
     private javax.swing.JButton modificarBoton;
     private javax.swing.JLabel oclock;
@@ -912,23 +965,110 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JLabel usuario1;
     // End of variables declaration//GEN-END:variables
 
-    private UsuarioFrame cargarUsuarios(List usuarios) {
-        UsuarioFrame e;
-        try {
-            // Creamos un ObjectInputStream para leer el archivo "usuario.dat"
-            ObjectInputStream entrada
-                    = new ObjectInputStream(new FileInputStream(rutaUsuario));
-            // Leemos el objeto ControladorFile del archivo
-            e = (UsuarioFrame) entrada.readObject();
-            // Cerramos el flujo de entrada
-            entrada.close();
-        } catch (IOException | ClassNotFoundException ex) {
-            // Si hay algún problema al leer el archivo, creamos un nuevo objeto ControladorFile vacío
-            e = new UsuarioFrame();
+    public void cargarUsuarios(List<Usuario> usuarios) {
+        File archivo = new File(rutaUsuario);
+
+        if (!archivo.exists()) {
+            try {
+                archivo.createNewFile();
+            } catch (IOException e) {
+                System.err.println("Error al crear el archivo de usuarios: " + e.getMessage());
+            }
         }
-        // Devolvemos el objeto ControladorFile.
-        return e;
+
+        try (
+                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
+            while (true) {
+                Usuario u = (Usuario) ois.readObject();
+                usuarios.add(u);
+            }
+
+        } catch (EOFException e) {
+            // Se alcanzó el final del archivo
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Aún no hay usuarios registrados, registre uno");
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error de lectura de usuarios: " + e.getMessage());
+        }
     }
-    
-    
+
+    //UsuarioExiste
+    public boolean isExistsUsuario(UsuarioFrame u) {
+        return usuarios.contains(u);
+    }
+
+    //Crear Usuario
+    public void crearUsuario(List usuarios, String nombre, String contrasena, String contrasena2) {
+        Usuario buscar = new Usuario(nombre, "");
+        boolean crear = true;
+        boolean formatoCorrecto = true;
+
+        if (nombre.equals(contrasena)) {
+            JOptionPane.showMessageDialog(null, "El nombre de usuario no puede ser igual que la contraseña");
+        } else if (usuarios.contains(buscar)) {
+            JOptionPane.showMessageDialog(null, "El usuario ya existe");
+        } else if (nombre.isEmpty() || !nombreValido(nombre)) {
+            JOptionPane.showMessageDialog(null, "Debe introducir un nombre de usuario");
+            crear = false;
+            formatoCorrecto = false;
+        } else if (contrasena.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe introducir una contraseña");
+            crear = false;
+            formatoCorrecto = false;
+        } else if (nombre.length() < 4) {
+            JOptionPane.showMessageDialog(null, "El nombre de usuario debe tener más de 3 caracteres");
+            crear = false;
+            formatoCorrecto = false;
+        } else if (contrasena.length() < 4) {
+            JOptionPane.showMessageDialog(null, "La contraseña debe tener más de 3 caracteres");
+            crear = false;
+            formatoCorrecto = false;
+        }
+
+        if (crear && formatoCorrecto) {
+            Usuario nuevo = new Usuario(nombre, contrasena);
+            usuarios.add(nuevo);
+
+            try ( ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaUsuario))) {
+                oos.writeObject(usuarios);
+                JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
+            } catch (IOException e) {
+                System.err.println("Error de escritura en el archivo");
+            }
+        }
+    }
+
+    /*
+    * Comprobar que el nombre es valido:
+    *     Si esta vacio
+    *     Son caracteres
+    *     No es null
+     */
+    public boolean nombreValido(String nombre) {
+        if (nombre.isEmpty()) {
+            return false;
+        }
+
+        for (int i = 0; i < nombre.length(); i++) {
+            if (nombre.charAt(i) != ' ' && !nombre.equals("null")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean usuarioCorrecto(List<Usuario> usuarios, String nombre, String contrasena) {
+       String usu = nombre + " : " + contrasena;
+       String [] partes = usu.split(" : ");
+       Usuario comprobar = new Usuario(partes[0], partes[1]);
+       
+       for (Object o : usuarios){
+           Usuario u = (Usuario) o;
+           if (u.getNombre().toLowerCase().equals(comprobar.getNombre().toLowerCase()) && u.getContrasena().equals(comprobar.getContrasena())){
+              return true; 
+           }
+       }
+       return false;
+    }
+
 }

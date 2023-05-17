@@ -7,22 +7,22 @@ import java.io.*;
 
 /**
  *
- * @author Lucia
- */
-public class ControladorFile {
-    private String rutaUsuario = new String ("datos/usuario.dat");
-    private String rutaTarea = new String ("datos/tarea.dat");
-    
-    public ControladorFile (String rutaUsuario, String rutaTarea){
-        this.rutaUsuario = rutaUsuario;
-        this.rutaTarea = rutaTarea;
-    }
-    
-    // Contrucción por defecto
-    public ControladorFile(){
-        this ("datos/usuario.dat", "datos/tarea.dat");
-    }
-    
+// * @author Lucia
+// */
+//public class ControladorFile {
+//    private String rutaUsuario = new String ("datos/usuario.dat");
+//    private String rutaTarea = new String ("datos/tarea.dat");
+//    
+//    public ControladorFile (String rutaUsuario, String rutaTarea){
+//        this.rutaUsuario = rutaUsuario;
+//        this.rutaTarea = rutaTarea;
+//    }
+//    
+//    // Contrucción por defecto
+//    public ControladorFile(){
+//        this ("datos/usuario.dat", "datos/tarea.dat");
+//    }
+//    
     /*  
      * Este método carga los datos guardados en el archivo "usuario.dat" y devuelve un objeto ControladorFile.
     */
@@ -33,7 +33,7 @@ public class ControladorFile {
 //            ObjectInputStream entrada = 
 ////                    new ObjectInputStream(new FileInputStream(rutaUsuario));
 //            // Leemos el objeto ControladorFile del archivo
-////            e = (ControladorFile)entrada.readObject();
+//            e = (ControladorFile)entrada.readObject();
 //            // Cerramos el flujo de entrada
 //            entrada.close();
 //        } catch (IOException | ClassNotFoundException ex) {
@@ -61,10 +61,10 @@ public class ControladorFile {
 //            System.err.println("Error al guardar datos: " + ex.getMessage());
 //        }        
 //    }
-
-    /*  
-     * Este método carga los datos guardados en el archivo "tarea.dat" y devuelve un objeto ControladorFile.
-    */
+//
+//    /*  
+//     * Este método carga los datos guardados en el archivo "tarea.dat" y devuelve un objeto ControladorFile.
+//    */
 //    public static ControladorFile cargarDatosTarea() throws IOException { 
 //        ControladorFile e;
 //        try {
@@ -81,10 +81,10 @@ public class ControladorFile {
 //        }
 //        return e;        
 //    }
-
-    /*
-     *  Este método guarda los datos de un objeto ControladorFile en el archivo "tarea.dat". 
-    */
+//
+//    /*
+//     *  Este método guarda los datos de un objeto ControladorFile en el archivo "tarea.dat". 
+//    */
 //    public static void guardarDatosTarea(ControladorFile e) {
 //        try {
 //            // Creamos un ObjectOutputStream para escribir en el archivo "tarea.dat"
@@ -99,6 +99,6 @@ public class ControladorFile {
 //            System.err.println("Error al guardar datos: " + ex.getMessage());
 //        }         
 //    }
-   
-}
-
+//   
+//}
+//
