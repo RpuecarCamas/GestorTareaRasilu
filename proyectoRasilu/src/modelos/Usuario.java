@@ -18,7 +18,7 @@ public class Usuario  implements Serializable {
     private static final long serialVersionUID = 1;
     public static int nextId = 100;
     private int id;
-    private String nombre;
+    private static String nombre;
     private String email;
     private String contrasena;
     private String contasena2;
@@ -44,7 +44,7 @@ public class Usuario  implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
+    public static String getNombre() {
         return nombre;
     }
 

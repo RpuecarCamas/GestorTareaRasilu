@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.List;
 import modelos.Usuario;
-import vistas.UsuarioVista;
+
 
 /**
  *
@@ -17,14 +17,13 @@ import vistas.UsuarioVista;
  */
 public class ControladorUsuario implements Serializable {
 
-    private static UsuarioVista usuarioVista;
+    
     private static List<Usuario> usuarios;
 
       
     public ControladorUsuario() {
-        this.usuarioVista = usuarioVista;
-        usuarioVista.addLoginListener(new LoginListener());
-        usuarioVista.addRegisterListener(new RegisterListener());
+
+
     }
 
     //Crear Usuario
@@ -84,37 +83,6 @@ public class ControladorUsuario implements Serializable {
     public boolean isExistsUsuario(Usuario usu) {
         return usuarios.contains(usu);
     }
-        
-    // Clase estatica de inicio que implementa ActionListener
-    private static class LoginListener implements ActionListener {
+}    
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String nombreUsuario = usuarioVista.getName();
-            String contrasena = usuarioVista.getContrasenaUsuario();
-            
-             if (usuarios.contains(nombreUsuario)) {
-              usuarioVista.mostrarMensaje("Usuario correcto");
-            } else {
-                usuarioVista.mostrarMensaje("Usuario incorrecto");
-            }
-             
-             
-             
-        }
 
-    }
-
-    private static class RegisterListener implements ActionListener {
-
-        public RegisterListener() {
-            
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            
-        }
-    }
-
-}
