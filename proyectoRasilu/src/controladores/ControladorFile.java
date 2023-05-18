@@ -1,16 +1,16 @@
-/*
- *
- */
-package controladores;
-
-import java.io.*;
-
-/**
- *
+///*
+// *
+// */
+//package controladores;
+//
+//import java.io.*;
+//
+///**
+// *
 // * @author Lucia
 // */
 //public class ControladorFile {
-//    private String rutaUsuario = new String ("datos/usuario.dat");
+//    
 //    private String rutaTarea = new String ("datos/tarea.dat");
 //    
 //    public ControladorFile (String rutaUsuario, String rutaTarea){
@@ -23,9 +23,9 @@ import java.io.*;
 //        this ("datos/usuario.dat", "datos/tarea.dat");
 //    }
 //    
-    /*  
-     * Este método carga los datos guardados en el archivo "usuario.dat" y devuelve un objeto ControladorFile.
-    */
+//    /*  
+//     * Este método carga los datos guardados en el archivo "usuario.dat" y devuelve un objeto ControladorFile.
+//    */
 //    public static ControladorFile cargarDatos() throws IOException {
 //        ControladorFile e;
 //        try {
@@ -43,10 +43,10 @@ import java.io.*;
 //        // Devolvemos el objeto ControladorFile.
 //        return e;
 //    }
-   
-    /*
-     *  Este método guarda los datos de un objeto ControladorFile en el archivo "usuario.dat".
-    */
+//   
+//    /*
+//     *  Este método guarda los datos de un objeto ControladorFile en el archivo "usuario.dat".
+//    */
 //    public static void guardarDatosUsuario(ControladorFile e) {
 //        try {
 //            // Creamos un ObjectOutputStream para escribir en el archivo "usuario.dat"

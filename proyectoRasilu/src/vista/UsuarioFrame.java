@@ -11,10 +11,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelos.Tarea;
 import modelos.Usuario;
@@ -25,13 +28,17 @@ import modelos.Usuario;
  */
 public class UsuarioFrame extends javax.swing.JFrame {
 
-    private static String rutaUsuario = new String("datos\\usuario.dat");
-    private static String rutaTarea = new String("datos\\tarea.dat");
+    private String rutaUsuario = new String("datos/usuario.dat");
+    private String rutaTarea = new String("datos/tarea.dat");
+    private final InputStream inputUsuario = getClass().getResourceAsStream(rutaUsuario);
+    private final InputStream inputTarea = getClass().getResourceAsStream(rutaTarea);
     private static Usuario usu;
     private static List<Usuario> usuarios;
     private static Tarea tarea;
     private static List<Tarea> tareas;
-    private int contadorIntento = 0;
+    private static int contadorIntento;
+    private final int longMinNombreUsuario = 3;
+    private final int longMinContrasenaUsuario = 6;
 
     /**
      * Creates new form UsuarioFrame
@@ -41,6 +48,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         usu = new Usuario();
         usuarios = new ArrayList();
         tareas = new ArrayList();
+        this.contadorIntento = 1;
 
     }
 
@@ -93,8 +101,8 @@ public class UsuarioFrame extends javax.swing.JFrame {
         oclock = new javax.swing.JLabel();
         logo2 = new javax.swing.JLabel();
         titulo = new javax.swing.JLabel();
-        duracion = new javax.swing.JLabel();
-        textDuracion = new javax.swing.JTextField();
+        fechaFin = new javax.swing.JLabel();
+        textFechaFin = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
         jSeparator7 = new javax.swing.JSeparator();
         botonGuardar = new javax.swing.JButton();
@@ -112,6 +120,9 @@ public class UsuarioFrame extends javax.swing.JFrame {
         pendiente = new javax.swing.JRadioButton();
         enProceso = new javax.swing.JRadioButton();
         finalizado = new javax.swing.JRadioButton();
+        fechaInicio1 = new javax.swing.JLabel();
+        textFechaInicio = new javax.swing.JTextField();
+        botonSalirTarea = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -423,28 +434,28 @@ public class UsuarioFrame extends javax.swing.JFrame {
         titulo.setText("TITULO");
         menuTareas.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, -1, 20));
 
-        duracion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        duracion.setText("DURACION");
-        menuTareas.add(duracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, 20));
+        fechaFin.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        fechaFin.setText("Fecha fin ");
+        menuTareas.add(fechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, -1, 20));
 
-        textDuracion.setForeground(new java.awt.Color(204, 204, 204));
-        textDuracion.setText("Escriba aquí la duración de su tarea...");
-        textDuracion.setAutoscrolls(false);
-        textDuracion.setBorder(null);
-        textDuracion.addMouseListener(new java.awt.event.MouseAdapter() {
+        textFechaFin.setForeground(new java.awt.Color(204, 204, 204));
+        textFechaFin.setText("Escriba aquí la duración de su tarea...");
+        textFechaFin.setAutoscrolls(false);
+        textFechaFin.setBorder(null);
+        textFechaFin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                textDuracionMousePressed(evt);
+                textFechaFinMousePressed(evt);
             }
         });
-        textDuracion.addActionListener(new java.awt.event.ActionListener() {
+        textFechaFin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textDuracionActionPerformed(evt);
+                textFechaFinActionPerformed(evt);
             }
         });
-        menuTareas.add(textDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 330, 20));
+        menuTareas.add(textFechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 230, 120, 20));
 
         jSeparator6.setForeground(new java.awt.Color(0, 0, 0));
-        menuTareas.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 310, 10));
+        menuTareas.add(jSeparator6, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 310, 10));
 
         jSeparator7.setForeground(new java.awt.Color(0, 0, 0));
         menuTareas.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 310, 20));
@@ -471,7 +482,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonGuardarActionPerformed(evt);
             }
         });
-        menuTareas.add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 350, -1, -1));
+        menuTareas.add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 320, -1, -1));
 
         textTitulo.setForeground(new java.awt.Color(204, 204, 204));
         textTitulo.setText("Escriba aquí el titulo de su tarea...");
@@ -491,7 +502,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
         estado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         estado.setText("ESTADO");
-        menuTareas.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, -1, 20));
+        menuTareas.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, -1, 20));
 
         addBoton.setBackground(new java.awt.Color(242, 242, 242));
         addBoton.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
@@ -539,7 +550,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         tituloLista.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lista1.setViewportView(tituloLista);
 
-        menuTareas.add(lista1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, 110, 140));
+        menuTareas.add(lista1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 110, 140));
 
         duracionLista.setBackground(new java.awt.Color(242, 242, 242));
         duracionLista.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Duración", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 10))); // NOI18N
@@ -553,7 +564,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         duracionLista.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lista2.setViewportView(duracionLista);
 
-        menuTareas.add(lista2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 400, 110, 140));
+        menuTareas.add(lista2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 370, 110, 140));
 
         estadoLista.setBackground(new java.awt.Color(242, 242, 242));
         estadoLista.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 10))); // NOI18N
@@ -565,7 +576,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         estadoLista.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lista3.setViewportView(estadoLista);
 
-        menuTareas.add(lista3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 400, 110, 140));
+        menuTareas.add(lista3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 370, 110, 140));
 
         pendiente.setText("PENDIENTE");
         pendiente.addActionListener(new java.awt.event.ActionListener() {
@@ -573,7 +584,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 pendienteActionPerformed(evt);
             }
         });
-        menuTareas.add(pendiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, -1));
+        menuTareas.add(pendiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 280, -1, -1));
 
         enProceso.setText("EN PROCESO");
         enProceso.addActionListener(new java.awt.event.ActionListener() {
@@ -581,12 +592,42 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 enProcesoActionPerformed(evt);
             }
         });
-        menuTareas.add(enProceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, -1, -1));
+        menuTareas.add(enProceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, -1, -1));
 
         finalizado.setText("FINALIZADO");
         finalizado.setContentAreaFilled(false);
         finalizado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menuTareas.add(finalizado, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 310, -1, -1));
+        menuTareas.add(finalizado, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 280, -1, -1));
+
+        fechaInicio1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        fechaInicio1.setText("Fecha Inicio");
+        menuTareas.add(fechaInicio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, -1, 20));
+
+        textFechaInicio.setForeground(new java.awt.Color(204, 204, 204));
+        textFechaInicio.setText("Escriba aquí la duración de su tarea...");
+        textFechaInicio.setAutoscrolls(false);
+        textFechaInicio.setBorder(null);
+        textFechaInicio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                textFechaInicioMousePressed(evt);
+            }
+        });
+        textFechaInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textFechaInicioActionPerformed(evt);
+            }
+        });
+        menuTareas.add(textFechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 130, 20));
+
+        botonSalirTarea.setBackground(new java.awt.Color(221, 152, 123));
+        botonSalirTarea.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        botonSalirTarea.setText("Salir");
+        botonSalirTarea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonSalirTareaActionPerformed(evt);
+            }
+        });
+        menuTareas.add(botonSalirTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 80, -1));
 
         menuUsuario.addTab("Tareas", menuTareas);
 
@@ -622,9 +663,10 @@ public class UsuarioFrame extends javax.swing.JFrame {
             textContraseña.setText("");
             textContraseña.setForeground(Color.black);
         }
+
         if (textUsuario.getText().isEmpty()) {
             textUsuario.setText("Escriba aquí su nombre..");
-            textUsuario.setForeground(Color.black);
+            textUsuario.setForeground(Color.gray);
         }
     }//GEN-LAST:event_textContraseñaMousePressed
 
@@ -662,7 +704,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
     private void botonRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistroActionPerformed
 
-       menuUsuario.setSelectedIndex(1);
+        menuUsuario.setSelectedIndex(1);
     }//GEN-LAST:event_botonRegistroActionPerformed
 
     private void textUsuario1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textUsuario1MousePressed
@@ -672,15 +714,14 @@ public class UsuarioFrame extends javax.swing.JFrame {
             textUsuario1.setText("");
             textUsuario1.setForeground(Color.black);
         }
+
         if (String.valueOf(textContraseña2.getPassword()).isEmpty()) {
-            textContraseña2.setText("********");
             textContraseña2.setText("");
             textContraseña2.setForeground(Color.black);
         }
 
         if (String.valueOf(textContraseña1.getPassword()).isEmpty()) {
-            textContraseña1.setText("********");
-             textContraseña1.setText("");
+            textContraseña1.setText("");
             textContraseña1.setForeground(Color.gray);
         }
 
@@ -691,21 +732,21 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_textUsuario1ActionPerformed
 
     private void textContraseña1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseña1MousePressed
-                
+
         //Estas condiciones se ponen para que cuando escribas en un campo no se borren los datos en el otro
-        if (String.valueOf(textContraseña1.getPassword()).equals("********")) {
-            textContraseña1.setText("*********");
+        if (textUsuario1.getText().equals("Escriba aquí su nombre..")) {
+            textUsuario1.setText("");
+            textUsuario1.setForeground(Color.black);
+        }
+
+        if (String.valueOf(textContraseña2.getPassword()).isEmpty()) {
+            textContraseña2.setText("");
+            textContraseña2.setForeground(Color.black);
+        }
+
+        if (String.valueOf(textContraseña1.getPassword()).isEmpty()) {
             textContraseña1.setText("");
-            textContraseña1.setForeground(Color.black);
-        }
-        if (textUsuario1.getText().isEmpty()) {
-            textUsuario1.setText("Escriba aquí su nombre..");
-            textUsuario1.setForeground(Color.gray);
-        }
-        if (String.valueOf(textContraseña2.getPassword()).equals("********")) {
-            textContraseña2.setText("*********");
-         
-            textContraseña2.setForeground(Color.gray);
+            textContraseña1.setForeground(Color.gray);
         }
 
 
@@ -741,9 +782,10 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonInicioActionPerformed
 
     private void textContraseña2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseña2MousePressed
-         if (String.valueOf(textContraseña1.getPassword()).equals("********")) {
-            textContraseña1.setText("*********");
+        if (String.valueOf(textContraseña1.getPassword()).equals("********")) {
+
             textContraseña1.setText("");
+            textContraseña1.setText("*********");
             textContraseña1.setForeground(Color.black);
         }
         if (textUsuario1.getText().isEmpty()) {
@@ -752,8 +794,8 @@ public class UsuarioFrame extends javax.swing.JFrame {
             textUsuario1.setForeground(Color.black);
         }
         if (String.valueOf(textContraseña2.getPassword()).equals("*********")) {
-            textContraseña2.setText("*********");
             textContraseña2.setText("");
+            textContraseña2.setText("*********");
             textContraseña2.setForeground(Color.black);
         }
 
@@ -776,23 +818,23 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonRegistro1MousePressed
 
     private void botonRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistro1ActionPerformed
-       
+
         String nombre = textUsuario.getText();
         String contrasena = String.valueOf(textContraseña1.getPassword());
         String contrasena2 = String.valueOf(textContraseña2.getPassword());
-        cargarUsuarios(usuarios);
+        usuarios = cargarUsuarios();
         crearUsuario(usuarios, nombre, contrasena, contrasena2);
 
 
     }//GEN-LAST:event_botonRegistro1ActionPerformed
 
-    private void textDuracionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textDuracionMousePressed
+    private void textFechaFinMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textFechaFinMousePressed
         //
-    }//GEN-LAST:event_textDuracionMousePressed
+    }//GEN-LAST:event_textFechaFinMousePressed
 
-    private void textDuracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textDuracionActionPerformed
+    private void textFechaFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFechaFinActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textDuracionActionPerformed
+    }//GEN-LAST:event_textFechaFinActionPerformed
 
     private void botonGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonGuardarMouseEntered
 
@@ -852,8 +894,9 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonAcceder1MousePressed
 
     private void botonAcceder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder1ActionPerformed
-        
-        cargarUsuarios(usuarios);
+
+        usuarios = cargarUsuarios();
+        System.out.println(usuarios);
         String nombre = textUsuario.getText();
         String contrasena = textContraseña.getText();
 
@@ -879,8 +922,23 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 }
             }
         }
-         
+
         }//GEN-LAST:event_botonAcceder1ActionPerformed
+
+    private void textFechaInicioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textFechaInicioMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textFechaInicioMousePressed
+
+    private void textFechaInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFechaInicioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textFechaInicioActionPerformed
+
+    private void botonSalirTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirTareaActionPerformed
+        int salir = JOptionPane.showConfirmDialog(this, "¿Estás seguro que deseas salir?", "", JOptionPane.YES_NO_OPTION);
+        if (salir == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_botonSalirTareaActionPerformed
 
     private void botonEntrarMousePressed(java.awt.event.MouseEvent evt) {
 // En este apartado creo una alerta como si estubieramos accediendo 
@@ -935,15 +993,17 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JButton botonRegistro;
     private javax.swing.JButton botonRegistro1;
     private javax.swing.JButton botonSalir;
+    private javax.swing.JButton botonSalirTarea;
     private javax.swing.JLabel confirmarContraseña;
     private javax.swing.JLabel contraseña;
     private javax.swing.JLabel contraseña1;
-    private javax.swing.JLabel duracion;
     private javax.swing.JList<String> duracionLista;
     private javax.swing.JButton eliminarBoton;
     private javax.swing.JRadioButton enProceso;
     private javax.swing.JLabel estado;
     private javax.swing.JList<String> estadoLista;
+    private javax.swing.JLabel fechaFin;
+    private javax.swing.JLabel fechaInicio1;
     private javax.swing.JRadioButton finalizado;
     private javax.swing.JLabel iniciarSesion;
     private javax.swing.JLabel iniciarSesion1;
@@ -975,7 +1035,8 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JPasswordField textContraseña;
     private javax.swing.JPasswordField textContraseña1;
     private javax.swing.JPasswordField textContraseña2;
-    private javax.swing.JTextField textDuracion;
+    private javax.swing.JTextField textFechaFin;
+    private javax.swing.JTextField textFechaInicio;
     private javax.swing.JTextField textTitulo;
     private javax.swing.JTextField textUsuario;
     private javax.swing.JTextField textUsuario1;
@@ -985,32 +1046,22 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JLabel usuario1;
     // End of variables declaration//GEN-END:variables
 
-    public void cargarUsuarios(List<Usuario> usuarios) {
-        File archivo = new File(rutaUsuario);
+    public List<Usuario> cargarUsuarios() {
+        // Pasamos por parametro un Usuario que añadimos List usuarios
 
-        if (!archivo.exists()) {
-            try {
-                archivo.createNewFile();
-            } catch (IOException e) {
-                System.err.println("Error al crear el archivo de usuarios: " + e.getMessage());
-            }
-        }
-
-        try (
-                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
-            // 
+        try ( ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(rutaUsuario)))) {
             while (ois.available() > 0) {
-                Usuario u = (Usuario) ois.readObject();
-                usuarios.add(u);
+                usuarios = (List<Usuario>) ois.readObject();
             }
-
-        } catch (EOFException e) {
-            // Se alcanzó el final del archivo
+            System.out.println("Datos cargados correctamente");
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Aún no hay usuarios registrados, registre uno");
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error de lectura de usuarios: " + e.getMessage());
+            System.err.println("El archivo no existe: " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("Error de escritura del archivo: " + e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.err.println("Error en el cast entre clases " + ex.getMessage());
         }
+        return usuarios;
     }
 
     //UsuarioExiste
@@ -1021,11 +1072,12 @@ public class UsuarioFrame extends javax.swing.JFrame {
     //Crear Usuario
     public void crearUsuario(List usuarios, String nombre, String contrasena, String contrasena2) {
         Usuario buscar = new Usuario(nombre, "");
+
         boolean crear = true;
         boolean formatoCorrecto = true;
 
         if (nombre.equals(contrasena)) {
-            JOptionPane.showMessageDialog(null, "El nombre de usuario tiene que ser diferente a la contraseña");
+            JOptionPane.showMessageDialog(null, "El nombre de usuario no puede ser igual que la contraseña");
         } else {
             if (usuarios.contains(buscar)) {
                 JOptionPane.showMessageDialog(null, "El usuario ya existe");
@@ -1038,37 +1090,45 @@ public class UsuarioFrame extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Debe introducir una contraseña");
                     crear = false;
                     formatoCorrecto = false;
-                } else if (nombre.length() < 4) {
-                    JOptionPane.showMessageDialog(null, "El nombre de usuario debe tener más de 3 caracteres");
+                } else if (contrasena2.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Debe confirmar su contraseña");
                     crear = false;
                     formatoCorrecto = false;
-                } else if (contrasena.length() < 4) {
-                    JOptionPane.showMessageDialog(null, "La contraseña debe tener más de 3 caracteres");
+                } else if (!contrasena.equals(contrasena2)) {
+                    JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
+                    crear = false;
+                    formatoCorrecto = false;
+                } else if (nombre.length() < longMinNombreUsuario) {
+                    JOptionPane.showMessageDialog(null, "El nombre de usuario debe tener al menos " + longMinNombreUsuario + " caracteres");
+                    crear = false;
+                    formatoCorrecto = false;
+                } else if (contrasena.length() < longMinContrasenaUsuario) {
+                    JOptionPane.showMessageDialog(null, "La contraseña debe tener al menos " + longMinContrasenaUsuario + " caracteres");
                     crear = false;
                     formatoCorrecto = false;
                 }
 
-                if (crear && formatoCorrecto) {
-                    Usuario nuevo = new Usuario(nombre, contrasena);
+                if (crear) {
+                    Usuario nuevo = new Usuario(nombre, contrasena, contrasena2);
                     usuarios.add(nuevo);
-                    
 
-                    try ( ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaUsuario))) {
-                        oos.writeObject(usuarios);
+                    try ( ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(new File(rutaUsuario), false))) {
+                        output.writeObject(usuarios);
                         JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
                     } catch (IOException e) {
-                        System.err.println("Error de escritura en el archivo");
+                        System.err.println("Error de escritura: " + e.getMessage());
                     }
                 }
             }
         }
     }
-            /*
+
+    /*
     * Comprobar que el nombre es valido:
     *     Si esta vacio
     *     Son caracteres
     *     No es null
-             */
+     */
     public boolean nombreValido(String nombre) {
         if (nombre.isEmpty()) {
             return false;
