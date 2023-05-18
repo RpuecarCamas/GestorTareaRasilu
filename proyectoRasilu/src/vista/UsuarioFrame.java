@@ -25,14 +25,13 @@ import modelos.Usuario;
  */
 public class UsuarioFrame extends javax.swing.JFrame {
 
-    private static String rutaUsuario = new String("datos/usuario.dat");
-    private static String rutaTarea = new String("datos/tarea.dat");
+    private static String rutaUsuario = new String("datos\\usuario.dat");
+    private static String rutaTarea = new String("datos\\tarea.dat");
     private static Usuario usu;
     private static List<Usuario> usuarios;
     private static Tarea tarea;
     private static List<Tarea> tareas;
-    int contadorIntento = 0;
-    
+    private int contadorIntento = 0;
 
     /**
      * Creates new form UsuarioFrame
@@ -42,6 +41,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         usu = new Usuario();
         usuarios = new ArrayList();
         tareas = new ArrayList();
+
     }
 
     /**
@@ -54,7 +54,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         menuUsuario = new javax.swing.JTabbedPane();
-        Inicio = new javax.swing.JPanel();
+        inicio = new javax.swing.JPanel();
         logoRasilu = new javax.swing.JLabel();
         bgFondo = new javax.swing.JLabel();
         logoName = new javax.swing.JLabel();
@@ -117,35 +117,35 @@ public class UsuarioFrame extends javax.swing.JFrame {
         setLocationByPlatform(true);
         setResizable(false);
 
-        Inicio.setBackground(new java.awt.Color(255, 255, 255));
-        Inicio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        inicio.setBackground(new java.awt.Color(255, 255, 255));
+        inicio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         logoRasilu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logo rasilu.png"))); // NOI18N
-        Inicio.add(logoRasilu, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 190, 240, 130));
+        inicio.add(logoRasilu, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 190, 240, 130));
 
         bgFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondoflores.png"))); // NOI18N
         bgFondo.setText("jLabel2");
-        Inicio.add(bgFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, -10, 280, 600));
+        inicio.add(bgFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, -10, 280, 600));
 
         logoName.setFont(new java.awt.Font("Segoe Print", 1, 18)); // NOI18N
         logoName.setText("O´clock");
-        Inicio.add(logoName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 120, 50));
+        inicio.add(logoName, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 120, 50));
 
         logo.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logopequeño.png"))); // NOI18N
-        Inicio.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 20, 280, 90));
+        inicio.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 20, 280, 90));
 
         iniciarSesion.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         iniciarSesion.setText("INICIAR SESION");
-        Inicio.add(iniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 180, 50));
+        inicio.add(iniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 180, 50));
 
         usuario.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         usuario.setText("USUARIO");
-        Inicio.add(usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, -1, -1));
+        inicio.add(usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, -1, -1));
 
         contraseña.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         contraseña.setText("CONTRASEÑA");
-        Inicio.add(contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, 20));
+        inicio.add(contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, 20));
 
         textUsuario.setForeground(new java.awt.Color(204, 204, 204));
         textUsuario.setText("Escriba aquí su nombre..");
@@ -161,10 +161,10 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 textUsuarioActionPerformed(evt);
             }
         });
-        Inicio.add(textUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, 330, 20));
+        inicio.add(textUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, 330, 20));
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
-        Inicio.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 310, 10));
+        inicio.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 310, 10));
 
         textContraseña.setForeground(new java.awt.Color(204, 204, 204));
         textContraseña.setText("jPasswordFie");
@@ -179,14 +179,14 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 textContraseñaActionPerformed(evt);
             }
         });
-        Inicio.add(textContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 170, -1));
+        inicio.add(textContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 170, -1));
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        Inicio.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 280, 310, 20));
+        inicio.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 280, 310, 20));
 
         registro.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         registro.setText("¿Aún no estás registrado?");
-        Inicio.add(registro, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 530, -1, 30));
+        inicio.add(registro, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 530, -1, 30));
 
         botonSalir.setBackground(new java.awt.Color(221, 152, 123));
         botonSalir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -209,7 +209,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonSalirActionPerformed(evt);
             }
         });
-        Inicio.add(botonSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 410, 80, 30));
+        inicio.add(botonSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 410, 80, 30));
 
         botonRegistro.setBackground(new java.awt.Color(221, 152, 123));
         botonRegistro.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -232,7 +232,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonRegistroActionPerformed(evt);
             }
         });
-        Inicio.add(botonRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 520, 140, 30));
+        inicio.add(botonRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 520, 140, 30));
 
         botonAcceder1.setBackground(new java.awt.Color(221, 152, 123));
         botonAcceder1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -255,9 +255,9 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonAcceder1ActionPerformed(evt);
             }
         });
-        Inicio.add(botonAcceder1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 410, 90, 30));
+        inicio.add(botonAcceder1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 410, 90, 30));
 
-        menuUsuario.addTab("Usuario", Inicio);
+        menuUsuario.addTab("Usuario", inicio);
 
         menuRegistro.setBackground(new java.awt.Color(255, 255, 255));
         menuRegistro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -606,7 +606,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private void textUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textUsuarioMousePressed
 //       Cuando pasamos el cursor se cambia de color el apartado contrario y viceversa
 
-        if (textUsuario.getText().equals("Ingrese su nombre de usuario")) {
+        if (textUsuario.getText().equals("Escriba aquí su nombre..")) {
             textUsuario.setText("");
             textUsuario.setForeground(Color.black);
         }
@@ -623,7 +623,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
             textContraseña.setForeground(Color.black);
         }
         if (textUsuario.getText().isEmpty()) {
-            textUsuario.setText("Ingrese su nombre de usuario");
+            textUsuario.setText("Escriba aquí su nombre..");
             textUsuario.setForeground(Color.black);
         }
     }//GEN-LAST:event_textContraseñaMousePressed
@@ -662,26 +662,28 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
     private void botonRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistroActionPerformed
 
-        Inicio.setVisible(false);
-        menuRegistro.setVisible(true);
+       menuUsuario.setSelectedIndex(1);
     }//GEN-LAST:event_botonRegistroActionPerformed
 
     private void textUsuario1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textUsuario1MousePressed
         //       Cuando pasamos el cursor se cambia de color el apartado contrario y viceversa
 
-        if (textUsuario.getText().equals("Ingrese su nombre de usuario")) {
-            textUsuario.setText("");
-            textUsuario.setForeground(Color.black);
+        if (textUsuario1.getText().equals("Escriba aquí su nombre..")) {
+            textUsuario1.setText("");
+            textUsuario1.setForeground(Color.black);
         }
-        if (String.valueOf(textContraseña.getPassword()).isEmpty()) {
-            textContraseña.setText("********");
-            textContraseña.setForeground(Color.gray);
+        if (String.valueOf(textContraseña2.getPassword()).isEmpty()) {
+            textContraseña2.setText("********");
+            textContraseña2.setText("");
+            textContraseña2.setForeground(Color.black);
         }
 
         if (String.valueOf(textContraseña1.getPassword()).isEmpty()) {
             textContraseña1.setText("********");
+             textContraseña1.setText("");
             textContraseña1.setForeground(Color.gray);
         }
+
     }//GEN-LAST:event_textUsuario1MousePressed
 
     private void textUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textUsuario1ActionPerformed
@@ -689,19 +691,24 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_textUsuario1ActionPerformed
 
     private void textContraseña1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseña1MousePressed
+                
         //Estas condiciones se ponen para que cuando escribas en un campo no se borren los datos en el otro
         if (String.valueOf(textContraseña1.getPassword()).equals("********")) {
+            textContraseña1.setText("*********");
             textContraseña1.setText("");
             textContraseña1.setForeground(Color.black);
         }
-        if (textUsuario.getText().isEmpty()) {
-            textUsuario.setText("Ingrese su nombre de usuario");
-            textUsuario.setForeground(Color.gray);
+        if (textUsuario1.getText().isEmpty()) {
+            textUsuario1.setText("Escriba aquí su nombre..");
+            textUsuario1.setForeground(Color.gray);
         }
-        if (String.valueOf(textContraseña.getPassword()).equals("********")) {
-            textContraseña.setText("");
-            textContraseña.setForeground(Color.black);
+        if (String.valueOf(textContraseña2.getPassword()).equals("********")) {
+            textContraseña2.setText("*********");
+         
+            textContraseña2.setForeground(Color.gray);
         }
+
+
     }//GEN-LAST:event_textContraseña1MousePressed
 
     private void textContraseña1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textContraseña1ActionPerformed
@@ -728,14 +735,28 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 JOptionPane.YES_NO_OPTION);
 
         if (volverInicio == JOptionPane.YES_OPTION) {
-            menuRegistro.setVisible(false);
-            Inicio.setVisible(true);
+            menuUsuario.setSelectedIndex(0);
         }
 
     }//GEN-LAST:event_botonInicioActionPerformed
 
     private void textContraseña2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseña2MousePressed
-        // TODO add your handling code here:
+         if (String.valueOf(textContraseña1.getPassword()).equals("********")) {
+            textContraseña1.setText("*********");
+            textContraseña1.setText("");
+            textContraseña1.setForeground(Color.black);
+        }
+        if (textUsuario1.getText().isEmpty()) {
+            textUsuario1.setText("Escriba aquí su nombre..");
+
+            textUsuario1.setForeground(Color.black);
+        }
+        if (String.valueOf(textContraseña2.getPassword()).equals("*********")) {
+            textContraseña2.setText("*********");
+            textContraseña2.setText("");
+            textContraseña2.setForeground(Color.black);
+        }
+
     }//GEN-LAST:event_textContraseña2MousePressed
 
     private void textContraseña2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textContraseña2ActionPerformed
@@ -755,11 +776,11 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonRegistro1MousePressed
 
     private void botonRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistro1ActionPerformed
-        UsuarioFrame uf = new UsuarioFrame();
+       
         String nombre = textUsuario.getText();
         String contrasena = String.valueOf(textContraseña1.getPassword());
         String contrasena2 = String.valueOf(textContraseña2.getPassword());
-        uf.cargarUsuarios(usuarios);
+        cargarUsuarios(usuarios);
         crearUsuario(usuarios, nombre, contrasena, contrasena2);
 
 
@@ -831,7 +852,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonAcceder1MousePressed
 
     private void botonAcceder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder1ActionPerformed
-        UsuarioFrame uf = new UsuarioFrame();
+        
         cargarUsuarios(usuarios);
         String nombre = textUsuario.getText();
         String contrasena = textContraseña.getText();
@@ -844,11 +865,10 @@ public class UsuarioFrame extends javax.swing.JFrame {
         } else {
 
             if (usuarioCorrecto(usuarios, nombre, contrasena)) {
-                menuTareas.setVisible(true);
-                menuUsuario.setVisible(false);
-                
+                menuUsuario.setSelectedIndex(2);
+
             } else if (!usuarioCorrecto(usuarios, nombre, contrasena)) {
-                JOptionPane.showMessageDialog(this, "El usuario no existe en el sistema");
+                JOptionPane.showMessageDialog(this, "El usuario no está registrado");
 
             } else {
                 JOptionPane.showMessageDialog(this, "La contraseña es incorrecta");
@@ -859,7 +879,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 }
             }
         }
-
+         
         }//GEN-LAST:event_botonAcceder1ActionPerformed
 
     private void botonEntrarMousePressed(java.awt.event.MouseEvent evt) {
@@ -904,7 +924,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Inicio;
     private javax.swing.JLabel Logo;
     private javax.swing.JButton addBoton;
     private javax.swing.JLabel bgFondo;
@@ -928,6 +947,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton finalizado;
     private javax.swing.JLabel iniciarSesion;
     private javax.swing.JLabel iniciarSesion1;
+    private javax.swing.JPanel inicio;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -978,7 +998,8 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
         try (
                  ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
-            while (true) {
+            // 
+            while (ois.available() > 0) {
                 Usuario u = (Usuario) ois.readObject();
                 usuarios.add(u);
             }
@@ -1004,46 +1025,50 @@ public class UsuarioFrame extends javax.swing.JFrame {
         boolean formatoCorrecto = true;
 
         if (nombre.equals(contrasena)) {
-            JOptionPane.showMessageDialog(null, "El nombre de usuario no puede ser igual que la contraseña");
-        } else if (usuarios.contains(buscar)) {
-            JOptionPane.showMessageDialog(null, "El usuario ya existe");
-        } else if (nombre.isEmpty() || !nombreValido(nombre)) {
-            JOptionPane.showMessageDialog(null, "Debe introducir un nombre de usuario");
-            crear = false;
-            formatoCorrecto = false;
-        } else if (contrasena.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe introducir una contraseña");
-            crear = false;
-            formatoCorrecto = false;
-        } else if (nombre.length() < 4) {
-            JOptionPane.showMessageDialog(null, "El nombre de usuario debe tener más de 3 caracteres");
-            crear = false;
-            formatoCorrecto = false;
-        } else if (contrasena.length() < 4) {
-            JOptionPane.showMessageDialog(null, "La contraseña debe tener más de 3 caracteres");
-            crear = false;
-            formatoCorrecto = false;
-        }
+            JOptionPane.showMessageDialog(null, "El nombre de usuario tiene que ser diferente a la contraseña");
+        } else {
+            if (usuarios.contains(buscar)) {
+                JOptionPane.showMessageDialog(null, "El usuario ya existe");
+            } else {
+                if (nombre.isEmpty() || !nombreValido(nombre)) {
+                    JOptionPane.showMessageDialog(null, "Debe introducir un nombre de usuario");
+                    crear = false;
+                    formatoCorrecto = false;
+                } else if (contrasena.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Debe introducir una contraseña");
+                    crear = false;
+                    formatoCorrecto = false;
+                } else if (nombre.length() < 4) {
+                    JOptionPane.showMessageDialog(null, "El nombre de usuario debe tener más de 3 caracteres");
+                    crear = false;
+                    formatoCorrecto = false;
+                } else if (contrasena.length() < 4) {
+                    JOptionPane.showMessageDialog(null, "La contraseña debe tener más de 3 caracteres");
+                    crear = false;
+                    formatoCorrecto = false;
+                }
 
-        if (crear && formatoCorrecto) {
-            Usuario nuevo = new Usuario(nombre, contrasena);
-            usuarios.add(nuevo);
+                if (crear && formatoCorrecto) {
+                    Usuario nuevo = new Usuario(nombre, contrasena);
+                    usuarios.add(nuevo);
+                    
 
-            try ( ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaUsuario))) {
-                oos.writeObject(usuarios);
-                JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
-            } catch (IOException e) {
-                System.err.println("Error de escritura en el archivo");
+                    try ( ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaUsuario))) {
+                        oos.writeObject(usuarios);
+                        JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
+                    } catch (IOException e) {
+                        System.err.println("Error de escritura en el archivo");
+                    }
+                }
             }
         }
     }
-
-    /*
+            /*
     * Comprobar que el nombre es valido:
     *     Si esta vacio
     *     Son caracteres
     *     No es null
-     */
+             */
     public boolean nombreValido(String nombre) {
         if (nombre.isEmpty()) {
             return false;
@@ -1058,17 +1083,17 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }
 
     private boolean usuarioCorrecto(List<Usuario> usuarios, String nombre, String contrasena) {
-       String usu = nombre + " : " + contrasena;
-       String [] partes = usu.split(" : ");
-       Usuario comprobar = new Usuario(partes[0], partes[1]);
-       
-       for (Object o : usuarios){
-           Usuario u = (Usuario) o;
-           if (u.getNombre().toLowerCase().equals(comprobar.getNombre().toLowerCase()) && u.getContrasena().equals(comprobar.getContrasena())){
-              return true; 
-           }
-       }
-       return false;
+        String usu = nombre + " : " + contrasena;
+        String[] partes = usu.split(" : ");
+        Usuario comprobar = new Usuario(partes[0], partes[1]);
+
+        for (Object o : usuarios) {
+            Usuario u = (Usuario) o;
+            if (u.getNombre().toLowerCase().equals(comprobar.getNombre().toLowerCase()) && u.getContrasena().equals(comprobar.getContrasena())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
