@@ -5,7 +5,6 @@
 package vista;
 
 import java.awt.Color;
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -16,8 +15,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import modelos.Tarea;
 import modelos.Usuario;
@@ -49,6 +47,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         usuarios = new ArrayList();
         tareas = new ArrayList();
         this.contadorIntento = 1;
+        contenedor.setEnabled(false);
 
     }
 
@@ -61,7 +60,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        menuUsuario = new javax.swing.JTabbedPane();
+        contenedor = new javax.swing.JTabbedPane();
         inicio = new javax.swing.JPanel();
         logoRasilu = new javax.swing.JLabel();
         bgFondo = new javax.swing.JLabel();
@@ -123,6 +122,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         fechaInicio1 = new javax.swing.JLabel();
         textFechaInicio = new javax.swing.JTextField();
         botonSalirTarea = new javax.swing.JButton();
+        botonVolverInicioTarea = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -178,7 +178,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         inicio.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 310, 10));
 
         textContraseña.setForeground(new java.awt.Color(204, 204, 204));
-        textContraseña.setText("jPasswordFie");
+        textContraseña.setText("******");
         textContraseña.setBorder(null);
         textContraseña.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -268,7 +268,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         });
         inicio.add(botonAcceder1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 410, 90, 30));
 
-        menuUsuario.addTab("Usuario", inicio);
+        contenedor.addTab("Usuario", inicio);
 
         menuRegistro.setBackground(new java.awt.Color(255, 255, 255));
         menuRegistro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -320,7 +320,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         menuRegistro.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, 310, 10));
 
         textContraseña1.setForeground(new java.awt.Color(204, 204, 204));
-        textContraseña1.setText("jPasswordFie");
+        textContraseña1.setText("******");
         textContraseña1.setBorder(null);
         textContraseña1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -361,7 +361,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         menuRegistro.add(botonInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, 140, 30));
 
         textContraseña2.setForeground(new java.awt.Color(204, 204, 204));
-        textContraseña2.setText("jPasswordFie");
+        textContraseña2.setText("******");
         textContraseña2.setBorder(null);
         textContraseña2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -405,7 +405,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         });
         menuRegistro.add(botonRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 440, 110, 30));
 
-        menuUsuario.addTab("Registro", menuRegistro);
+        contenedor.addTab("Registro", menuRegistro);
 
         menuTareas.setBackground(new java.awt.Color(255, 255, 255));
         menuTareas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -482,7 +482,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonGuardarActionPerformed(evt);
             }
         });
-        menuTareas.add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 320, -1, -1));
+        menuTareas.add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 350, -1, -1));
 
         textTitulo.setForeground(new java.awt.Color(204, 204, 204));
         textTitulo.setText("Escriba aquí el titulo de su tarea...");
@@ -550,7 +550,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         tituloLista.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lista1.setViewportView(tituloLista);
 
-        menuTareas.add(lista1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 110, 140));
+        menuTareas.add(lista1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, 110, 140));
 
         duracionLista.setBackground(new java.awt.Color(242, 242, 242));
         duracionLista.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Duración", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 10))); // NOI18N
@@ -564,7 +564,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         duracionLista.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lista2.setViewportView(duracionLista);
 
-        menuTareas.add(lista2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 370, 110, 140));
+        menuTareas.add(lista2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 330, 110, 140));
 
         estadoLista.setBackground(new java.awt.Color(242, 242, 242));
         estadoLista.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 10))); // NOI18N
@@ -576,7 +576,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         estadoLista.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lista3.setViewportView(estadoLista);
 
-        menuTareas.add(lista3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 370, 110, 140));
+        menuTareas.add(lista3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 330, 110, 140));
 
         pendiente.setText("PENDIENTE");
         pendiente.addActionListener(new java.awt.event.ActionListener() {
@@ -627,11 +627,21 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonSalirTareaActionPerformed(evt);
             }
         });
-        menuTareas.add(botonSalirTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 80, -1));
+        menuTareas.add(botonSalirTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 490, 80, -1));
 
-        menuUsuario.addTab("Tareas", menuTareas);
+        botonVolverInicioTarea.setBackground(new java.awt.Color(221, 152, 123));
+        botonVolverInicioTarea.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        botonVolverInicioTarea.setText("Volver al inicio");
+        botonVolverInicioTarea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonVolverInicioTareaActionPerformed(evt);
+            }
+        });
+        menuTareas.add(botonVolverInicioTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 490, -1, -1));
 
-        getContentPane().add(menuUsuario, java.awt.BorderLayout.PAGE_START);
+        contenedor.addTab("Tareas", menuTareas);
+
+        getContentPane().add(contenedor, java.awt.BorderLayout.PAGE_START);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -652,14 +662,14 @@ public class UsuarioFrame extends javax.swing.JFrame {
             textUsuario.setForeground(Color.black);
         }
         if (String.valueOf(textContraseña.getPassword()).isEmpty()) {
-            textContraseña.setText("********");
+            textContraseña.setText("******");
             textContraseña.setForeground(Color.gray);
         }
     }//GEN-LAST:event_textUsuarioMousePressed
 
     private void textContraseñaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseñaMousePressed
 //Estas condiciones se ponen para que cuando escribas en un campo no se borren los datos en el otro
-        if (String.valueOf(textContraseña.getPassword()).equals("********")) {
+        if (String.valueOf(textContraseña.getPassword()).equals("******")) {
             textContraseña.setText("");
             textContraseña.setForeground(Color.black);
         }
@@ -704,7 +714,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
     private void botonRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistroActionPerformed
 
-        menuUsuario.setSelectedIndex(1);
+        contenedor.setSelectedIndex(1);
     }//GEN-LAST:event_botonRegistroActionPerformed
 
     private void textUsuario1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textUsuario1MousePressed
@@ -716,11 +726,13 @@ public class UsuarioFrame extends javax.swing.JFrame {
         }
 
         if (String.valueOf(textContraseña2.getPassword()).isEmpty()) {
+            textContraseña2.setText("******");
             textContraseña2.setText("");
             textContraseña2.setForeground(Color.black);
         }
 
         if (String.valueOf(textContraseña1.getPassword()).isEmpty()) {
+            textContraseña2.setText("******");
             textContraseña1.setText("");
             textContraseña1.setForeground(Color.gray);
         }
@@ -734,19 +746,19 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private void textContraseña1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseña1MousePressed
 
         //Estas condiciones se ponen para que cuando escribas en un campo no se borren los datos en el otro
-        if (textUsuario1.getText().equals("Escriba aquí su nombre..")) {
-            textUsuario1.setText("");
-            textUsuario1.setForeground(Color.black);
-        }
-
-        if (String.valueOf(textContraseña2.getPassword()).isEmpty()) {
-            textContraseña2.setText("");
-            textContraseña2.setForeground(Color.black);
-        }
-
-        if (String.valueOf(textContraseña1.getPassword()).isEmpty()) {
+        if (String.valueOf(textContraseña1.getPassword()).equals("******")) {
+            textContraseña1.setText("*******");
             textContraseña1.setText("");
-            textContraseña1.setForeground(Color.gray);
+            textContraseña1.setForeground(Color.black);
+        }
+        if (textUsuario1.getText().isEmpty()) {
+            textUsuario1.setText("Escriba aquí su nombre..");
+            textUsuario1.setForeground(Color.gray);
+        }
+        if (String.valueOf(textContraseña2.getPassword()).equals("******")) {
+            textContraseña2.setText("*******");
+
+            textContraseña2.setForeground(Color.gray);
         }
 
 
@@ -776,16 +788,15 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 JOptionPane.YES_NO_OPTION);
 
         if (volverInicio == JOptionPane.YES_OPTION) {
-            menuUsuario.setSelectedIndex(0);
+            contenedor.setSelectedIndex(0);
         }
 
     }//GEN-LAST:event_botonInicioActionPerformed
 
     private void textContraseña2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseña2MousePressed
-        if (String.valueOf(textContraseña1.getPassword()).equals("********")) {
-
+        if (String.valueOf(textContraseña1.getPassword()).equals("******")) {
+            textContraseña1.setText("*******");
             textContraseña1.setText("");
-            textContraseña1.setText("*********");
             textContraseña1.setForeground(Color.black);
         }
         if (textUsuario1.getText().isEmpty()) {
@@ -793,9 +804,10 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
             textUsuario1.setForeground(Color.black);
         }
-        if (String.valueOf(textContraseña2.getPassword()).equals("*********")) {
+        if (String.valueOf(textContraseña2.getPassword()).equals("*******")) {
+            textContraseña2.setText("*******");
             textContraseña2.setText("");
-            textContraseña2.setText("*********");
+
             textContraseña2.setForeground(Color.black);
         }
 
@@ -814,7 +826,9 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonRegistro1MouseExited
 
     private void botonRegistro1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonRegistro1MousePressed
-        // TODO add your handling code here:
+          // En este apartado creo una alerta como si estubieramos accediendo 
+        javax.swing.JOptionPane.showMessageDialog(this, "Intento de login con los datos:\nUsuario: " + textUsuario.getText() + "\nContraseña: "
+                + "*******", "LOGIN", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_botonRegistro1MousePressed
 
     private void botonRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistro1ActionPerformed
@@ -823,7 +837,9 @@ public class UsuarioFrame extends javax.swing.JFrame {
         String contrasena = String.valueOf(textContraseña1.getPassword());
         String contrasena2 = String.valueOf(textContraseña2.getPassword());
         usuarios = cargarUsuarios();
+
         crearUsuario(usuarios, nombre, contrasena, contrasena2);
+        contenedor.setSelectedIndex(0);
 
 
     }//GEN-LAST:event_botonRegistro1ActionPerformed
@@ -853,7 +869,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonGuardarActionPerformed
 
     private void textTituloMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textTituloMousePressed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_textTituloMousePressed
 
     private void textTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textTituloActionPerformed
@@ -890,7 +906,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonAcceder1MouseExited
 
     private void botonAcceder1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonAcceder1MousePressed
-        // TODO add your handling code here:
+      
     }//GEN-LAST:event_botonAcceder1MousePressed
 
     private void botonAcceder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder1ActionPerformed
@@ -908,7 +924,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         } else {
 
             if (usuarioCorrecto(usuarios, nombre, contrasena)) {
-                menuUsuario.setSelectedIndex(2);
+                contenedor.setSelectedIndex(2);
 
             } else if (!usuarioCorrecto(usuarios, nombre, contrasena)) {
                 JOptionPane.showMessageDialog(this, "El usuario no está registrado");
@@ -940,11 +956,17 @@ public class UsuarioFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botonSalirTareaActionPerformed
 
-    private void botonEntrarMousePressed(java.awt.event.MouseEvent evt) {
-// En este apartado creo una alerta como si estubieramos accediendo 
-        javax.swing.JOptionPane.showMessageDialog(this, "Intento de login con los datos:\nUsuario: " + textUsuario.getText() + "\nContraseña: "
-                + "*********", "LOGIN", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-    }
+    private void botonVolverInicioTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVolverInicioTareaActionPerformed
+        int volverInicio = JOptionPane.showConfirmDialog(
+                this,
+                "¿Está seguro de que quiere volver al menú principal?",
+                "",
+                JOptionPane.YES_NO_OPTION);
+
+        if (volverInicio == JOptionPane.YES_OPTION) {
+            contenedor.setSelectedIndex(0);
+        }
+    }//GEN-LAST:event_botonVolverInicioTareaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -994,7 +1016,9 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JButton botonRegistro1;
     private javax.swing.JButton botonSalir;
     private javax.swing.JButton botonSalirTarea;
+    private javax.swing.JButton botonVolverInicioTarea;
     private javax.swing.JLabel confirmarContraseña;
+    private javax.swing.JTabbedPane contenedor;
     private javax.swing.JLabel contraseña;
     private javax.swing.JLabel contraseña1;
     private javax.swing.JList<String> duracionLista;
@@ -1027,7 +1051,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JLabel logoRasilu1;
     private javax.swing.JPanel menuRegistro;
     private javax.swing.JPanel menuTareas;
-    private javax.swing.JTabbedPane menuUsuario;
     private javax.swing.JButton modificarBoton;
     private javax.swing.JLabel oclock;
     private javax.swing.JRadioButton pendiente;
@@ -1115,6 +1138,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                     try ( ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(new File(rutaUsuario), false))) {
                         output.writeObject(usuarios);
                         JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
+                        output.close();
                     } catch (IOException e) {
                         System.err.println("Error de escritura: " + e.getMessage());
                     }
