@@ -26,26 +26,15 @@ import modelos.Usuario;
  */
 public class UsuarioFrame extends javax.swing.JFrame {
 
-    private String rutaUsuario = new String("datos/usuario.dat");
-    private String rutaTarea = new String("datos/tarea.dat");
-    private final InputStream inputUsuario = getClass().getResourceAsStream(rutaUsuario);
-    private final InputStream inputTarea = getClass().getResourceAsStream(rutaTarea);
-    private static Usuario usu;
-    private static List<Usuario> usuarios;
-    private static Tarea tarea;
-    private static List<Tarea> tareas;
+ 
     private static int contadorIntento;
-    private final int longMinNombreUsuario = 3;
-    private final int longMinContrasenaUsuario = 6;
+   
 
     /**
      * Creates new form UsuarioFrame
      */
     public UsuarioFrame() {
         initComponents();
-        usu = new Usuario();
-        usuarios = new ArrayList();
-        tareas = new ArrayList();
         this.contadorIntento = 1;
         contenedor.setEnabled(false);
 
@@ -1069,115 +1058,8 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JLabel usuario1;
     // End of variables declaration//GEN-END:variables
 
-    public List<Usuario> cargarUsuarios() {
-        // Pasamos por parametro un Usuario que añadimos List usuarios
 
-        try ( ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(rutaUsuario)))) {
-            while (ois.available() > 0) {
-                usuarios = (List<Usuario>) ois.readObject();
-            }
-            System.out.println("Datos cargados correctamente");
-        } catch (FileNotFoundException e) {
-            System.err.println("El archivo no existe: " + e.getMessage());
-        } catch (IOException e) {
-            System.err.println("Error de escritura del archivo: " + e.getMessage());
-        } catch (ClassNotFoundException ex) {
-            System.err.println("Error en el cast entre clases " + ex.getMessage());
-        }
-        return usuarios;
-    }
 
-    //UsuarioExiste
-    public boolean isExistsUsuario(UsuarioFrame u) {
-        return usuarios.contains(u);
-    }
 
-    //Crear Usuario
-    public void crearUsuario(List usuarios, String nombre, String contrasena, String contrasena2) {
-        Usuario buscar = new Usuario(nombre, "");
-
-        boolean crear = true;
-        boolean formatoCorrecto = true;
-
-        if (nombre.equals(contrasena)) {
-            JOptionPane.showMessageDialog(null, "El nombre de usuario no puede ser igual que la contraseña");
-        } else {
-            if (usuarios.contains(buscar)) {
-                JOptionPane.showMessageDialog(null, "El usuario ya existe");
-            } else {
-                if (nombre.isEmpty() || !nombreValido(nombre)) {
-                    JOptionPane.showMessageDialog(null, "Debe introducir un nombre de usuario");
-                    crear = false;
-                    formatoCorrecto = false;
-                } else if (contrasena.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Debe introducir una contraseña");
-                    crear = false;
-                    formatoCorrecto = false;
-                } else if (contrasena2.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Debe confirmar su contraseña");
-                    crear = false;
-                    formatoCorrecto = false;
-                } else if (!contrasena.equals(contrasena2)) {
-                    JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
-                    crear = false;
-                    formatoCorrecto = false;
-                } else if (nombre.length() < longMinNombreUsuario) {
-                    JOptionPane.showMessageDialog(null, "El nombre de usuario debe tener al menos " + longMinNombreUsuario + " caracteres");
-                    crear = false;
-                    formatoCorrecto = false;
-                } else if (contrasena.length() < longMinContrasenaUsuario) {
-                    JOptionPane.showMessageDialog(null, "La contraseña debe tener al menos " + longMinContrasenaUsuario + " caracteres");
-                    crear = false;
-                    formatoCorrecto = false;
-                }
-
-                if (crear) {
-                    Usuario nuevo = new Usuario(nombre, contrasena, contrasena2);
-                    usuarios.add(nuevo);
-
-                    try ( ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(new File(rutaUsuario), false))) {
-                        output.writeObject(usuarios);
-                        JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
-                        output.close();
-                    } catch (IOException e) {
-                        System.err.println("Error de escritura: " + e.getMessage());
-                    }
-                }
-            }
-        }
-    }
-
-    /*
-    * Comprobar que el nombre es valido:
-    *     Si esta vacio
-    *     Son caracteres
-    *     No es null
-     */
-    public boolean nombreValido(String nombre) {
-        if (nombre.isEmpty()) {
-            return false;
-        }
-
-        for (int i = 0; i < nombre.length(); i++) {
-            if (nombre.charAt(i) != ' ' && !nombre.equals("null")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean usuarioCorrecto(List<Usuario> usuarios, String nombre, String contrasena) {
-        String usu = nombre + " : " + contrasena;
-        String[] partes = usu.split(" : ");
-        Usuario comprobar = new Usuario(partes[0], partes[1]);
-
-        for (Object o : usuarios) {
-            Usuario u = (Usuario) o;
-            if (u.getNombre().toLowerCase().equals(comprobar.getNombre().toLowerCase()) && u.getContrasena().equals(comprobar.getContrasena())) {
-                return true;
-            }
-        }
-        return false;
-    }
 
 }

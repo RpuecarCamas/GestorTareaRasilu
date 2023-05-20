@@ -15,7 +15,7 @@ public class Tarea implements Serializable, Comparable<Tarea> {
 
     private static final long serialVersionUID = 1;
 
-    public static int nextId = 001;
+    public int nextId = 001;
     // Atributos de la Clase Tarea
     private int id;
     private String nombre;
