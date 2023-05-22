@@ -21,10 +21,10 @@ public class Usuario implements Serializable {
     private String nombre;
     private String contrasena;
     private String contasena2;
-    private List<Tarea> listaTareas;
+ 
 
     public Usuario() {
-        listaTareas = new ArrayList<Tarea>();
+        
     }
 
     public Usuario(String nombre, String contrasena) {
@@ -90,13 +90,7 @@ public class Usuario implements Serializable {
         this.nextId = nextId;
     }
 
-    public List<Tarea> getListaTareas() {
-        return listaTareas;
-    }
-
-    public void setListaTareas(List<Tarea> listaTareas) {
-        this.listaTareas = listaTareas;
-    }
+    
     
 
     @Override
@@ -105,13 +99,14 @@ public class Usuario implements Serializable {
                 + "\n" + ", nombre: " + nombre + "\n";
     }
 
-    public void añadirTarea(Tarea tarea) {
-        listaTareas.add(tarea);
-    }
-
-    public void eliminarTarea(Tarea tarea) {
-        listaTareas.remove(tarea);
-    }
+    // Tarea
+//    public void añadirTarea(Tarea tarea) {
+//        listaTareas.add(tarea);
+//    }
+//
+//    public void eliminarTarea(Tarea tarea) {
+//        listaTareas.remove(tarea);
+//    }
 
     public void modificarTarea(Tarea tarea) {
         // Implementación para modificar una tarea específica

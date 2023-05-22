@@ -44,7 +44,9 @@ public class Tarea implements Serializable, Comparable<Tarea> {
         this. estado = estado;
         
     }
-
+    public Tarea (String nombre){
+        this.nombre = nombre;
+    }
     // Metodos
     public int getId() {
         return id;

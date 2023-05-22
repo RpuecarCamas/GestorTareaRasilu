@@ -4,17 +4,14 @@
  */
 package vista;
 
+import controladores.GestorRasilu;
 import java.awt.Color;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import modelos.Tarea;
@@ -26,9 +23,9 @@ import modelos.Usuario;
  */
 public class UsuarioFrame extends javax.swing.JFrame {
 
- 
-    private static int contadorIntento;
-   
+    private int contadorIntento;
+    private List<Usuario> usuarios;
+    private GestorRasilu gestorRasilu;
 
     /**
      * Creates new form UsuarioFrame
@@ -37,7 +34,15 @@ public class UsuarioFrame extends javax.swing.JFrame {
         initComponents();
         this.contadorIntento = 1;
         contenedor.setEnabled(false);
-
+        gestorRasilu = new GestorRasilu();
+        DefaultComboBoxModel comboModel = new DefaultComboBoxModel();
+        for (Tarea t: gestorRasilu.getTareas()){
+            comboModel.addElement(t);
+        }
+        comboTareas.setModel(comboModel);
+        
+        
+        
     }
 
     /**
@@ -96,15 +101,9 @@ public class UsuarioFrame extends javax.swing.JFrame {
         botonGuardar = new javax.swing.JButton();
         textTitulo = new javax.swing.JTextField();
         estado = new javax.swing.JLabel();
-        addBoton = new javax.swing.JButton();
+        botonAdd = new javax.swing.JButton();
         modificarBoton = new javax.swing.JButton();
         eliminarBoton = new javax.swing.JButton();
-        lista1 = new javax.swing.JScrollPane();
-        tituloLista = new javax.swing.JList<>();
-        lista2 = new javax.swing.JScrollPane();
-        duracionLista = new javax.swing.JList<>();
-        lista3 = new javax.swing.JScrollPane();
-        estadoLista = new javax.swing.JList<>();
         pendiente = new javax.swing.JRadioButton();
         enProceso = new javax.swing.JRadioButton();
         finalizado = new javax.swing.JRadioButton();
@@ -112,6 +111,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         textFechaInicio = new javax.swing.JTextField();
         botonSalirTarea = new javax.swing.JButton();
         botonVolverInicioTarea = new javax.swing.JButton();
+        comboTareas = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -148,7 +148,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
         inicio.add(contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, 20));
 
         textUsuario.setForeground(new java.awt.Color(204, 204, 204));
-        textUsuario.setText("Escriba aquí su nombre..");
         textUsuario.setAutoscrolls(false);
         textUsuario.setBorder(null);
         textUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -167,7 +166,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
         inicio.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 310, 10));
 
         textContraseña.setForeground(new java.awt.Color(204, 204, 204));
-        textContraseña.setText("******");
         textContraseña.setBorder(null);
         textContraseña.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -290,7 +288,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
         menuRegistro.add(contraseña1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 300, -1, 20));
 
         textUsuario1.setForeground(new java.awt.Color(204, 204, 204));
-        textUsuario1.setText("Escriba aquí su nombre..");
         textUsuario1.setAutoscrolls(false);
         textUsuario1.setBorder(null);
         textUsuario1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -309,7 +306,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
         menuRegistro.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, 310, 10));
 
         textContraseña1.setForeground(new java.awt.Color(204, 204, 204));
-        textContraseña1.setText("******");
         textContraseña1.setBorder(null);
         textContraseña1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -350,7 +346,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
         menuRegistro.add(botonInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, 140, 30));
 
         textContraseña2.setForeground(new java.awt.Color(204, 204, 204));
-        textContraseña2.setText("******");
         textContraseña2.setBorder(null);
         textContraseña2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -428,7 +423,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
         menuTareas.add(fechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, -1, 20));
 
         textFechaFin.setForeground(new java.awt.Color(204, 204, 204));
-        textFechaFin.setText("Escriba aquí la duración de su tarea...");
         textFechaFin.setAutoscrolls(false);
         textFechaFin.setBorder(null);
         textFechaFin.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -474,7 +468,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
         menuTareas.add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 350, -1, -1));
 
         textTitulo.setForeground(new java.awt.Color(204, 204, 204));
-        textTitulo.setText("Escriba aquí el titulo de su tarea...");
         textTitulo.setAutoscrolls(false);
         textTitulo.setBorder(null);
         textTitulo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -493,17 +486,17 @@ public class UsuarioFrame extends javax.swing.JFrame {
         estado.setText("ESTADO");
         menuTareas.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, -1, 20));
 
-        addBoton.setBackground(new java.awt.Color(242, 242, 242));
-        addBoton.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
-        addBoton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/añadir.png"))); // NOI18N
-        addBoton.setText("Añadir ");
-        addBoton.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        addBoton.addActionListener(new java.awt.event.ActionListener() {
+        botonAdd.setBackground(new java.awt.Color(242, 242, 242));
+        botonAdd.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        botonAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/añadir.png"))); // NOI18N
+        botonAdd.setText("Añadir ");
+        botonAdd.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        botonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBotonActionPerformed(evt);
+                botonAddActionPerformed(evt);
             }
         });
-        menuTareas.add(addBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 90, 40));
+        menuTareas.add(botonAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 90, 40));
 
         modificarBoton.setBackground(new java.awt.Color(242, 242, 242));
         modificarBoton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -528,44 +521,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
             }
         });
         menuTareas.add(eliminarBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 100, -1));
-
-        tituloLista.setBackground(new java.awt.Color(242, 242, 242));
-        tituloLista.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Titulo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 10))); // NOI18N
-        tituloLista.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        tituloLista.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        lista1.setViewportView(tituloLista);
-
-        menuTareas.add(lista1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, 110, 140));
-
-        duracionLista.setBackground(new java.awt.Color(242, 242, 242));
-        duracionLista.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Duración", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 10))); // NOI18N
-        duracionLista.setFont(new java.awt.Font("Mongolian Baiti", 0, 12)); // NOI18N
-        duracionLista.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        duracionLista.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        duracionLista.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        lista2.setViewportView(duracionLista);
-
-        menuTareas.add(lista2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 330, 110, 140));
-
-        estadoLista.setBackground(new java.awt.Color(242, 242, 242));
-        estadoLista.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 2, 10))); // NOI18N
-        estadoLista.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        estadoLista.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        lista3.setViewportView(estadoLista);
-
-        menuTareas.add(lista3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 330, 110, 140));
 
         pendiente.setText("PENDIENTE");
         pendiente.addActionListener(new java.awt.event.ActionListener() {
@@ -593,7 +548,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
         menuTareas.add(fechaInicio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, -1, 20));
 
         textFechaInicio.setForeground(new java.awt.Color(204, 204, 204));
-        textFechaInicio.setText("Escriba aquí la duración de su tarea...");
         textFechaInicio.setAutoscrolls(false);
         textFechaInicio.setBorder(null);
         textFechaInicio.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -628,6 +582,14 @@ public class UsuarioFrame extends javax.swing.JFrame {
         });
         menuTareas.add(botonVolverInicioTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 490, -1, -1));
 
+        comboTareas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboTareas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboTareasActionPerformed(evt);
+            }
+        });
+        menuTareas.add(comboTareas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 400, 30));
+
         contenedor.addTab("Tareas", menuTareas);
 
         getContentPane().add(contenedor, java.awt.BorderLayout.PAGE_START);
@@ -645,28 +607,28 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
     private void textUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textUsuarioMousePressed
 //       Cuando pasamos el cursor se cambia de color el apartado contrario y viceversa
-
-        if (textUsuario.getText().equals("Escriba aquí su nombre..")) {
-            textUsuario.setText("");
-            textUsuario.setForeground(Color.black);
-        }
-        if (String.valueOf(textContraseña.getPassword()).isEmpty()) {
-            textContraseña.setText("******");
-            textContraseña.setForeground(Color.gray);
-        }
+//
+//        if (textUsuario.getText().equals("Escriba aquí su nombre..")) {
+//            textUsuario.setText("");
+//            textUsuario.setForeground(Color.black);
+//        }
+//        if (String.valueOf(textContraseña.getPassword()).isEmpty()) {
+//            textContraseña.setText("******");
+//            textContraseña.setForeground(Color.gray);
+//        }
     }//GEN-LAST:event_textUsuarioMousePressed
 
     private void textContraseñaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseñaMousePressed
 //Estas condiciones se ponen para que cuando escribas en un campo no se borren los datos en el otro
-        if (String.valueOf(textContraseña.getPassword()).equals("******")) {
-            textContraseña.setText("");
-            textContraseña.setForeground(Color.black);
-        }
-
-        if (textUsuario.getText().isEmpty()) {
-            textUsuario.setText("Escriba aquí su nombre..");
-            textUsuario.setForeground(Color.gray);
-        }
+//        if (String.valueOf(textContraseña.getPassword()).equals("******")) {
+//            textContraseña.setText("");
+//            textContraseña.setForeground(Color.black);
+//        }
+//
+//        if (textUsuario.getText().isEmpty()) {
+//            textUsuario.setText("Escriba aquí su nombre..");
+//            textUsuario.setForeground(Color.gray);
+//        }
     }//GEN-LAST:event_textContraseñaMousePressed
 
     private void botonSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonSalirMouseEntered
@@ -709,22 +671,22 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private void textUsuario1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textUsuario1MousePressed
         //       Cuando pasamos el cursor se cambia de color el apartado contrario y viceversa
 
-        if (textUsuario1.getText().equals("Escriba aquí su nombre..")) {
-            textUsuario1.setText("");
-            textUsuario1.setForeground(Color.black);
-        }
-
-        if (String.valueOf(textContraseña2.getPassword()).isEmpty()) {
-            textContraseña2.setText("******");
-            textContraseña2.setText("");
-            textContraseña2.setForeground(Color.black);
-        }
-
-        if (String.valueOf(textContraseña1.getPassword()).isEmpty()) {
-            textContraseña2.setText("******");
-            textContraseña1.setText("");
-            textContraseña1.setForeground(Color.gray);
-        }
+//        if (textUsuario1.getText().equals("Escriba aquí su nombre..")) {
+//            textUsuario1.setText("");
+//            textUsuario1.setForeground(Color.black);
+//        }
+//
+//        if (String.valueOf(textContraseña2.getPassword()).isEmpty()) {
+//            textContraseña2.setText("******");
+//            textContraseña2.setText("");
+//            textContraseña2.setForeground(Color.black);
+//        }
+//
+//        if (String.valueOf(textContraseña1.getPassword()).isEmpty()) {
+//            textContraseña2.setText("******");
+//            textContraseña1.setText("");
+//            textContraseña1.setForeground(Color.gray);
+//        }
 
     }//GEN-LAST:event_textUsuario1MousePressed
 
@@ -734,22 +696,22 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
     private void textContraseña1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseña1MousePressed
 
-        //Estas condiciones se ponen para que cuando escribas en un campo no se borren los datos en el otro
-        if (String.valueOf(textContraseña1.getPassword()).equals("******")) {
-            textContraseña1.setText("*******");
-            textContraseña1.setText("");
-            textContraseña1.setForeground(Color.black);
-        }
-        if (textUsuario1.getText().isEmpty()) {
-            textUsuario1.setText("Escriba aquí su nombre..");
-            textUsuario1.setForeground(Color.gray);
-        }
-        if (String.valueOf(textContraseña2.getPassword()).equals("******")) {
-            textContraseña2.setText("*******");
-
-            textContraseña2.setForeground(Color.gray);
-        }
-
+//        //Estas condiciones se ponen para que cuando escribas en un campo no se borren los datos en el otro
+//        if (String.valueOf(textContraseña1.getPassword()).equals("******")) {
+//            textContraseña1.setText("*******");
+//            textContraseña1.setText("");
+//            textContraseña1.setForeground(Color.black);
+//        }
+//        if (textUsuario1.getText().isEmpty()) {
+//            textUsuario1.setText("Escriba aquí su nombre..");
+//            textUsuario1.setForeground(Color.gray);
+//        }
+//        if (String.valueOf(textContraseña2.getPassword()).equals("******")) {
+//            textContraseña2.setText("*******");
+//
+//            textContraseña2.setForeground(Color.gray);
+//        }
+//
 
     }//GEN-LAST:event_textContraseña1MousePressed
 
@@ -783,22 +745,22 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonInicioActionPerformed
 
     private void textContraseña2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseña2MousePressed
-        if (String.valueOf(textContraseña1.getPassword()).equals("******")) {
-            textContraseña1.setText("*******");
-            textContraseña1.setText("");
-            textContraseña1.setForeground(Color.black);
-        }
-        if (textUsuario1.getText().isEmpty()) {
-            textUsuario1.setText("Escriba aquí su nombre..");
-
-            textUsuario1.setForeground(Color.black);
-        }
-        if (String.valueOf(textContraseña2.getPassword()).equals("*******")) {
-            textContraseña2.setText("*******");
-            textContraseña2.setText("");
-
-            textContraseña2.setForeground(Color.black);
-        }
+//        if (String.valueOf(textContraseña1.getPassword()).equals("******")) {
+//            textContraseña1.setText("*******");
+//            textContraseña1.setText("");
+//            textContraseña1.setForeground(Color.black);
+//        }
+//        if (textUsuario1.getText().isEmpty()) {
+//            textUsuario1.setText("Escriba aquí su nombre..");
+//
+//            textUsuario1.setForeground(Color.black);
+//        }
+//        if (String.valueOf(textContraseña2.getPassword()).equals("*******")) {
+//            textContraseña2.setText("*******");
+//            textContraseña2.setText("");
+//
+//            textContraseña2.setForeground(Color.black);
+//        }
 
     }//GEN-LAST:event_textContraseña2MousePressed
 
@@ -815,22 +777,21 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonRegistro1MouseExited
 
     private void botonRegistro1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonRegistro1MousePressed
-          // En este apartado creo una alerta como si estubieramos accediendo 
-        javax.swing.JOptionPane.showMessageDialog(this, "Intento de login con los datos:\nUsuario: " + textUsuario.getText() + "\nContraseña: "
-                + "*******", "LOGIN", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
     }//GEN-LAST:event_botonRegistro1MousePressed
 
     private void botonRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistro1ActionPerformed
-
-        String nombre = textUsuario.getText();
-        String contrasena = String.valueOf(textContraseña1.getPassword());
+       
+        String nombre = textUsuario1.getText();
+        String contrasena1 = String.valueOf(textContraseña1.getPassword());
         String contrasena2 = String.valueOf(textContraseña2.getPassword());
-        usuarios = cargarUsuarios();
-
-        crearUsuario(usuarios, nombre, contrasena, contrasena2);
+        
+        try {
+            gestorRasilu.crearUsuario(nombre, contrasena1, contrasena2);
+        } catch (IOException ex) {
+        }
+        
         contenedor.setSelectedIndex(0);
-
-
     }//GEN-LAST:event_botonRegistro1ActionPerformed
 
     private void textFechaFinMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textFechaFinMousePressed
@@ -865,10 +826,17 @@ public class UsuarioFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_textTituloActionPerformed
 
-    private void addBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBotonActionPerformed
-
+    private void botonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAddActionPerformed
+        String titulo = textTitulo.getText();
+        String fechaInicio = String.valueOf(textFechaInicio.getText());
+        
+        Tarea nueva = new Tarea (titulo);
+        gestorRasilu.addTarea(nueva);
+        
+        
+        
         botonGuardar.setVisible(true);
-    }//GEN-LAST:event_addBotonActionPerformed
+    }//GEN-LAST:event_botonAddActionPerformed
 
     private void modificarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBotonActionPerformed
         botonGuardar.setVisible(true);
@@ -895,15 +863,15 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonAcceder1MouseExited
 
     private void botonAcceder1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonAcceder1MousePressed
-      
+
     }//GEN-LAST:event_botonAcceder1MousePressed
 
     private void botonAcceder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder1ActionPerformed
 
-        usuarios = cargarUsuarios();
-        System.out.println(usuarios);
+        gestorRasilu.cargarUsuarios();
+        gestorRasilu.getTareas();
         String nombre = textUsuario.getText();
-        String contrasena = textContraseña.getText();
+        String contrasena = String.valueOf(textContraseña.getPassword());
 
         if (nombre.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe introducir un nombre de usuario");
@@ -912,10 +880,10 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
         } else {
 
-            if (usuarioCorrecto(usuarios, nombre, contrasena)) {
+            if (gestorRasilu.usuarioCorrecto( nombre, contrasena)) {
                 contenedor.setSelectedIndex(2);
 
-            } else if (!usuarioCorrecto(usuarios, nombre, contrasena)) {
+            } else if (!gestorRasilu.usuarioCorrecto( nombre, contrasena)) {
                 JOptionPane.showMessageDialog(this, "El usuario no está registrado");
 
             } else {
@@ -927,7 +895,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 }
             }
         }
-
+            
         }//GEN-LAST:event_botonAcceder1ActionPerformed
 
     private void textFechaInicioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textFechaInicioMousePressed
@@ -956,6 +924,11 @@ public class UsuarioFrame extends javax.swing.JFrame {
             contenedor.setSelectedIndex(0);
         }
     }//GEN-LAST:event_botonVolverInicioTareaActionPerformed
+
+    private void comboTareasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTareasActionPerformed
+        Tarea tarea = (Tarea)comboTareas.getSelectedItem();
+        textTitulo.setText(tarea.getNombre());
+    }//GEN-LAST:event_comboTareasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -994,11 +967,11 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Logo;
-    private javax.swing.JButton addBoton;
     private javax.swing.JLabel bgFondo;
     private javax.swing.JLabel bgFondo1;
     private javax.swing.JLabel bgFondo2;
     private javax.swing.JButton botonAcceder1;
+    private javax.swing.JButton botonAdd;
     private javax.swing.JButton botonGuardar;
     private javax.swing.JButton botonInicio;
     private javax.swing.JButton botonRegistro;
@@ -1006,15 +979,14 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JButton botonSalir;
     private javax.swing.JButton botonSalirTarea;
     private javax.swing.JButton botonVolverInicioTarea;
+    private javax.swing.JComboBox<String> comboTareas;
     private javax.swing.JLabel confirmarContraseña;
     private javax.swing.JTabbedPane contenedor;
     private javax.swing.JLabel contraseña;
     private javax.swing.JLabel contraseña1;
-    private javax.swing.JList<String> duracionLista;
     private javax.swing.JButton eliminarBoton;
     private javax.swing.JRadioButton enProceso;
     private javax.swing.JLabel estado;
-    private javax.swing.JList<String> estadoLista;
     private javax.swing.JLabel fechaFin;
     private javax.swing.JLabel fechaInicio1;
     private javax.swing.JRadioButton finalizado;
@@ -1029,9 +1001,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
-    private javax.swing.JScrollPane lista1;
-    private javax.swing.JScrollPane lista2;
-    private javax.swing.JScrollPane lista3;
     private javax.swing.JLabel logo;
     private javax.swing.JLabel logo1;
     private javax.swing.JLabel logo2;
@@ -1053,13 +1022,10 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JTextField textUsuario;
     private javax.swing.JTextField textUsuario1;
     private javax.swing.JLabel titulo;
-    private javax.swing.JList<String> tituloLista;
     private javax.swing.JLabel usuario;
     private javax.swing.JLabel usuario1;
     // End of variables declaration//GEN-END:variables
 
-
-
-
-
+    
+    
 }

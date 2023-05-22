@@ -17,21 +17,21 @@
 //        this.rutaUsuario = rutaUsuario;
 //        this.rutaTarea = rutaTarea;
 //    }
-//    
-//    // Contrucción por defecto
-//    public ControladorFile(){
-//        this ("datos/usuario.dat", "datos/tarea.dat");
-//    }
-//    
-//    /*  
-//     * Este método carga los datos guardados en el archivo "usuario.dat" y devuelve un objeto ControladorFile.
-//    */
+////    
+////    // Contrucción por defecto
+////    public ControladorFile(){
+////        this ("datos/usuario.dat", "datos/tarea.dat");
+////    }
+////    
+////    /*  
+////     * Este método carga los datos guardados en el archivo "usuario.dat" y devuelve un objeto ControladorFile.
+////    */
 //    public static ControladorFile cargarDatos() throws IOException {
 //        ControladorFile e;
 //        try {
 //            // Creamos un ObjectInputStream para leer el archivo "usuario.dat"
 //            ObjectInputStream entrada = 
-////                    new ObjectInputStream(new FileInputStream(rutaUsuario));
+//              new ObjectInputStream(new FileInputStream(rutaUsuario));
 //            // Leemos el objeto ControladorFile del archivo
 //            e = (ControladorFile)entrada.readObject();
 //            // Cerramos el flujo de entrada
@@ -43,7 +43,7 @@
 //        // Devolvemos el objeto ControladorFile.
 //        return e;
 //    }
-//   
+////   
 //    /*
 //     *  Este método guarda los datos de un objeto ControladorFile en el archivo "usuario.dat".
 //    */
