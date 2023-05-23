@@ -20,36 +20,23 @@ public class Usuario implements Serializable {
     private int id;
     private String nombre;
     private String contrasena;
-    private String contasena2;
- 
+    private List<Tarea> tareas;
 
     public Usuario() {
-        
+
     }
 
+  
     public Usuario(String nombre, String contrasena) {
-        this.nombre = nombre;
-        this.contrasena = contrasena;
-    }
-
-    public Usuario(String nombre, String contrasena, String contrasena2) {
         nextId = 100;
         this.id = nextId++;
         this.nombre = nombre;
         this.contrasena = contrasena;
-        this.contasena2 = contasena2;
+        tareas = new ArrayList<Tarea>();
 
     }
 
-    public Usuario(String nombre, String contrasena, String contrasena2, List<Tarea> listaTareas, int id) {
-        this.nombre = nombre;
-        this.contrasena = contrasena;
-        this.contasena2 = contrasena2;
-        listaTareas = new ArrayList<Tarea>();
-        this.id = id;
-
-    }
-
+   
     public int getId() {
         return id;
     }
@@ -58,7 +45,7 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public  String getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
@@ -74,14 +61,7 @@ public class Usuario implements Serializable {
         this.contrasena = contraseña;
     }
 
-    public String getContasena2() {
-        return contasena2;
-    }
-
-    public void setContasena2(String contasena2) {
-        this.contasena2 = contasena2;
-    }
-
+ 
     public int getNextId() {
         return nextId;
     }
@@ -90,9 +70,10 @@ public class Usuario implements Serializable {
         this.nextId = nextId;
     }
 
+    public List<Tarea> getTareas() {
+        return tareas;
+    }
     
-    
-
     @Override
     public String toString() {
         return "Usuario" + "id: " + id
@@ -107,7 +88,6 @@ public class Usuario implements Serializable {
 //    public void eliminarTarea(Tarea tarea) {
 //        listaTareas.remove(tarea);
 //    }
-
     public void modificarTarea(Tarea tarea) {
         // Implementación para modificar una tarea específica
     }

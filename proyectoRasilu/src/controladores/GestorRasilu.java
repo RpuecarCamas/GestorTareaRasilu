@@ -18,16 +18,14 @@ import modelos.Tarea;
 import modelos.Usuario;
 
 public class GestorRasilu implements Serializable{
-
+    private Usuario usuario;
     private List<Usuario> usuarios;
-    private List<Tarea> tareas;
     private String rutaUsuario = "datos/usuario.dat";
     private int longMinContrasenaUsuario;
     private int longMinNombreUsuario;
 
     public GestorRasilu() {
         usuarios = new ArrayList<Usuario>();
-        tareas = new ArrayList<Tarea>();
         longMinContrasenaUsuario = 6;
         longMinNombreUsuario = 3;
     }
@@ -40,13 +38,15 @@ public class GestorRasilu implements Serializable{
         this.usuarios = usuarios;
     }
 
-    public List<Tarea> getTareas() {
-        return tareas;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setTareas(List<Tarea> tareas) {
-        this.tareas = tareas;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
+    
+  
 
     // Métodos 
     public void crearUsuario(String nombre, String contrasena, String contrasena2) throws IOException {
@@ -93,7 +93,7 @@ public class GestorRasilu implements Serializable{
         }
 
         if (crear) {
-            Usuario nuevo = new Usuario(nombre, contrasena, contrasena2);
+            Usuario nuevo = new Usuario(nombre, contrasena);
             usuarios.add(nuevo);
             JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
         }
@@ -166,31 +166,21 @@ public class GestorRasilu implements Serializable{
 //        }
 //    }
 
-    public boolean usuarioCorrecto(String nombre, String contrasena) {
+    public Usuario usuarioCorrecto(String nombre, String contrasena) {
         Usuario comprobar = new Usuario(nombre, contrasena);
 
         for (Usuario u : usuarios) {
             if (u.getNombre().equalsIgnoreCase(comprobar.getNombre()) && u.getContrasena().equals(comprobar.getContrasena())) {
-                return true;
+                return u;
             }
         }
-        return false;
+        return null;
     }
     
-     public List<Tarea> cargarTareas(String nombre) {
-        String nombreArchivo = "datos/" + nombre + "Tarea.dat";
-        try ( ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(nombreArchivo))) {
-            List<Tarea> tareas = (List<Tarea>) entrada.readObject();
-
-        } catch (IOException | ClassNotFoundException e) {
-            tareas = new ArrayList<Tarea>();
-        }
-        return tareas;
-    }
-
-    public void addTarea (Tarea t){
-        tareas.add(t);
-    }
+  
+//    public void addTarea (Tarea t){
+//        tareas.add(t);
+//    }
 //    public void eliminarTarea(Tarea tarea, Usuario u) {
 //        if (u.getListaTareas().remove(tarea)) {
 //            actualizarArchivoTareas(u);
