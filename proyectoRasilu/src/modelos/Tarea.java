@@ -5,7 +5,7 @@
 package modelos;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
@@ -19,12 +19,12 @@ public class Tarea implements Serializable, Comparable<Tarea> {
     // Atributos de la Clase Tarea
     private int id;
     private String nombre;
-    private LocalDate fechaInicio;
-    private LocalDate fechaFin;
+    private Date fechaInicio;
+    private Date fechaFin;
     private EstadoTarea estado;
 
     // Contrustores
-    public Tarea() {
+    public Tarea(String titulo, Date fehcaInicio, Date fechaFin1) {
     }
 
     /**
@@ -34,7 +34,7 @@ public class Tarea implements Serializable, Comparable<Tarea> {
      * @param fechaFin
      * @param estado
      */
-    public Tarea(String nombre, LocalDate fechaInicio, LocalDate fechaFin, EstadoTarea estado) {
+    public Tarea(String nombre, Date fechaInicio, Date fechaFin, EstadoTarea estado) {
 
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
@@ -73,19 +73,19 @@ public class Tarea implements Serializable, Comparable<Tarea> {
     }
 
     
-    public LocalDate getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(LocalDate fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public LocalDate getFechaFin() {
+    public Date getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(LocalDate fechaFin) {
+    public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
 

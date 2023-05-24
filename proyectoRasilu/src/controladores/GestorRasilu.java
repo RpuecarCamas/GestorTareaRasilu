@@ -4,6 +4,7 @@
  */
 package controladores;
 
+import com.toedter.calendar.JDateChooser;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,23 +12,29 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import modelos.Tarea;
 import modelos.Usuario;
 
-public class GestorRasilu implements Serializable{
+public class GestorRasilu implements Serializable {
+
     private Usuario usuario;
     private List<Usuario> usuarios;
     private String rutaUsuario = "datos/usuario.dat";
     private int longMinContrasenaUsuario;
     private int longMinNombreUsuario;
+    SimpleDateFormat formato;
 
     public GestorRasilu() {
         usuarios = new ArrayList<Usuario>();
         longMinContrasenaUsuario = 6;
         longMinNombreUsuario = 3;
+        formato = new SimpleDateFormat("dd-MM-yyyy");
     }
 
     public List<Usuario> getUsuarios() {
@@ -45,12 +52,31 @@ public class GestorRasilu implements Serializable{
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
-  
 
-    // Métodos 
+    public void guardarDatos() {
+      try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaUsuario));
+            oos.writeObject(usuarios);
+
+        } catch (IOException ex) {
+            System.err.println("Error al guardar al usuario" + ex.getMessage());
+        }
+    }
+
+    // Metodo que coge el fichero donde están todos los objetos de usuario y lo guarda en una List de Usuario
+    public void cargarUsuarios() {
+
+        try ( ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(rutaUsuario))) {
+            usuarios = (List<Usuario>) entrada.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            usuarios = new ArrayList<Usuario>();
+        }
+    }
+
+    // crearUsuario metodo que registra al usuario
+    // Crear un nuevo usuario, y lo guarda en el fichero donde están todos los usuarios
     public void crearUsuario(String nombre, String contrasena, String contrasena2) throws IOException {
-
+        // Booleano para comprobar si está bien el usuario
         boolean crear = true;
         if (nombre.equals(contrasena)) {
             JOptionPane.showMessageDialog(null, "El nombre de usuario no puede ser igual que la contraseña");
@@ -91,28 +117,19 @@ public class GestorRasilu implements Serializable{
             JOptionPane.showMessageDialog(null, "La contraseña debe tener al menos " + longMinContrasenaUsuario + " caracteres");
             crear = false;
         }
-
+        // Creamos al usuario que lo añadimos a una List de objetos Usuario
         if (crear) {
             Usuario nuevo = new Usuario(nombre, contrasena);
             usuarios.add(nuevo);
             JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
         }
-
+        // Guardamos toda la List de Usuario y la escribimos en el fichero binario
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaUsuario));
             oos.writeObject(usuarios);
-            
+
         } catch (IOException ex) {
             System.err.println("Error al guardar al usuario" + ex.getMessage());
-        }
-    }
-
-    public void cargarUsuarios() {
-
-        try ( ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(rutaUsuario))) {
-            usuarios = (List<Usuario>) entrada.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            usuarios = new ArrayList<Usuario>();
         }
     }
 
@@ -153,18 +170,6 @@ public class GestorRasilu implements Serializable{
         return false;
     }
 
-//    public void modificarUsuario(Usuario usu) {
-//        for (Usuario u : usuarios) {
-//            if (u.getNombre().equals(usu.getNombre())) {
-//                u.setNombre(usu.getNombre());
-//                u.setContrasena(usu.getContrasena());
-//                u.setContasena2(usu.getContasena2());
-//                System.out.println("Usuario modificado correctamente");
-//            } else {
-//                System.out.println("El usuario " + usu + " no se ha podido modificar correctamente");
-//            }
-//        }
-//    }
 
     public Usuario usuarioCorrecto(String nombre, String contrasena) {
         Usuario comprobar = new Usuario(nombre, contrasena);
@@ -176,8 +181,7 @@ public class GestorRasilu implements Serializable{
         }
         return null;
     }
-    
-  
+
 //    public void addTarea (Tarea t){
 //        tareas.add(t);
 //    }
@@ -192,25 +196,26 @@ public class GestorRasilu implements Serializable{
 //        return u.getListaTareas().contains(tarea);
 //    }
    
-    public void guardarTareas(List<Tarea> tareas, String nombre) {
-        String nombreArchivo = "datos/" + nombre + "Tarea.dat";
-        try ( ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(new File(nombreArchivo)))) {
-            out.writeObject(tareas);
-        } catch (IOException e) {
-            System.out.println("Error al crear el archivo de tareas para el usuario: " + nombre);
+
+    // Metodo que recoge un JDateChooser y proporciona un String con el formato predeterminado por nosotros
+    public String getFecha(JDateChooser jd) {
+        if (jd.getDate() != null) {
+            return formato.format(jd.getDate());
+        } else {
+            return null;
         }
     }
 
+    // Metodo que recoge un String y lo transforma en un Date
+    public Date StringDate(String fecha) {
+        SimpleDateFormat formatoTexto = new SimpleDateFormat("dd-MM-yyyy");
+        Date fechaE = null;
 
-
-   
-
-//    public void actualizarArchivoTareas(Usuario usuario) {
-//        String nombreArchivo = "datos/" + usuario.getNombre() + "Tarea.dat";
-//        try ( ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(new File(nombreArchivo)))) {
-//            out.writeObject(usuario.getListaTareas());
-//        } catch (IOException e) {
-//            System.out.println("Error al actualizar el archivo de tareas para el usuario: " + usuario.getNombre());
-//        }
-//    }
+        try {
+            fechaE = formatoTexto.parse(fecha);
+            return fechaE;
+        } catch (ParseException ex) {
+            return null;
+        }
+    }
 }

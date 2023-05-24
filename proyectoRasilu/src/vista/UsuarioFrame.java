@@ -8,6 +8,7 @@ import controladores.GestorRasilu;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,10 +36,13 @@ public class UsuarioFrame extends javax.swing.JFrame {
         this.contadorIntento = 1;
         contenedor.setEnabled(false);
         gestorRasilu = new GestorRasilu();
-        
-        
-        
-        
+
+//        DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
+//        for (Usuario u : gestorRasilu.getUsuarios()) {
+//            modeloCombo.addElement(u);
+//        }
+//        comboBoxTarea.setModel(modeloCombo);
+//        comboBoxTareaActionPerformed(null);
     }
 
     /**
@@ -70,7 +74,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         menuRegistro = new javax.swing.JPanel();
         logoRasilu1 = new javax.swing.JLabel();
         bgFondo1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        oclockLogo = new javax.swing.JLabel();
         logo1 = new javax.swing.JLabel();
         iniciarSesion1 = new javax.swing.JLabel();
         usuario1 = new javax.swing.JLabel();
@@ -99,8 +103,13 @@ public class UsuarioFrame extends javax.swing.JFrame {
         finalizado = new javax.swing.JRadioButton();
         botonSalirTarea = new javax.swing.JButton();
         botonVolverInicioTarea = new javax.swing.JButton();
-        comboTareas = new javax.swing.JComboBox<>();
-        jCalendar1 = new com.toedter.calendar.JCalendar();
+        finJDateChooser = new com.toedter.calendar.JDateChooser();
+        fehcaFin = new javax.swing.JLabel();
+        inicioJDateChooser = new com.toedter.calendar.JDateChooser();
+        titulo = new javax.swing.JLabel();
+        tituloText = new javax.swing.JTextField();
+        fechaInicio = new javax.swing.JLabel();
+        comboBoxTarea = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -173,7 +182,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
         registro.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
         registro.setText("¿Aún no estás registrado?");
-        inicio.add(registro, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 530, -1, 30));
+        inicio.add(registro, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 490, -1, 30));
 
         botonSalir.setBackground(new java.awt.Color(221, 152, 123));
         botonSalir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -219,7 +228,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonRegistroActionPerformed(evt);
             }
         });
-        inicio.add(botonRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 520, 140, 30));
+        inicio.add(botonRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 490, 140, 30));
 
         botonAcceder1.setBackground(new java.awt.Color(221, 152, 123));
         botonAcceder1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -256,9 +265,9 @@ public class UsuarioFrame extends javax.swing.JFrame {
         bgFondo1.setText("jLabel2");
         menuRegistro.add(bgFondo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, -10, 280, 600));
 
-        jLabel2.setFont(new java.awt.Font("Segoe Print", 1, 18)); // NOI18N
-        jLabel2.setText("O´clock");
-        menuRegistro.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 120, 50));
+        oclockLogo.setFont(new java.awt.Font("Segoe Print", 1, 18)); // NOI18N
+        oclockLogo.setText("O´clock");
+        menuRegistro.add(oclockLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 120, 50));
 
         logo1.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         logo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logopequeño.png"))); // NOI18N
@@ -401,7 +410,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
         logo2.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         logo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logopequeño.png"))); // NOI18N
-        menuTareas.add(logo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 20, 280, 90));
+        menuTareas.add(logo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 0, 280, 90));
 
         botonGuardar.setBackground(new java.awt.Color(221, 152, 123));
         botonGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -425,11 +434,11 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonGuardarActionPerformed(evt);
             }
         });
-        menuTareas.add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, -1, -1));
+        menuTareas.add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 340, -1, -1));
 
         estado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         estado.setText("ESTADO");
-        menuTareas.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, -1, 20));
+        menuTareas.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, -1, 20));
 
         botonAdd.setBackground(new java.awt.Color(242, 242, 242));
         botonAdd.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
@@ -441,7 +450,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonAddActionPerformed(evt);
             }
         });
-        menuTareas.add(botonAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 90, 40));
+        menuTareas.add(botonAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 100, 40));
 
         modificarBoton.setBackground(new java.awt.Color(242, 242, 242));
         modificarBoton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -453,7 +462,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 modificarBotonActionPerformed(evt);
             }
         });
-        menuTareas.add(modificarBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 100, 40));
+        menuTareas.add(modificarBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 100, 40));
 
         eliminarBoton.setBackground(new java.awt.Color(242, 242, 242));
         eliminarBoton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -465,7 +474,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 eliminarBotonActionPerformed(evt);
             }
         });
-        menuTareas.add(eliminarBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 100, -1));
+        menuTareas.add(eliminarBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 40, 100, -1));
 
         pendiente.setText("PENDIENTE");
         pendiente.addActionListener(new java.awt.event.ActionListener() {
@@ -473,7 +482,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 pendienteActionPerformed(evt);
             }
         });
-        menuTareas.add(pendiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 390, -1, -1));
+        menuTareas.add(pendiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, -1, -1));
 
         enProceso.setText("EN PROCESO");
         enProceso.addActionListener(new java.awt.event.ActionListener() {
@@ -481,12 +490,12 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 enProcesoActionPerformed(evt);
             }
         });
-        menuTareas.add(enProceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 390, -1, -1));
+        menuTareas.add(enProceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 240, -1, -1));
 
         finalizado.setText("FINALIZADO");
         finalizado.setContentAreaFilled(false);
         finalizado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menuTareas.add(finalizado, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 390, -1, -1));
+        menuTareas.add(finalizado, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 240, -1, -1));
 
         botonSalirTarea.setBackground(new java.awt.Color(221, 152, 123));
         botonSalirTarea.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -496,7 +505,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonSalirTareaActionPerformed(evt);
             }
         });
-        menuTareas.add(botonSalirTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 490, 80, -1));
+        menuTareas.add(botonSalirTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 490, 80, -1));
 
         botonVolverInicioTarea.setBackground(new java.awt.Color(221, 152, 123));
         botonVolverInicioTarea.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -506,16 +515,36 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonVolverInicioTareaActionPerformed(evt);
             }
         });
-        menuTareas.add(botonVolverInicioTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 490, -1, -1));
+        menuTareas.add(botonVolverInicioTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, -1, -1));
+        menuTareas.add(finJDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 220, -1));
 
-        comboTareas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboTareas.addActionListener(new java.awt.event.ActionListener() {
+        fehcaFin.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        fehcaFin.setText("Fecha Fin:");
+        menuTareas.add(fehcaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, 110, 30));
+        menuTareas.add(inicioJDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 220, -1));
+
+        titulo.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        titulo.setText("Título");
+        menuTareas.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 110, 30));
+
+        tituloText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboTareasActionPerformed(evt);
+                tituloTextActionPerformed(evt);
             }
         });
-        menuTareas.add(comboTareas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, 400, 30));
-        menuTareas.add(jCalendar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 460, 230));
+        menuTareas.add(tituloText, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 220, -1));
+
+        fechaInicio.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        fechaInicio.setText("Fecha Inicio: ");
+        menuTareas.add(fechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, 110, 30));
+
+        comboBoxTarea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBoxTarea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxTareaActionPerformed(evt);
+            }
+        });
+        menuTareas.add(comboBoxTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 270, -1));
 
         contenedor.addTab("Tareas", menuTareas);
 
@@ -524,292 +553,9 @@ public class UsuarioFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textUsuarioActionPerformed
+    private void tituloTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tituloTextActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textUsuarioActionPerformed
-
-    private void textContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textContraseñaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textContraseñaActionPerformed
-
-    private void textUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textUsuarioMousePressed
-//       Cuando pasamos el cursor se cambia de color el apartado contrario y viceversa
-//
-//        if (textUsuario.getText().equals("Escriba aquí su nombre..")) {
-//            textUsuario.setText("");
-//            textUsuario.setForeground(Color.black);
-//        }
-//        if (String.valueOf(textContraseña.getPassword()).isEmpty()) {
-//            textContraseña.setText("******");
-//            textContraseña.setForeground(Color.gray);
-//        }
-    }//GEN-LAST:event_textUsuarioMousePressed
-
-    private void textContraseñaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseñaMousePressed
-//Estas condiciones se ponen para que cuando escribas en un campo no se borren los datos en el otro
-//        if (String.valueOf(textContraseña.getPassword()).equals("******")) {
-//            textContraseña.setText("");
-//            textContraseña.setForeground(Color.black);
-//        }
-//
-//        if (textUsuario.getText().isEmpty()) {
-//            textUsuario.setText("Escriba aquí su nombre..");
-//            textUsuario.setForeground(Color.gray);
-//        }
-    }//GEN-LAST:event_textContraseñaMousePressed
-
-    private void botonSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonSalirMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonSalirMouseEntered
-
-    private void botonSalirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonSalirMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonSalirMouseExited
-
-    private void botonSalirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonSalirMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonSalirMousePressed
-
-    private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
-        int salir = JOptionPane.showConfirmDialog(this, "¿Estás seguro que deseas salir?", "", JOptionPane.YES_NO_OPTION);
-        if (salir == JOptionPane.YES_OPTION) {
-            System.exit(0);
-        }
-
-    }//GEN-LAST:event_botonSalirActionPerformed
-
-    private void botonRegistroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonRegistroMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonRegistroMouseEntered
-
-    private void botonRegistroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonRegistroMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonRegistroMouseExited
-
-    private void botonRegistroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonRegistroMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonRegistroMousePressed
-
-    private void botonRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistroActionPerformed
-
-        contenedor.setSelectedIndex(1);
-    }//GEN-LAST:event_botonRegistroActionPerformed
-
-    private void textUsuario1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textUsuario1MousePressed
-        //       Cuando pasamos el cursor se cambia de color el apartado contrario y viceversa
-
-//        if (textUsuario1.getText().equals("Escriba aquí su nombre..")) {
-//            textUsuario1.setText("");
-//            textUsuario1.setForeground(Color.black);
-//        }
-//
-//        if (String.valueOf(textContraseña2.getPassword()).isEmpty()) {
-//            textContraseña2.setText("******");
-//            textContraseña2.setText("");
-//            textContraseña2.setForeground(Color.black);
-//        }
-//
-//        if (String.valueOf(textContraseña1.getPassword()).isEmpty()) {
-//            textContraseña2.setText("******");
-//            textContraseña1.setText("");
-//            textContraseña1.setForeground(Color.gray);
-//        }
-
-    }//GEN-LAST:event_textUsuario1MousePressed
-
-    private void textUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textUsuario1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textUsuario1ActionPerformed
-
-    private void textContraseña1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseña1MousePressed
-
-//        //Estas condiciones se ponen para que cuando escribas en un campo no se borren los datos en el otro
-//        if (String.valueOf(textContraseña1.getPassword()).equals("******")) {
-//            textContraseña1.setText("*******");
-//            textContraseña1.setText("");
-//            textContraseña1.setForeground(Color.black);
-//        }
-//        if (textUsuario1.getText().isEmpty()) {
-//            textUsuario1.setText("Escriba aquí su nombre..");
-//            textUsuario1.setForeground(Color.gray);
-//        }
-//        if (String.valueOf(textContraseña2.getPassword()).equals("******")) {
-//            textContraseña2.setText("*******");
-//
-//            textContraseña2.setForeground(Color.gray);
-//        }
-//
-
-    }//GEN-LAST:event_textContraseña1MousePressed
-
-    private void textContraseña1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textContraseña1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textContraseña1ActionPerformed
-
-    private void botonInicioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonInicioMouseEntered
-
-    }//GEN-LAST:event_botonInicioMouseEntered
-
-    private void botonInicioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonInicioMouseExited
-
-    }//GEN-LAST:event_botonInicioMouseExited
-
-    private void botonInicioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonInicioMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonInicioMousePressed
-
-    private void botonInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInicioActionPerformed
-        int volverInicio = JOptionPane.showConfirmDialog(
-                this,
-                "¿Está seguro de que quiere volver al menú principal?",
-                "",
-                JOptionPane.YES_NO_OPTION);
-
-        if (volverInicio == JOptionPane.YES_OPTION) {
-            contenedor.setSelectedIndex(0);
-        }
-
-    }//GEN-LAST:event_botonInicioActionPerformed
-
-    private void textContraseña2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseña2MousePressed
-//        if (String.valueOf(textContraseña1.getPassword()).equals("******")) {
-//            textContraseña1.setText("*******");
-//            textContraseña1.setText("");
-//            textContraseña1.setForeground(Color.black);
-//        }
-//        if (textUsuario1.getText().isEmpty()) {
-//            textUsuario1.setText("Escriba aquí su nombre..");
-//
-//            textUsuario1.setForeground(Color.black);
-//        }
-//        if (String.valueOf(textContraseña2.getPassword()).equals("*******")) {
-//            textContraseña2.setText("*******");
-//            textContraseña2.setText("");
-//
-//            textContraseña2.setForeground(Color.black);
-//        }
-
-    }//GEN-LAST:event_textContraseña2MousePressed
-
-    private void textContraseña2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textContraseña2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textContraseña2ActionPerformed
-
-    private void botonRegistro1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonRegistro1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonRegistro1MouseEntered
-
-    private void botonRegistro1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonRegistro1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonRegistro1MouseExited
-
-    private void botonRegistro1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonRegistro1MousePressed
-
-    }//GEN-LAST:event_botonRegistro1MousePressed
-
-    private void botonRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistro1ActionPerformed
-       
-        String nombre = textUsuario1.getText();
-        String contrasena1 = String.valueOf(textContraseña1.getPassword());
-        String contrasena2 = String.valueOf(textContraseña2.getPassword());
-        
-        try {
-            gestorRasilu.crearUsuario(nombre, contrasena1, contrasena2);
-        } catch (IOException ex) {
-        }
-        
-        contenedor.setSelectedIndex(0);
-    }//GEN-LAST:event_botonRegistro1ActionPerformed
-
-    private void botonGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonGuardarMouseEntered
-
-    }//GEN-LAST:event_botonGuardarMouseEntered
-
-    private void botonGuardarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonGuardarMouseExited
-
-    }//GEN-LAST:event_botonGuardarMouseExited
-
-    private void botonGuardarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonGuardarMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonGuardarMousePressed
-
-    private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonGuardarActionPerformed
-
-    private void botonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAddActionPerformed
-//        String titulo = textTitulo.getText();
-//        String fechaInicio = String.valueOf(textFechaInicio.getText());
-        
-//        Tarea nueva = new Tarea (titulo);
-//        gestorRasilu.getUsuario().getTareas().add(nueva);
-        
-        
-        
-        botonGuardar.setVisible(true);
-    }//GEN-LAST:event_botonAddActionPerformed
-
-    private void modificarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBotonActionPerformed
-        botonGuardar.setVisible(true);
-    }//GEN-LAST:event_modificarBotonActionPerformed
-
-    private void eliminarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBotonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_eliminarBotonActionPerformed
-
-    private void pendienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pendienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pendienteActionPerformed
-
-    private void enProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enProcesoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_enProcesoActionPerformed
-
-    private void botonAcceder1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonAcceder1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonAcceder1MouseEntered
-
-    private void botonAcceder1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonAcceder1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botonAcceder1MouseExited
-
-    private void botonAcceder1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonAcceder1MousePressed
-
-    }//GEN-LAST:event_botonAcceder1MousePressed
-
-    private void botonAcceder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder1ActionPerformed
-        
-        gestorRasilu.cargarUsuarios();
-        
-        String nombre = textUsuario.getText();
-        String contrasena = String.valueOf(textContraseña.getPassword());
-
-        if (nombre.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe introducir un nombre de usuario");
-        } else if (contrasena.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debe introducir una contraseña");
-
-        } else {
-            Usuario usuBuscar = gestorRasilu.usuarioCorrecto( nombre, contrasena);
-            if (usuBuscar != null) {
-                gestorRasilu.setUsuario(usuBuscar);
-                refrescarTarea();
-                contenedor.setSelectedIndex(2);
-
-            } else {
-                JOptionPane.showMessageDialog(this, "El usuario no está registrado y/o contraseña incorrecta");
-                
-            } 
-        }
-            
-        }//GEN-LAST:event_botonAcceder1ActionPerformed
-
-    private void botonSalirTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirTareaActionPerformed
-        int salir = JOptionPane.showConfirmDialog(this, "¿Estás seguro que deseas salir?", "", JOptionPane.YES_NO_OPTION);
-        if (salir == JOptionPane.YES_OPTION) {
-            System.exit(0);
-        }
-    }//GEN-LAST:event_botonSalirTareaActionPerformed
+    }//GEN-LAST:event_tituloTextActionPerformed
 
     private void botonVolverInicioTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVolverInicioTareaActionPerformed
         int volverInicio = JOptionPane.showConfirmDialog(
@@ -823,10 +569,297 @@ public class UsuarioFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botonVolverInicioTareaActionPerformed
 
-    private void comboTareasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTareasActionPerformed
-//        Tarea tarea = (Tarea)comboTareas.getSelectedItem();
-//        textTitulo.setText(tarea.getNombre());
-    }//GEN-LAST:event_comboTareasActionPerformed
+    private void botonSalirTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirTareaActionPerformed
+        int salir = JOptionPane.showConfirmDialog(this, "¿Estás seguro que deseas salir?", "", JOptionPane.YES_NO_OPTION);
+        if (salir == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_botonSalirTareaActionPerformed
+
+    private void enProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enProcesoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_enProcesoActionPerformed
+
+    private void pendienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pendienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pendienteActionPerformed
+
+    private void eliminarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBotonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_eliminarBotonActionPerformed
+
+    private void modificarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBotonActionPerformed
+//        new DialogoMoficarTarea(this, true).setVisible(true);
+        modelListActionPerformed(null);
+        comboBoxTarea.repaint();
+        botonGuardar.setVisible(true);
+    }//GEN-LAST:event_modificarBotonActionPerformed
+
+    private void botonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAddActionPerformed
+        String titulo = tituloText.getText();
+        Date fehcaInicio = inicioJDateChooser.getDate();
+        Date fechaFin = finJDateChooser.getDate();
+        Tarea tarea = new Tarea(titulo, fehcaInicio, fechaFin);
+        gestorRasilu.getUsuario().getTareas().add(tarea);
+
+        botonGuardar.setVisible(true);
+    }//GEN-LAST:event_botonAddActionPerformed
+
+    private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonGuardarActionPerformed
+
+    private void botonGuardarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonGuardarMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonGuardarMousePressed
+
+    private void botonGuardarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonGuardarMouseExited
+
+    }//GEN-LAST:event_botonGuardarMouseExited
+
+    private void botonGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonGuardarMouseEntered
+        gestorRasilu.guardarDatos();
+        JOptionPane.showInputDialog(null, "Se han guardado correctamente los usuarios");
+    }//GEN-LAST:event_botonGuardarMouseEntered
+
+    private void botonRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistro1ActionPerformed
+
+        gestorRasilu.cargarUsuarios();
+
+        String nombre = textUsuario1.getText();
+        String contrasena1 = String.valueOf(textContraseña1.getPassword());
+        String contrasena2 = String.valueOf(textContraseña2.getPassword());
+
+        try {
+            gestorRasilu.crearUsuario(nombre, contrasena1, contrasena2);
+        } catch (IOException ex) {
+        }
+
+        contenedor.setSelectedIndex(0);
+    }//GEN-LAST:event_botonRegistro1ActionPerformed
+
+    private void botonRegistro1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonRegistro1MousePressed
+
+    }//GEN-LAST:event_botonRegistro1MousePressed
+
+    private void botonRegistro1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonRegistro1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonRegistro1MouseExited
+
+    private void botonRegistro1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonRegistro1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonRegistro1MouseEntered
+
+    private void textContraseña2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textContraseña2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textContraseña2ActionPerformed
+
+    private void textContraseña2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseña2MousePressed
+        //        if (String.valueOf(textContraseña1.getPassword()).equals("******")) {
+        //            textContraseña1.setText("*******");
+        //            textContraseña1.setText("");
+        //            textContraseña1.setForeground(Color.black);
+        //        }
+        //        if (textUsuario1.getText().isEmpty()) {
+        //            textUsuario1.setText("Escriba aquí su nombre..");
+        //
+        //            textUsuario1.setForeground(Color.black);
+        //        }
+        //        if (String.valueOf(textContraseña2.getPassword()).equals("*******")) {
+        //            textContraseña2.setText("*******");
+        //            textContraseña2.setText("");
+        //
+        //            textContraseña2.setForeground(Color.black);
+        //        }
+    }//GEN-LAST:event_textContraseña2MousePressed
+
+    private void botonInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInicioActionPerformed
+        int volverInicio = JOptionPane.showConfirmDialog(
+                this,
+                "¿Está seguro de que quiere volver al menú principal?",
+                "",
+                JOptionPane.YES_NO_OPTION);
+
+        if (volverInicio == JOptionPane.YES_OPTION) {
+            contenedor.setSelectedIndex(0);
+        }
+    }//GEN-LAST:event_botonInicioActionPerformed
+
+    private void botonInicioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonInicioMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonInicioMousePressed
+
+    private void botonInicioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonInicioMouseExited
+
+    }//GEN-LAST:event_botonInicioMouseExited
+
+    private void botonInicioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonInicioMouseEntered
+
+    }//GEN-LAST:event_botonInicioMouseEntered
+
+    private void textContraseña1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textContraseña1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textContraseña1ActionPerformed
+
+    private void textContraseña1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseña1MousePressed
+
+        //        //Estas condiciones se ponen para que cuando escribas en un campo no se borren los datos en el otro
+        //        if (String.valueOf(textContraseña1.getPassword()).equals("******")) {
+        //            textContraseña1.setText("*******");
+        //            textContraseña1.setText("");
+        //            textContraseña1.setForeground(Color.black);
+        //        }
+        //        if (textUsuario1.getText().isEmpty()) {
+        //            textUsuario1.setText("Escriba aquí su nombre..");
+        //            textUsuario1.setForeground(Color.gray);
+        //        }
+        //        if (String.valueOf(textContraseña2.getPassword()).equals("******")) {
+        //            textContraseña2.setText("*******");
+        //
+        //            textContraseña2.setForeground(Color.gray);
+        //        }
+        //
+    }//GEN-LAST:event_textContraseña1MousePressed
+
+    private void textUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textUsuario1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textUsuario1ActionPerformed
+
+    private void textUsuario1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textUsuario1MousePressed
+        //       Cuando pasamos el cursor se cambia de color el apartado contrario y viceversa
+
+        //        if (textUsuario1.getText().equals("Escriba aquí su nombre..")) {
+        //            textUsuario1.setText("");
+        //            textUsuario1.setForeground(Color.black);
+        //        }
+        //
+        //        if (String.valueOf(textContraseña2.getPassword()).isEmpty()) {
+        //            textContraseña2.setText("******");
+        //            textContraseña2.setText("");
+        //            textContraseña2.setForeground(Color.black);
+        //        }
+        //
+        //        if (String.valueOf(textContraseña1.getPassword()).isEmpty()) {
+        //            textContraseña2.setText("******");
+        //            textContraseña1.setText("");
+        //            textContraseña1.setForeground(Color.gray);
+        //        }
+    }//GEN-LAST:event_textUsuario1MousePressed
+
+    private void botonAcceder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder1ActionPerformed
+        // con cargarUsuario obtenemos un ArrayList<Usuario>
+        gestorRasilu.cargarUsuarios();
+
+        String nombre = textUsuario.getText();
+        String contrasena = String.valueOf(textContraseña.getPassword());
+
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe introducir un nombre de usuario");
+        } else if (contrasena.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe introducir una contraseña");
+
+        } else {
+            Usuario usuBuscar = gestorRasilu.usuarioCorrecto(nombre, contrasena);
+            if (usuBuscar != null) {
+                gestorRasilu.setUsuario(usuBuscar);
+                //                refrescarTarea();
+                contenedor.setSelectedIndex(2);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "El usuario no está registrado y/o contraseña incorrecta");
+
+            }
+        }
+
+    }//GEN-LAST:event_botonAcceder1ActionPerformed
+
+    private void botonAcceder1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonAcceder1MousePressed
+
+    }//GEN-LAST:event_botonAcceder1MousePressed
+
+    private void botonAcceder1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonAcceder1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonAcceder1MouseExited
+
+    private void botonAcceder1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonAcceder1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonAcceder1MouseEntered
+
+    private void botonRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistroActionPerformed
+
+        contenedor.setSelectedIndex(1);
+    }//GEN-LAST:event_botonRegistroActionPerformed
+
+    private void botonRegistroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonRegistroMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonRegistroMousePressed
+
+    private void botonRegistroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonRegistroMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonRegistroMouseExited
+
+    private void botonRegistroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonRegistroMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonRegistroMouseEntered
+
+    private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
+        int salir = JOptionPane.showConfirmDialog(this, "¿Estás seguro que deseas salir?", "", JOptionPane.YES_NO_OPTION);
+        if (salir == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_botonSalirActionPerformed
+
+    private void botonSalirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonSalirMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonSalirMousePressed
+
+    private void botonSalirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonSalirMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonSalirMouseExited
+
+    private void botonSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonSalirMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonSalirMouseEntered
+
+    private void textContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textContraseñaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textContraseñaActionPerformed
+
+    private void textContraseñaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textContraseñaMousePressed
+        //Estas condiciones se ponen para que cuando escribas en un campo no se borren los datos en el otro
+        //        if (String.valueOf(textContraseña.getPassword()).equals("******")) {
+        //            textContraseña.setText("");
+        //            textContraseña.setForeground(Color.black);
+        //        }
+        //
+        //        if (textUsuario.getText().isEmpty()) {
+        //            textUsuario.setText("Escriba aquí su nombre..");
+        //            textUsuario.setForeground(Color.gray);
+        //        }
+    }//GEN-LAST:event_textContraseñaMousePressed
+
+    private void textUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textUsuarioActionPerformed
+
+    private void textUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textUsuarioMousePressed
+        //       Cuando pasamos el cursor se cambia de color el apartado contrario y viceversa
+        //
+        //        if (textUsuario.getText().equals("Escriba aquí su nombre..")) {
+        //            textUsuario.setText("");
+        //            textUsuario.setForeground(Color.black);
+        //        }
+        //        if (String.valueOf(textContraseña.getPassword()).isEmpty()) {
+        //            textContraseña.setText("******");
+        //            textContraseña.setForeground(Color.gray);
+        //        }
+    }//GEN-LAST:event_textUsuarioMousePressed
+
+    private void comboBoxTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxTareaActionPerformed
+//         gestorRasilu.getUsuario().getTareas().get(gestorRasilu.getUsuario().)
+//        tituloText.setText(tarea.getNombre());
+        
+    }//GEN-LAST:event_comboBoxTareaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -877,7 +910,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JButton botonSalir;
     private javax.swing.JButton botonSalirTarea;
     private javax.swing.JButton botonVolverInicioTarea;
-    private javax.swing.JComboBox<String> comboTareas;
+    private javax.swing.JComboBox<String> comboBoxTarea;
     private javax.swing.JLabel confirmarContraseña;
     private javax.swing.JTabbedPane contenedor;
     private javax.swing.JLabel contraseña;
@@ -885,12 +918,14 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JButton eliminarBoton;
     private javax.swing.JRadioButton enProceso;
     private javax.swing.JLabel estado;
+    private javax.swing.JLabel fechaInicio;
+    private javax.swing.JLabel fehcaFin;
+    private com.toedter.calendar.JDateChooser finJDateChooser;
     private javax.swing.JRadioButton finalizado;
     private javax.swing.JLabel iniciarSesion;
     private javax.swing.JLabel iniciarSesion1;
     private javax.swing.JPanel inicio;
-    private com.toedter.calendar.JCalendar jCalendar1;
-    private javax.swing.JLabel jLabel2;
+    private com.toedter.calendar.JDateChooser inicioJDateChooser;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -906,6 +941,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JPanel menuTareas;
     private javax.swing.JButton modificarBoton;
     private javax.swing.JLabel oclock;
+    private javax.swing.JLabel oclockLogo;
     private javax.swing.JRadioButton pendiente;
     private javax.swing.JLabel registro;
     private javax.swing.JPasswordField textContraseña;
@@ -913,16 +949,27 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JPasswordField textContraseña2;
     private javax.swing.JTextField textUsuario;
     private javax.swing.JTextField textUsuario1;
+    private javax.swing.JLabel titulo;
+    private javax.swing.JTextField tituloText;
     private javax.swing.JLabel usuario;
     private javax.swing.JLabel usuario1;
     // End of variables declaration//GEN-END:variables
 
-    public void refrescarTarea (){
-        DefaultComboBoxModel comboModel = new DefaultComboBoxModel();
-        for (Tarea t: gestorRasilu.getUsuario().getTareas()){
-            comboModel.addElement(t);
-        }
-        comboTareas.setModel(comboModel);
+    private void modelListActionPerformed(Object object) {
     }
-    
+
+    public GestorRasilu getGestorRasilu() {
+        return gestorRasilu;
+    }
+
+     public  Tarea getTareaSeleccionada() {
+        return (Tarea)comboBoxTarea.getSelectedItem();
+    }
+//    public void refrescarTarea (){
+//        DefaultComboBoxModel comboModel = new DefaultComboBoxModel();
+//        for (Tarea t: gestorRasilu.getUsuario().getTareas()){
+//            comboModel.addElement(t);
+//        }
+//        comboTareas.setModel(comboModel);
+//    }
 }
