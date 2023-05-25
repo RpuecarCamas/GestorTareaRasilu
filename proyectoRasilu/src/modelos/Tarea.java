@@ -5,6 +5,7 @@
 package modelos;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -14,30 +15,31 @@ import java.util.Date;
 public class Tarea implements Serializable, Comparable<Tarea> {
 
     private static final long serialVersionUID = 1;
-
+    private SimpleDateFormat formato;
     public int nextId = 001;
+    
     // Atributos de la Clase Tarea
     private int id;
     private String nombre;
     private Date fechaInicio;
     private Date fechaFin;
-
-    public int getNextId() {
-        return nextId;
-    }
-
-    public void setNextId(int nextId) {
-        this.nextId = nextId;
-    }
-    private EstadoTarea estado;
+    private String inicioFecha;
+    private String finFecha;
+     private EstadoTarea estado;
+   
+   
 
     // Contrustores 
     public Tarea(String titulo, Date fechaInicio, Date fechaFin) {
-}
- 
+        this(titulo, fechaInicio, fechaFin, EstadoTarea.EN_PROCESO);
+        formato = new SimpleDateFormat("dd-MM-yyyy");
+        inicioFecha = formato.format(fechaInicio);
+        finFecha = formato.format(fechaFin);
+    }
 
     /**
      * Construtor de Tarea
+     *
      * @param nombre
      * @param fechaInicio
      * @param fechaFin
@@ -50,12 +52,14 @@ public class Tarea implements Serializable, Comparable<Tarea> {
         this.fechaFin = fechaFin;
         // Inicializamos el id de forma aleatoria
         this.id = nextId++;
-        this. estado = estado;
-        
-    }   
-    public Tarea (String nombre){
+        this.estado = estado;
+
+    }
+
+    public Tarea(String nombre) {
         this.nombre = nombre;
     }
+
     // Metodos
     public int getId() {
         return id;
@@ -81,7 +85,6 @@ public class Tarea implements Serializable, Comparable<Tarea> {
         this.estado = estado;
     }
 
-    
     public Date getFechaInicio(Date fechaInicio) {
         return fechaInicio;
     }
@@ -96,6 +99,19 @@ public class Tarea implements Serializable, Comparable<Tarea> {
 
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
+    }
+     public int getNextId() {
+        return nextId;
+    }
+
+    public void setNextId(int nextId) {
+        this.nextId = nextId;
+    }
+
+    public String toString() {
+        return (nombre
+                + "\n" + ", Inicio: " + inicioFecha + "\n"
+                + ", Fin: " + finFecha);
     }
 
     @Override

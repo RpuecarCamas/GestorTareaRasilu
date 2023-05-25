@@ -4,8 +4,7 @@
  */
 package controladores;
 
-import com.toedter.calendar.JDateChooser;
-import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,34 +24,23 @@ public class GestorRasilu implements Serializable {
 
     private Usuario usuario;
     private List<Usuario> usuarios;
-    private List<Tarea> tareas;
     private String rutaUsuario = "datos/usuario.dat";
-    private String rutaTarea = "datos/tarea.dat";
     private int longMinContrasenaUsuario;
     private int longMinNombreUsuario;
     private SimpleDateFormat formato;
 
     public GestorRasilu() {
         usuarios = new ArrayList<Usuario>();
-        tareas = new ArrayList<Tarea>();
         longMinContrasenaUsuario = 6;
         longMinNombreUsuario = 3;
-        formato = new SimpleDateFormat("dd-MM-yyyy");
+        
     }
 
     public List<Usuario> getUsuarios() {
         return usuarios;
     }
 
-    public List<Tarea> getTareas() {
-        return tareas;
-    }
-
-    public void setTareas(List<Tarea> tareas) {
-        this.tareas = tareas;
-    }
-
-    
+   
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
@@ -64,7 +52,9 @@ public class GestorRasilu implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
+    
+    // Metodo que guarda toda la List<Usuario> que contiene todos los objetos de usuarios creados
+    // Y estos a su vez tienen su list<Tarea>
     public void guardarDatos() {
       try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaUsuario));
@@ -75,16 +65,7 @@ public class GestorRasilu implements Serializable {
             System.err.println("Error al guardar al usuario" + ex.getMessage());
         }
     }
-    public void guardarTareas() {
-      try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaTarea));
-            oos.writeObject(tareas);
-            
-
-        } catch (IOException ex) {
-            System.err.println("Error al guardar la tarea" + ex.getMessage());
-        }
-    }
+   
 
     // Metodo que coge el fichero donde están todos los objetos de usuario y lo guarda en una List de Usuario
     public void cargarUsuarios() {
@@ -95,46 +76,7 @@ public class GestorRasilu implements Serializable {
             usuarios = new ArrayList<Usuario>();
         }
     }
-    
-    public void cargarTarea(){    
-        try ( ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(rutaTarea))) {
-           tareas = (List<Tarea>) entrada.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            tareas = new ArrayList<Tarea>();
-        }   
-    }
-    public void crearTarea(String titulo, Date fechaInicio, Date fechaFin) {
-        if (titulo != null && fechaInicio != null && fechaFin != null) {
-            Tarea nuevaTarea = new Tarea(titulo, fechaInicio, fechaFin);
-            tareas.add(nuevaTarea);
-            JOptionPane.showMessageDialog(null, "Tarea creada correctamente");
-
-            guardarTareas();
-        }
-    
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaTarea));
-            oos.writeObject(tareas);
-
-        } catch (IOException ex) {
-            System.err.println("Error al guardar la tarea" + ex.getMessage());
-        }
-    
-    }
-
-// if (crear) {
-//            Tarea nuevo = new Tarea(nombre);
-//            tareas.add(nuevo);
-//            JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
-//        }
-//      try {
-//            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaTarea));
-//            oos.writeObject(tareas);
-//
-//        } catch (IOException ex) {
-//            System.err.println("Error al guardar la tarea" + ex.getMessage());
-//        }
-//    
+ 
     // crearUsuario metodo que registra al usuario
     // Crear un nuevo usuario, y lo guarda en el fichero donde están todos los usuarios
     public void crearUsuario(String nombre, String contrasena, String contrasena2) throws IOException {
@@ -205,19 +147,6 @@ public class GestorRasilu implements Serializable {
         return false;
     }
 
-    public void eliminarUsuario(String nombreUsuario) {
-        Usuario usuarioAEliminar = null;
-        for (Usuario usuario : usuarios) {
-            if (usuario.getNombre().equals(nombreUsuario)) {
-                usuarioAEliminar = usuario;
-            } else {
-                System.out.println("No se ha encontrado el usuario");
-            }
-        }
-        if (usuarioAEliminar != null) {
-            usuarios.remove(usuarioAEliminar);
-        }
-    }
 
     public boolean nombreValido(String nombre) {
         if (nombre.isEmpty()) {
@@ -244,20 +173,16 @@ public class GestorRasilu implements Serializable {
         return null;
     }
 
-//    public void addTarea (Tarea t){
-//        tareas.add(t);
-//    }
-//    public void eliminarTarea(Tarea tarea, Usuario u) {
-//        if (u.getListaTareas().remove(tarea)) {
-//            actualizarArchivoTareas(u);
-//        } else {
-//            System.out.println("La tarea no se ha podido eliminar");
-//        }
-//    }
-//    private boolean siExisteTarea(Tarea tarea, Usuario u) {
-//        return u.getListaTareas().contains(tarea);
-//    }
-   
+
+    public void eliminarTarea(Tarea tarea) {
+        
+        if (usuario.getTareas().contains(tarea)) {
+            usuario.getTareas().remove(tarea);
+        } else {
+            System.out.println("La tarea no se ha podido eliminar");
+        }
+    }
+      
 
     // Metodo que recoge un JDateChooser y proporciona un String con el formato predeterminado por nosotros
     public   String getFecha(Date jd) {

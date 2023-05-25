@@ -5,7 +5,10 @@
 package vista;
 
 import controladores.GestorRasilu;
+
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -31,13 +34,8 @@ public class UsuarioFrame extends javax.swing.JFrame {
         this.contadorIntento = 1;
         contenedor.setEnabled(false);
         gestorRasilu = new GestorRasilu();
+        botonFinalizarTarea.setVisible(false);
 
-        DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
-        for (Usuario u : gestorRasilu.getUsuarios()) {
-            modeloCombo.addElement(u);
-        }
-        comboBoxTarea.setModel(modeloCombo);
-        comboBoxTareaActionPerformed(null);
     }
 
     /**
@@ -89,15 +87,11 @@ public class UsuarioFrame extends javax.swing.JFrame {
         oclock = new javax.swing.JLabel();
         logo2 = new javax.swing.JLabel();
         botonGuardar = new javax.swing.JButton();
-        estado = new javax.swing.JLabel();
         botonAdd = new javax.swing.JButton();
         modificarBoton = new javax.swing.JButton();
         eliminarBoton = new javax.swing.JButton();
-        pendiente = new javax.swing.JRadioButton();
-        enProceso = new javax.swing.JRadioButton();
-        finalizado = new javax.swing.JRadioButton();
         botonSalirTarea = new javax.swing.JButton();
-        botonVolverInicioTarea = new javax.swing.JButton();
+        botonFinalizarTarea = new javax.swing.JButton();
         finJDateChooser = new com.toedter.calendar.JDateChooser();
         fehcaFin = new javax.swing.JLabel();
         inicioJDateChooser = new com.toedter.calendar.JDateChooser();
@@ -105,6 +99,23 @@ public class UsuarioFrame extends javax.swing.JFrame {
         tituloText = new javax.swing.JTextField();
         fechaInicio = new javax.swing.JLabel();
         comboBoxTarea = new javax.swing.JComboBox<>();
+        estadoLabel = new javax.swing.JLabel();
+        botonVolverInicioTarea1 = new javax.swing.JButton();
+        menuModificar = new javax.swing.JPanel();
+        menuTareas1 = new javax.swing.JPanel();
+        Logo1 = new javax.swing.JLabel();
+        bgFondo3 = new javax.swing.JLabel();
+        oclock1 = new javax.swing.JLabel();
+        logo3 = new javax.swing.JLabel();
+        botonGuardar1 = new javax.swing.JButton();
+        botonSalirTarea1 = new javax.swing.JButton();
+        botonVolverAtras = new javax.swing.JButton();
+        finModificarJDate = new com.toedter.calendar.JDateChooser();
+        fehcaFin1 = new javax.swing.JLabel();
+        inicioModificarJDate = new com.toedter.calendar.JDateChooser();
+        titulo1 = new javax.swing.JLabel();
+        tituloModificar = new javax.swing.JTextField();
+        fechaInicio1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -431,10 +442,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
         });
         menuTareas.add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 480, -1, -1));
 
-        estado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        estado.setText("ESTADO");
-        menuTareas.add(estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, -1, 20));
-
         botonAdd.setBackground(new java.awt.Color(242, 242, 242));
         botonAdd.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
         botonAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/añadir.png"))); // NOI18N
@@ -471,27 +478,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
         });
         menuTareas.add(eliminarBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 40, 100, -1));
 
-        pendiente.setText("PENDIENTE");
-        pendiente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pendienteActionPerformed(evt);
-            }
-        });
-        menuTareas.add(pendiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, -1, -1));
-
-        enProceso.setText("EN PROCESO");
-        enProceso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                enProcesoActionPerformed(evt);
-            }
-        });
-        menuTareas.add(enProceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 240, -1, -1));
-
-        finalizado.setText("FINALIZADO");
-        finalizado.setContentAreaFilled(false);
-        finalizado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menuTareas.add(finalizado, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 240, -1, -1));
-
         botonSalirTarea.setBackground(new java.awt.Color(221, 152, 123));
         botonSalirTarea.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         botonSalirTarea.setText("Salir");
@@ -502,15 +488,20 @@ public class UsuarioFrame extends javax.swing.JFrame {
         });
         menuTareas.add(botonSalirTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 490, 80, -1));
 
-        botonVolverInicioTarea.setBackground(new java.awt.Color(221, 152, 123));
-        botonVolverInicioTarea.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        botonVolverInicioTarea.setText("Volver al inicio");
-        botonVolverInicioTarea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonVolverInicioTareaActionPerformed(evt);
+        botonFinalizarTarea.setBackground(new java.awt.Color(221, 152, 123));
+        botonFinalizarTarea.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        botonFinalizarTarea.setText("Finalizar");
+        botonFinalizarTarea.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botonFinalizarTareaMouseExited(evt);
             }
         });
-        menuTareas.add(botonVolverInicioTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, -1, -1));
+        botonFinalizarTarea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonFinalizarTareaActionPerformed(evt);
+            }
+        });
+        menuTareas.add(botonFinalizarTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 360, -1, -1));
         menuTareas.add(finJDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 220, -1));
 
         fehcaFin.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
@@ -534,14 +525,127 @@ public class UsuarioFrame extends javax.swing.JFrame {
         menuTareas.add(fechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, 110, 30));
 
         comboBoxTarea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBoxTarea.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                comboBoxTareaFocusGained(evt);
+            }
+        });
+        comboBoxTarea.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                comboBoxTareaMouseClicked(evt);
+            }
+        });
         comboBoxTarea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxTareaActionPerformed(evt);
             }
         });
-        menuTareas.add(comboBoxTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 270, 20));
+        menuTareas.add(comboBoxTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 530, 20));
+        menuTareas.add(estadoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 250, 40));
+
+        botonVolverInicioTarea1.setBackground(new java.awt.Color(221, 152, 123));
+        botonVolverInicioTarea1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        botonVolverInicioTarea1.setText("Volver al inicio");
+        botonVolverInicioTarea1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonVolverInicioTarea1ActionPerformed(evt);
+            }
+        });
+        menuTareas.add(botonVolverInicioTarea1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, -1, -1));
 
         contenedor.addTab("Tareas", menuTareas);
+
+        menuTareas1.setBackground(new java.awt.Color(255, 255, 255));
+        menuTareas1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Logo1.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
+        Logo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Logo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logo rasilu.png"))); // NOI18N
+        Logo1.setToolTipText("");
+        Logo1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        Logo1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        menuTareas1.add(Logo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 190, 280, 130));
+
+        bgFondo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/fondoflores.png"))); // NOI18N
+        bgFondo3.setText("jLabel2");
+        menuTareas1.add(bgFondo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 0, 280, 580));
+
+        oclock1.setFont(new java.awt.Font("Segoe Print", 1, 18)); // NOI18N
+        oclock1.setText("O´clock");
+        menuTareas1.add(oclock1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 120, 50));
+
+        logo3.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
+        logo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logopequeño.png"))); // NOI18N
+        menuTareas1.add(logo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 0, 280, 90));
+
+        botonGuardar1.setBackground(new java.awt.Color(221, 152, 123));
+        botonGuardar1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        botonGuardar1.setForeground(new java.awt.Color(255, 255, 255));
+        botonGuardar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/guardar.png"))); // NOI18N
+        botonGuardar1.setText("GUARDAR");
+        botonGuardar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonGuardar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botonGuardar1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botonGuardar1MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                botonGuardar1MousePressed(evt);
+            }
+        });
+        botonGuardar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGuardar1ActionPerformed(evt);
+            }
+        });
+        menuTareas1.add(botonGuardar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 360, -1, -1));
+
+        botonSalirTarea1.setBackground(new java.awt.Color(221, 152, 123));
+        botonSalirTarea1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        botonSalirTarea1.setText("Salir");
+        botonSalirTarea1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonSalirTarea1ActionPerformed(evt);
+            }
+        });
+        menuTareas1.add(botonSalirTarea1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 80, -1));
+
+        botonVolverAtras.setBackground(new java.awt.Color(221, 152, 123));
+        botonVolverAtras.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        botonVolverAtras.setText("Volver atras");
+        botonVolverAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonVolverAtrasActionPerformed(evt);
+            }
+        });
+        menuTareas1.add(botonVolverAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, -1, 30));
+        menuTareas1.add(finModificarJDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 220, -1));
+
+        fehcaFin1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        fehcaFin1.setText("Fecha Fin:");
+        menuTareas1.add(fehcaFin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, 110, 30));
+        menuTareas1.add(inicioModificarJDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 220, -1));
+
+        titulo1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        titulo1.setText("Título");
+        menuTareas1.add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 110, 30));
+
+        tituloModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tituloModificarActionPerformed(evt);
+            }
+        });
+        menuTareas1.add(tituloModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 220, -1));
+
+        fechaInicio1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        fechaInicio1.setText("Fecha Inicio: ");
+        menuTareas1.add(fechaInicio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, 110, 30));
+
+        menuModificar.add(menuTareas1);
+
+        contenedor.addTab("Modificar", menuModificar);
 
         getContentPane().add(contenedor, java.awt.BorderLayout.PAGE_START);
 
@@ -552,65 +656,55 @@ public class UsuarioFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tituloTextActionPerformed
 
-    private void botonVolverInicioTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVolverInicioTareaActionPerformed
-        int volverInicio = JOptionPane.showConfirmDialog(
-                this,
-                "¿Está seguro de que quiere volver al menú principal?",
-                "",
-                JOptionPane.YES_NO_OPTION);
+    private void botonFinalizarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFinalizarTareaActionPerformed
+        Tarea tareaSelecionada = (Tarea) comboBoxTarea.getSelectedItem();
+        DefaultComboBoxModel modeloTarea = (DefaultComboBoxModel) comboBoxTarea.getModel();
 
-        if (volverInicio == JOptionPane.YES_OPTION) {
-            contenedor.setSelectedIndex(0);
-        }
-    }//GEN-LAST:event_botonVolverInicioTareaActionPerformed
+        modeloTarea.removeElement(tareaSelecionada);
+        gestorRasilu.getUsuario().getTareas().remove(tareaSelecionada);
+        gestorRasilu.guardarDatos();
+    }//GEN-LAST:event_botonFinalizarTareaActionPerformed
 
     private void botonSalirTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirTareaActionPerformed
         int salir = JOptionPane.showConfirmDialog(this, "¿Estás seguro que deseas salir?", "", JOptionPane.YES_NO_OPTION);
         if (salir == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
+
+
     }//GEN-LAST:event_botonSalirTareaActionPerformed
 
-    private void enProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enProcesoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_enProcesoActionPerformed
-
-    private void pendienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pendienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pendienteActionPerformed
-
     private void eliminarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBotonActionPerformed
-        // TODO add your handling code here:
+        Tarea tareaSelecionada = (Tarea) comboBoxTarea.getSelectedItem();
+        DefaultComboBoxModel modeloTarea = (DefaultComboBoxModel) comboBoxTarea.getModel();
+
+        modeloTarea.removeElement(tareaSelecionada);
+        gestorRasilu.getUsuario().getTareas().remove(tareaSelecionada);
+        gestorRasilu.guardarDatos();
+
     }//GEN-LAST:event_eliminarBotonActionPerformed
 
     private void modificarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBotonActionPerformed
-//        new DialogoMoficarTarea(this, true).setVisible(true);
-        modelListActionPerformed(null);
-       comboBoxTarea.repaint();
+        contenedor.setSelectedIndex(3);
+        comboBoxTarea.repaint();
+        gestorRasilu.guardarDatos();
     }//GEN-LAST:event_modificarBotonActionPerformed
 
     private void botonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAddActionPerformed
-        
-     
-
 
         String titulo = tituloText.getText();
         Date fechaInicio = inicioJDateChooser.getDate();
         Date fechaFin = finJDateChooser.getDate();
-        String fechaInicio1 = fechaInicio.toString();
-        String fechaFin1 = fechaFin.toString();
         Tarea tarea = new Tarea(titulo, fechaInicio, fechaFin);
 
-  
-            gestorRasilu.crearTarea(titulo, fechaInicio, fechaFin);
-            comboBoxTarea.addItem(titulo);
-            comboBoxTarea.addItem(fechaInicio1);
-            comboBoxTarea.addItem(fechaFin1);
-             gestorRasilu.cargarTarea();
-             gestorRasilu.guardarTareas();
-           gestorRasilu.getUsuario().getTareas().add(tarea);
+        DefaultComboBoxModel modeloTarea = (DefaultComboBoxModel) comboBoxTarea.getModel();
+        modeloTarea.addElement(tarea);
 
-     
+        gestorRasilu.getUsuario().getTareas().add(tarea);
+
+        gestorRasilu.guardarDatos();
+        System.out.println(gestorRasilu.getUsuario());
+
     }//GEN-LAST:event_botonAddActionPerformed
 
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
@@ -618,9 +712,8 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonGuardarActionPerformed
 
     private void botonGuardarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonGuardarMousePressed
-       gestorRasilu.guardarDatos();
-       gestorRasilu.guardarTareas();
- JOptionPane.showMessageDialog(this, "Los datos se han guardado correctamente");
+        gestorRasilu.guardarDatos();
+        JOptionPane.showMessageDialog(this, "Los datos se han guardado correctamente");
     }//GEN-LAST:event_botonGuardarMousePressed
 
     private void botonGuardarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonGuardarMouseExited
@@ -634,7 +727,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private void botonRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistro1ActionPerformed
 
         gestorRasilu.cargarUsuarios();
-        
 
         String nombre = textUsuario1.getText();
         String contrasena1 = String.valueOf(textContraseña1.getPassword());
@@ -758,10 +850,9 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
     private void botonAcceder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder1ActionPerformed
         // con cargarUsuario obtenemos un ArrayList<Usuario>
-   
+
         gestorRasilu.cargarUsuarios();
-        gestorRasilu.cargarTarea();
- 
+
         String nombre = textUsuario.getText();
         String contrasena = String.valueOf(textContraseña.getPassword());
 
@@ -776,6 +867,12 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 gestorRasilu.setUsuario(usuBuscar);
                 //                refrescarTarea();
                 contenedor.setSelectedIndex(2);
+                DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
+                for (Tarea t : gestorRasilu.getUsuario().getTareas()) {
+                    modeloCombo.addElement(t);
+                }
+                comboBoxTarea.setModel(modeloCombo);
+                comboBoxTarea.repaint();
 
             } else {
                 JOptionPane.showMessageDialog(this, "El usuario no está registrado y/o contraseña incorrecta");
@@ -868,9 +965,89 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_textUsuarioMousePressed
 
     private void comboBoxTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxTareaActionPerformed
-        //         gestorRasilu.getUsuario().getTareas().get(gestorRasilu.getUsuario().)
-        //        tituloText.setText(tarea.getNombre());
+        Tarea tareaSelecionada = (Tarea) comboBoxTarea.getSelectedItem();
+        DefaultComboBoxModel modeloTarea = (DefaultComboBoxModel) comboBoxTarea.getModel();
+        estadoLabel.setText(tareaSelecionada.getEstado().getDescripcion());
+
     }//GEN-LAST:event_comboBoxTareaActionPerformed
+
+    private void botonGuardar1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonGuardar1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonGuardar1MouseEntered
+
+    private void botonGuardar1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonGuardar1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonGuardar1MouseExited
+
+    private void botonGuardar1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonGuardar1MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonGuardar1MousePressed
+
+    private void botonGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardar1ActionPerformed
+        String titulo = tituloModificar.getText();
+        Date fechaInicioModificar = inicioModificarJDate.getDate();
+        Date fechaFinModificar = finModificarJDate.getDate();
+
+        DefaultComboBoxModel modeloTarea = (DefaultComboBoxModel) comboBoxTarea.getModel();
+        Tarea tareaSelecionada = (Tarea) comboBoxTarea.getSelectedItem();
+
+        tareaSelecionada.setNombre(titulo);
+        tareaSelecionada.setFechaInicio(fechaInicioModificar);
+        tareaSelecionada.setFechaFin(fechaFinModificar);
+
+        contenedor.setSelectedIndex(2);
+
+    }//GEN-LAST:event_botonGuardar1ActionPerformed
+
+    private void botonSalirTarea1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirTarea1ActionPerformed
+        int salir = JOptionPane.showConfirmDialog(this, "¿Estás seguro que deseas salir?", "", JOptionPane.YES_NO_OPTION);
+        if (salir == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_botonSalirTarea1ActionPerformed
+
+    private void botonVolverAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVolverAtrasActionPerformed
+        int volverInicio = JOptionPane.showConfirmDialog(
+                this,
+                "¿Está seguro de que quiere volver atras?",
+                "",
+                JOptionPane.YES_NO_OPTION);
+
+        if (volverInicio == JOptionPane.YES_OPTION) {
+            contenedor.setSelectedIndex(2);
+        }
+    }//GEN-LAST:event_botonVolverAtrasActionPerformed
+
+    private void tituloModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tituloModificarActionPerformed
+
+    }//GEN-LAST:event_tituloModificarActionPerformed
+
+    private void comboBoxTareaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_comboBoxTareaFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxTareaFocusGained
+
+    private void botonVolverInicioTarea1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVolverInicioTarea1ActionPerformed
+        // Activamos un JOptionPane, que nos mostrará el mensaje 
+        // ¿Está seguro que quiere volver al menú principal?
+        // Con un tipo de opciones YES O NO
+        int volverInicio = JOptionPane.showConfirmDialog(
+                this,
+                "¿Está seguro de que quiere volver al menú principal?",
+                "",
+                JOptionPane.YES_NO_OPTION);
+        // Comprobamos si la opción ha sido yes y pasamos al siguiente panel 
+        if (volverInicio == JOptionPane.YES_OPTION) {
+            contenedor.setSelectedIndex(0);
+        }
+    }//GEN-LAST:event_botonVolverInicioTarea1ActionPerformed
+
+    private void comboBoxTareaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboBoxTareaMouseClicked
+        botonFinalizarTarea.setVisible(true);
+    }//GEN-LAST:event_comboBoxTareaMouseClicked
+
+    private void botonFinalizarTareaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonFinalizarTareaMouseExited
+        botonFinalizarTarea.setVisible(false);
+    }//GEN-LAST:event_botonFinalizarTareaMouseExited
 
     /**
      * @param args the command line arguments
@@ -909,34 +1086,42 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Logo;
+    private javax.swing.JLabel Logo1;
     private javax.swing.JLabel bgFondo;
     private javax.swing.JLabel bgFondo1;
     private javax.swing.JLabel bgFondo2;
+    private javax.swing.JLabel bgFondo3;
     private javax.swing.JButton botonAcceder1;
     private javax.swing.JButton botonAdd;
+    private javax.swing.JButton botonFinalizarTarea;
     private javax.swing.JButton botonGuardar;
+    private javax.swing.JButton botonGuardar1;
     private javax.swing.JButton botonInicio;
     private javax.swing.JButton botonRegistro;
     private javax.swing.JButton botonRegistro1;
     private javax.swing.JButton botonSalir;
     private javax.swing.JButton botonSalirTarea;
-    private javax.swing.JButton botonVolverInicioTarea;
+    private javax.swing.JButton botonSalirTarea1;
+    private javax.swing.JButton botonVolverAtras;
+    private javax.swing.JButton botonVolverInicioTarea1;
     private javax.swing.JComboBox<String> comboBoxTarea;
     private javax.swing.JLabel confirmarContraseña;
     private javax.swing.JTabbedPane contenedor;
     private javax.swing.JLabel contraseña;
     private javax.swing.JLabel contraseña1;
     private javax.swing.JButton eliminarBoton;
-    private javax.swing.JRadioButton enProceso;
-    private javax.swing.JLabel estado;
+    private javax.swing.JLabel estadoLabel;
     private javax.swing.JLabel fechaInicio;
+    private javax.swing.JLabel fechaInicio1;
     private javax.swing.JLabel fehcaFin;
+    private javax.swing.JLabel fehcaFin1;
     private com.toedter.calendar.JDateChooser finJDateChooser;
-    private javax.swing.JRadioButton finalizado;
+    private com.toedter.calendar.JDateChooser finModificarJDate;
     private javax.swing.JLabel iniciarSesion;
     private javax.swing.JLabel iniciarSesion1;
     private javax.swing.JPanel inicio;
     private com.toedter.calendar.JDateChooser inicioJDateChooser;
+    private com.toedter.calendar.JDateChooser inicioModificarJDate;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -945,15 +1130,18 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JLabel logo;
     private javax.swing.JLabel logo1;
     private javax.swing.JLabel logo2;
+    private javax.swing.JLabel logo3;
     private javax.swing.JLabel logoName;
     private javax.swing.JLabel logoRasilu;
     private javax.swing.JLabel logoRasilu1;
+    private javax.swing.JPanel menuModificar;
     private javax.swing.JPanel menuRegistro;
     private javax.swing.JPanel menuTareas;
+    private javax.swing.JPanel menuTareas1;
     private javax.swing.JButton modificarBoton;
     private javax.swing.JLabel oclock;
+    private javax.swing.JLabel oclock1;
     private javax.swing.JLabel oclockLogo;
-    private javax.swing.JRadioButton pendiente;
     private javax.swing.JLabel registro;
     private javax.swing.JPasswordField textContraseña;
     private javax.swing.JPasswordField textContraseña1;
@@ -961,13 +1149,12 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private javax.swing.JTextField textUsuario;
     private javax.swing.JTextField textUsuario1;
     private javax.swing.JLabel titulo;
+    private javax.swing.JLabel titulo1;
+    private javax.swing.JTextField tituloModificar;
     private javax.swing.JTextField tituloText;
     private javax.swing.JLabel usuario;
     private javax.swing.JLabel usuario1;
     // End of variables declaration//GEN-END:variables
-
-    private void modelListActionPerformed(Object object) {
-    }
 
     public GestorRasilu getGestorRasilu() {
         return gestorRasilu;
