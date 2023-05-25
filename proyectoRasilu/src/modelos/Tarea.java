@@ -21,11 +21,20 @@ public class Tarea implements Serializable, Comparable<Tarea> {
     private String nombre;
     private Date fechaInicio;
     private Date fechaFin;
+
+    public int getNextId() {
+        return nextId;
+    }
+
+    public void setNextId(int nextId) {
+        this.nextId = nextId;
+    }
     private EstadoTarea estado;
 
-    // Contrustores
-    public Tarea(String titulo, Date fehcaInicio, Date fechaFin1) {
-    }
+    // Contrustores 
+    public Tarea(String titulo, Date fechaInicio, Date fechaFin) {
+}
+ 
 
     /**
      * Construtor de Tarea
@@ -43,7 +52,7 @@ public class Tarea implements Serializable, Comparable<Tarea> {
         this.id = nextId++;
         this. estado = estado;
         
-    }
+    }   
     public Tarea (String nombre){
         this.nombre = nombre;
     }
@@ -73,7 +82,7 @@ public class Tarea implements Serializable, Comparable<Tarea> {
     }
 
     
-    public Date getFechaInicio() {
+    public Date getFechaInicio(Date fechaInicio) {
         return fechaInicio;
     }
 

@@ -5,15 +5,10 @@
 package vista;
 
 import controladores.GestorRasilu;
-import java.awt.Color;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import modelos.Tarea;
 import modelos.Usuario;
@@ -37,12 +32,12 @@ public class UsuarioFrame extends javax.swing.JFrame {
         contenedor.setEnabled(false);
         gestorRasilu = new GestorRasilu();
 
-//        DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
-//        for (Usuario u : gestorRasilu.getUsuarios()) {
-//            modeloCombo.addElement(u);
-//        }
-//        comboBoxTarea.setModel(modeloCombo);
-//        comboBoxTareaActionPerformed(null);
+        DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
+        for (Usuario u : gestorRasilu.getUsuarios()) {
+            modeloCombo.addElement(u);
+        }
+        comboBoxTarea.setModel(modeloCombo);
+        comboBoxTareaActionPerformed(null);
     }
 
     /**
@@ -434,7 +429,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonGuardarActionPerformed(evt);
             }
         });
-        menuTareas.add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 340, -1, -1));
+        menuTareas.add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 480, -1, -1));
 
         estado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         estado.setText("ESTADO");
@@ -544,7 +539,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 comboBoxTareaActionPerformed(evt);
             }
         });
-        menuTareas.add(comboBoxTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 270, -1));
+        menuTareas.add(comboBoxTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 270, 20));
 
         contenedor.addTab("Tareas", menuTareas);
 
@@ -591,18 +586,31 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private void modificarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBotonActionPerformed
 //        new DialogoMoficarTarea(this, true).setVisible(true);
         modelListActionPerformed(null);
-        comboBoxTarea.repaint();
-        botonGuardar.setVisible(true);
+       comboBoxTarea.repaint();
     }//GEN-LAST:event_modificarBotonActionPerformed
 
     private void botonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAddActionPerformed
-        String titulo = tituloText.getText();
-        Date fehcaInicio = inicioJDateChooser.getDate();
-        Date fechaFin = finJDateChooser.getDate();
-        Tarea tarea = new Tarea(titulo, fehcaInicio, fechaFin);
-        gestorRasilu.getUsuario().getTareas().add(tarea);
+        
+     
 
-        botonGuardar.setVisible(true);
+
+        String titulo = tituloText.getText();
+        Date fechaInicio = inicioJDateChooser.getDate();
+        Date fechaFin = finJDateChooser.getDate();
+        String fechaInicio1 = fechaInicio.toString();
+        String fechaFin1 = fechaFin.toString();
+        Tarea tarea = new Tarea(titulo, fechaInicio, fechaFin);
+
+  
+            gestorRasilu.crearTarea(titulo, fechaInicio, fechaFin);
+            comboBoxTarea.addItem(titulo);
+            comboBoxTarea.addItem(fechaInicio1);
+            comboBoxTarea.addItem(fechaFin1);
+             gestorRasilu.cargarTarea();
+             gestorRasilu.guardarTareas();
+           gestorRasilu.getUsuario().getTareas().add(tarea);
+
+     
     }//GEN-LAST:event_botonAddActionPerformed
 
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
@@ -610,7 +618,9 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonGuardarActionPerformed
 
     private void botonGuardarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonGuardarMousePressed
-        // TODO add your handling code here:
+       gestorRasilu.guardarDatos();
+       gestorRasilu.guardarTareas();
+ JOptionPane.showMessageDialog(this, "Los datos se han guardado correctamente");
     }//GEN-LAST:event_botonGuardarMousePressed
 
     private void botonGuardarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonGuardarMouseExited
@@ -618,13 +628,13 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botonGuardarMouseExited
 
     private void botonGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botonGuardarMouseEntered
-        gestorRasilu.guardarDatos();
-        JOptionPane.showInputDialog(null, "Se han guardado correctamente los usuarios");
+
     }//GEN-LAST:event_botonGuardarMouseEntered
 
     private void botonRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistro1ActionPerformed
 
         gestorRasilu.cargarUsuarios();
+        
 
         String nombre = textUsuario1.getText();
         String contrasena1 = String.valueOf(textContraseña1.getPassword());
@@ -748,8 +758,10 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
     private void botonAcceder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAcceder1ActionPerformed
         // con cargarUsuario obtenemos un ArrayList<Usuario>
+   
         gestorRasilu.cargarUsuarios();
-
+        gestorRasilu.cargarTarea();
+ 
         String nombre = textUsuario.getText();
         String contrasena = String.valueOf(textContraseña.getPassword());
 
@@ -856,9 +868,8 @@ public class UsuarioFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_textUsuarioMousePressed
 
     private void comboBoxTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxTareaActionPerformed
-//         gestorRasilu.getUsuario().getTareas().get(gestorRasilu.getUsuario().)
-//        tituloText.setText(tarea.getNombre());
-        
+        //         gestorRasilu.getUsuario().getTareas().get(gestorRasilu.getUsuario().)
+        //        tituloText.setText(tarea.getNombre());
     }//GEN-LAST:event_comboBoxTareaActionPerformed
 
     /**
@@ -962,8 +973,8 @@ public class UsuarioFrame extends javax.swing.JFrame {
         return gestorRasilu;
     }
 
-     public  Tarea getTareaSeleccionada() {
-        return (Tarea)comboBoxTarea.getSelectedItem();
+    public Tarea getTareaSeleccionada() {
+        return (Tarea) comboBoxTarea.getSelectedItem();
     }
 //    public void refrescarTarea (){
 //        DefaultComboBoxModel comboModel = new DefaultComboBoxModel();
