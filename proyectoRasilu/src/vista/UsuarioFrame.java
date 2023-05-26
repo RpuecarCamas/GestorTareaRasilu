@@ -69,7 +69,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
         bgFondo1 = new javax.swing.JLabel();
         oclockLogo = new javax.swing.JLabel();
         logo1 = new javax.swing.JLabel();
-        iniciarSesion1 = new javax.swing.JLabel();
         usuario1 = new javax.swing.JLabel();
         contraseña1 = new javax.swing.JLabel();
         textUsuario1 = new javax.swing.JTextField();
@@ -81,6 +80,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         jSeparator5 = new javax.swing.JSeparator();
         confirmarContraseña = new javax.swing.JLabel();
         botonRegistro1 = new javax.swing.JButton();
+        iniciarSesion2 = new javax.swing.JLabel();
         menuTareas = new javax.swing.JPanel();
         Logo = new javax.swing.JLabel();
         bgFondo2 = new javax.swing.JLabel();
@@ -116,6 +116,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
         titulo1 = new javax.swing.JLabel();
         tituloModificar = new javax.swing.JTextField();
         fechaInicio1 = new javax.swing.JLabel();
+        iniciarSesion3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -151,7 +152,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
         contraseña.setText("CONTRASEÑA");
         inicio.add(contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, 20));
 
-        textUsuario.setForeground(new java.awt.Color(204, 204, 204));
         textUsuario.setAutoscrolls(false);
         textUsuario.setBorder(null);
         textUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -169,7 +169,6 @@ public class UsuarioFrame extends javax.swing.JFrame {
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
         inicio.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 360, 310, 10));
 
-        textContraseña.setForeground(new java.awt.Color(204, 204, 204));
         textContraseña.setBorder(null);
         textContraseña.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -279,19 +278,14 @@ public class UsuarioFrame extends javax.swing.JFrame {
         logo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logopequeño.png"))); // NOI18N
         menuRegistro.add(logo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 20, 280, 90));
 
-        iniciarSesion1.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        iniciarSesion1.setText("NUEVA CUENTA");
-        menuRegistro.add(iniciarSesion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 180, 50));
+        usuario1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        usuario1.setText("Nombre de usuario");
+        menuRegistro.add(usuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, -1, -1));
 
-        usuario1.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
-        usuario1.setText("NOMBRE DE USUARIO");
-        menuRegistro.add(usuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, -1));
+        contraseña1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        contraseña1.setText("Contraseña");
+        menuRegistro.add(contraseña1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, -1, 30));
 
-        contraseña1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        contraseña1.setText("CONTRASEÑA");
-        menuRegistro.add(contraseña1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 300, -1, 20));
-
-        textUsuario1.setForeground(new java.awt.Color(204, 204, 204));
         textUsuario1.setAutoscrolls(false);
         textUsuario1.setBorder(null);
         textUsuario1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -304,12 +298,11 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 textUsuario1ActionPerformed(evt);
             }
         });
-        menuRegistro.add(textUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 240, 330, 20));
+        menuRegistro.add(textUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 240, 330, 20));
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
-        menuRegistro.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, 310, 10));
+        menuRegistro.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 320, 310, 10));
 
-        textContraseña1.setForeground(new java.awt.Color(204, 204, 204));
         textContraseña1.setBorder(null);
         textContraseña1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -321,10 +314,10 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 textContraseña1ActionPerformed(evt);
             }
         });
-        menuRegistro.add(textContraseña1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 300, 170, -1));
+        menuRegistro.add(textContraseña1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 170, -1));
 
         jSeparator4.setForeground(new java.awt.Color(0, 0, 0));
-        menuRegistro.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, 310, 20));
+        menuRegistro.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 260, 310, 20));
 
         botonInicio.setBackground(new java.awt.Color(221, 152, 123));
         botonInicio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -347,9 +340,8 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonInicioActionPerformed(evt);
             }
         });
-        menuRegistro.add(botonInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, 140, 30));
+        menuRegistro.add(botonInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 490, 150, 30));
 
-        textContraseña2.setForeground(new java.awt.Color(204, 204, 204));
         textContraseña2.setBorder(null);
         textContraseña2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -361,14 +353,14 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 textContraseña2ActionPerformed(evt);
             }
         });
-        menuRegistro.add(textContraseña2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 360, 170, -1));
+        menuRegistro.add(textContraseña2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, 170, -1));
 
         jSeparator5.setForeground(new java.awt.Color(0, 0, 0));
-        menuRegistro.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 380, 310, 10));
+        menuRegistro.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 380, 310, 10));
 
-        confirmarContraseña.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        confirmarContraseña.setText("CONFIRMAR CONTRASEÑA");
-        menuRegistro.add(confirmarContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, -1, 20));
+        confirmarContraseña.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        confirmarContraseña.setText("Confirmar contraseña");
+        menuRegistro.add(confirmarContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, -1, 20));
 
         botonRegistro1.setBackground(new java.awt.Color(221, 152, 123));
         botonRegistro1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -391,7 +383,11 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonRegistro1ActionPerformed(evt);
             }
         });
-        menuRegistro.add(botonRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 440, 110, 30));
+        menuRegistro.add(botonRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 490, 150, 30));
+
+        iniciarSesion2.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        iniciarSesion2.setText("NUEVA CUENTA");
+        menuRegistro.add(iniciarSesion2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 230, 50));
 
         contenedor.addTab("Registro", menuRegistro);
 
@@ -416,7 +412,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
         logo2.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         logo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logopequeño.png"))); // NOI18N
-        menuTareas.add(logo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 0, 280, 90));
+        menuTareas.add(logo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 20, 280, 90));
 
         botonGuardar.setBackground(new java.awt.Color(221, 152, 123));
         botonGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -440,7 +436,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonGuardarActionPerformed(evt);
             }
         });
-        menuTareas.add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 480, -1, -1));
+        menuTareas.add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 460, -1, -1));
 
         botonAdd.setBackground(new java.awt.Color(242, 242, 242));
         botonAdd.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
@@ -452,7 +448,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonAddActionPerformed(evt);
             }
         });
-        menuTareas.add(botonAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 100, 40));
+        menuTareas.add(botonAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 100, 40));
 
         modificarBoton.setBackground(new java.awt.Color(242, 242, 242));
         modificarBoton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -464,7 +460,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 modificarBotonActionPerformed(evt);
             }
         });
-        menuTareas.add(modificarBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 100, 40));
+        menuTareas.add(modificarBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, 100, 40));
 
         eliminarBoton.setBackground(new java.awt.Color(242, 242, 242));
         eliminarBoton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -476,21 +472,23 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 eliminarBotonActionPerformed(evt);
             }
         });
-        menuTareas.add(eliminarBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 40, 100, -1));
+        menuTareas.add(eliminarBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, 100, -1));
 
         botonSalirTarea.setBackground(new java.awt.Color(221, 152, 123));
         botonSalirTarea.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        botonSalirTarea.setText("Salir");
+        botonSalirTarea.setForeground(new java.awt.Color(255, 255, 255));
+        botonSalirTarea.setText("SALIR");
         botonSalirTarea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonSalirTareaActionPerformed(evt);
             }
         });
-        menuTareas.add(botonSalirTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 490, 80, -1));
+        menuTareas.add(botonSalirTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 503, 80, 30));
 
         botonFinalizarTarea.setBackground(new java.awt.Color(221, 152, 123));
         botonFinalizarTarea.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        botonFinalizarTarea.setText("Finalizar");
+        botonFinalizarTarea.setForeground(new java.awt.Color(255, 255, 255));
+        botonFinalizarTarea.setText("FINALIZAR TAREA");
         botonFinalizarTarea.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 botonFinalizarTareaMouseExited(evt);
@@ -501,28 +499,28 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonFinalizarTareaActionPerformed(evt);
             }
         });
-        menuTareas.add(botonFinalizarTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 360, -1, -1));
-        menuTareas.add(finJDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 220, -1));
+        menuTareas.add(botonFinalizarTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 420, -1, 30));
+        menuTareas.add(finJDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 290, 220, -1));
 
         fehcaFin.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         fehcaFin.setText("Fecha Fin:");
-        menuTareas.add(fehcaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, 110, 30));
-        menuTareas.add(inicioJDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 220, -1));
+        menuTareas.add(fehcaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 110, 30));
+        menuTareas.add(inicioJDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, 220, -1));
 
         titulo.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         titulo.setText("Título");
-        menuTareas.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 110, 30));
+        menuTareas.add(titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 110, 30));
 
         tituloText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tituloTextActionPerformed(evt);
             }
         });
-        menuTareas.add(tituloText, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 220, -1));
+        menuTareas.add(tituloText, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 210, 220, -1));
 
         fechaInicio.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         fechaInicio.setText("Fecha Inicio: ");
-        menuTareas.add(fechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, 110, 30));
+        menuTareas.add(fechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 110, 30));
 
         comboBoxTarea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboBoxTarea.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -540,20 +538,25 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 comboBoxTareaActionPerformed(evt);
             }
         });
-        menuTareas.add(comboBoxTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 530, 20));
-        menuTareas.add(estadoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 250, 40));
+        menuTareas.add(comboBoxTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 530, 20));
+
+        estadoLabel.setFont(new java.awt.Font("SansSerif", 3, 14)); // NOI18N
+        menuTareas.add(estadoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 410, 250, 40));
 
         botonVolverInicioTarea1.setBackground(new java.awt.Color(221, 152, 123));
         botonVolverInicioTarea1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        botonVolverInicioTarea1.setText("Volver al inicio");
+        botonVolverInicioTarea1.setForeground(new java.awt.Color(255, 255, 255));
+        botonVolverInicioTarea1.setText("VOLVER A INICIO");
         botonVolverInicioTarea1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonVolverInicioTarea1ActionPerformed(evt);
             }
         });
-        menuTareas.add(botonVolverInicioTarea1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, -1, -1));
+        menuTareas.add(botonVolverInicioTarea1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 510, -1, 30));
 
         contenedor.addTab("Tareas", menuTareas);
+
+        menuModificar.setLayout(new java.awt.BorderLayout());
 
         menuTareas1.setBackground(new java.awt.Color(255, 255, 255));
         menuTareas1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -576,7 +579,7 @@ public class UsuarioFrame extends javax.swing.JFrame {
 
         logo3.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         logo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logopequeño.png"))); // NOI18N
-        menuTareas1.add(logo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 0, 280, 90));
+        menuTareas1.add(logo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, 20, 280, 90));
 
         botonGuardar1.setBackground(new java.awt.Color(221, 152, 123));
         botonGuardar1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -600,50 +603,56 @@ public class UsuarioFrame extends javax.swing.JFrame {
                 botonGuardar1ActionPerformed(evt);
             }
         });
-        menuTareas1.add(botonGuardar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 360, -1, -1));
+        menuTareas1.add(botonGuardar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 410, -1, -1));
 
         botonSalirTarea1.setBackground(new java.awt.Color(221, 152, 123));
         botonSalirTarea1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        botonSalirTarea1.setText("Salir");
+        botonSalirTarea1.setForeground(new java.awt.Color(255, 255, 255));
+        botonSalirTarea1.setText("SALIR");
         botonSalirTarea1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonSalirTarea1ActionPerformed(evt);
             }
         });
-        menuTareas1.add(botonSalirTarea1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 80, -1));
+        menuTareas1.add(botonSalirTarea1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 500, 90, 30));
 
         botonVolverAtras.setBackground(new java.awt.Color(221, 152, 123));
         botonVolverAtras.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        botonVolverAtras.setText("Volver atras");
+        botonVolverAtras.setForeground(new java.awt.Color(255, 255, 255));
+        botonVolverAtras.setText("VOLVER ATRAS");
         botonVolverAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonVolverAtrasActionPerformed(evt);
             }
         });
-        menuTareas1.add(botonVolverAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, -1, 30));
-        menuTareas1.add(finModificarJDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 220, -1));
+        menuTareas1.add(botonVolverAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 500, 120, 30));
+        menuTareas1.add(finModificarJDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, 220, -1));
 
         fehcaFin1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         fehcaFin1.setText("Fecha Fin:");
-        menuTareas1.add(fehcaFin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, 110, 30));
-        menuTareas1.add(inicioModificarJDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 220, -1));
+        menuTareas1.add(fehcaFin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 310, 110, 30));
+        menuTareas1.add(inicioModificarJDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 270, 220, -1));
 
         titulo1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         titulo1.setText("Título");
-        menuTareas1.add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 110, 30));
+        menuTareas1.add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 110, 30));
 
         tituloModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tituloModificarActionPerformed(evt);
             }
         });
-        menuTareas1.add(tituloModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 220, -1));
+        menuTareas1.add(tituloModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, 220, -1));
 
         fechaInicio1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         fechaInicio1.setText("Fecha Inicio: ");
-        menuTareas1.add(fechaInicio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, 110, 30));
+        menuTareas1.add(fechaInicio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 270, 110, 30));
 
-        menuModificar.add(menuTareas1);
+        iniciarSesion3.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        iniciarSesion3.setText("MODIFICAR");
+        menuTareas1.add(iniciarSesion3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 190, 60));
+
+        menuModificar.add(menuTareas1, java.awt.BorderLayout.CENTER);
 
         contenedor.addTab("Modificar", menuModificar);
 
@@ -1118,7 +1127,8 @@ public class UsuarioFrame extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser finJDateChooser;
     private com.toedter.calendar.JDateChooser finModificarJDate;
     private javax.swing.JLabel iniciarSesion;
-    private javax.swing.JLabel iniciarSesion1;
+    private javax.swing.JLabel iniciarSesion2;
+    private javax.swing.JLabel iniciarSesion3;
     private javax.swing.JPanel inicio;
     private com.toedter.calendar.JDateChooser inicioJDateChooser;
     private com.toedter.calendar.JDateChooser inicioModificarJDate;
